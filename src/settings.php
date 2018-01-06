@@ -5,8 +5,9 @@ return [
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 
         // Renderer settings
-        'renderer' => [
+        'view' => [
             'template_path' => __DIR__ . '/../templates/',
+            'cache_path' => '/var/tmp/cache',
         ],
 
         // Monolog settings
