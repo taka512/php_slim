@@ -3,6 +3,7 @@
 namespace Taka512\Controller;
 
 use Psr\Container\ContainerInterface;
+use Taka512\Model\Site;
 
 class HomeController
 {
@@ -15,12 +16,13 @@ class HomeController
 
     public function index($request, $response, $args)
     {
-        return $this->container['view']->render($response, 'home/index.html.twig', []);
+        $sites = Site::all();
+        return $this->container->get('view')->render($response, 'home/index.html.twig', ['sites' => $sites]);
     }
 
     public function hello($request, $response, $args)
     {
-        return $this->container['view']->render($response, 'home/hello.html.twig', [
+        return $this->container->get('view')->render($response, 'home/hello.html.twig', [
             'name' => $args['name']
         ]);
     }
