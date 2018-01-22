@@ -75,8 +75,12 @@
         </div>
       </div>
     </header>
-
     <div class="container">
+      <div class="pull-right">
+        <ul class="breadcrumb">
+{% block breadcrumb %}{% endblock %}
+        </ul>
+      </div>
 {% block content %}{% endblock %}
     </div>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

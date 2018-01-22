@@ -1,6 +1,11 @@
 {% extends "layout.html.twig" %}
 
 {% block title %}サイト編集{% endblock %}
+{% block breadcrumb %}
+      <li><a href="/">Home</a></li>
+      <li><a href="/site">サイト一覧</a></li>
+      <li class="active">サイト編集</li>
+{% endblock %}
 {% block content %}
 
   <div class="bs-docs-section">
