@@ -35,3 +35,12 @@ $container['db'] = function ($c) {
     return $capsule;
 };
 $container->get('db');
+
+
+$container['form.site_edit_form'] = function ($c) {
+    return new \Taka512\Form\SiteEditForm();
+};
+
+$container['form.site_edit_input'] = function ($c) {
+    return new \Taka512\Form\SiteEditInput();
+};
