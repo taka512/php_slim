@@ -25,6 +25,33 @@ class SiteController
         ]);
     }
 
+    public function create($request, $response, $args)
+    {
+        $form = $this->container->get('form.site_create_form');
+        $input = $this->container->get('form.site_create_input');
+
+        $form->bind($input);
+        if ($request->isPost()) {
+            $form->setData($request->getParsedBody());
+            if ($form->isValid()) {
+                $site = new Site();
+                $site->setFormArray($form->getData()->getArrayCopy());
+                if ($form->getData()->isConfirm()) {
+                    return $this->container->get('view')->render($response, 'site/create_confirm.html.twig', [
+                         'form' => $form
+                    ]);
+                }
+                $site->save();
+                return $response->withRedirect($this->container->get('router')->pathFor('site_index'), 303);
+            }
+
+        }
+
+        return $this->container->get('view')->render($response, 'site/create.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
     public function edit($request, $response, $args)
     {
         $site = Site::find($args['id']);
@@ -50,7 +77,6 @@ class SiteController
                 return $response->withRedirect($this->container->get('router')->pathFor('site_edit', ['id' => $args['id']]), 303);
 
             }
-
         }
 
         return $this->container->get('view')->render($response, 'site/edit.html.twig', [

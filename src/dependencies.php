@@ -37,6 +37,14 @@ $container['db'] = function ($c) {
 $container->get('db');
 
 
+$container['form.site_create_form'] = function ($c) {
+    return new \Taka512\Form\SiteCreateForm();
+};
+
+$container['form.site_create_input'] = function ($c) {
+    return new \Taka512\Form\SiteCreateInput();
+};
+
 $container['form.site_edit_form'] = function ($c) {
     return new \Taka512\Form\SiteEditForm();
 };

@@ -8,6 +8,7 @@ class Site extends BaseModel
     const DEL_FLG_ON = 1;
 
     protected $table = 'site';
+    protected $delFlg = self::DEL_FLG_OFF;
 
     public function isDelete()
     {
