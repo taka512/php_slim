@@ -17,6 +17,7 @@
         <div class="well bs-component">
           <form class="form-horizontal" action="/site/{{ form.get('id').getValue() }}/edit" method="POST">
             <input type="hidden" name="id" value="{{ form.get('id').getValue() }}">
+            <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">
             <fieldset>
               <legend>編集(確認)</legend>
               <div class="form-group">

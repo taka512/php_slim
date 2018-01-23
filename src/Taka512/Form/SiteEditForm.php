@@ -8,6 +8,7 @@ use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Checkbox;
 use Zend\Form\Element\Submit;
+use Zend\Form\Element\Csrf;
 use Taka512\Model\Site;
 
 class SiteEditForm extends Form
@@ -40,6 +41,12 @@ class SiteEditForm extends Form
         ])->add([
             'name' => 'updated_at',
             'type' => Text::class,
+        ])->add([
+            'name' => 'csrf',
+            'type' => Csrf::class,
+            'options' => [
+                'csrf_options' => ['timeout' => 7200],
+             ],
         ])->add([
             'name' => 'submit',
             'type' => Submit::class,

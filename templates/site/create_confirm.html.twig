@@ -16,6 +16,7 @@
       <div class="col-lg-10">
         <div class="well bs-component">
           <form class="form-horizontal" action="/site/create" method="POST">
+            <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">
             <fieldset>
               <legend>登録(確認)</legend>
               <div class="form-group">
