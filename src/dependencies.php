@@ -36,9 +36,24 @@ $container['db'] = function ($c) {
 };
 $container->get('db');
 
+// session
+$container['session'] = function ($c) {
+    $settings = $c->get('settings')['session'];
+    $config = new \Zend\Session\Config\SessionConfig();
+    $config->setOptions([
+        'name'  => $settings['cookie_name'],
+    ]);
+    return new \Zend\Session\Container(
+        'storage_key',
+        new \Zend\Session\SessionManager($config)
+    );
+};
 
 $container['form.site_create_form'] = function ($c) {
-    return new \Taka512\Form\SiteCreateForm();
+    return new \Taka512\Form\SiteCreateForm(
+        $c->get('session'),
+        $c->get('settings')['form']['csrf_timeout']
+    );
 };
 
 $container['form.site_create_input'] = function ($c) {
@@ -46,7 +61,10 @@ $container['form.site_create_input'] = function ($c) {
 };
 
 $container['form.site_edit_form'] = function ($c) {
-    return new \Taka512\Form\SiteEditForm();
+    return new \Taka512\Form\SiteEditForm(
+        $c->get('session'),
+        $c->get('settings')['form']['csrf_timeout']
+    );
 };
 
 $container['form.site_edit_input'] = function ($c) {
