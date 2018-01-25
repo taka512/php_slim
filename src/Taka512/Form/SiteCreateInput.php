@@ -16,6 +16,7 @@ class SiteCreateInput implements InputFilterAwareInterface
     public $name;
     public $url;
     public $confirm = false;
+    public $back = false;
 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
@@ -87,6 +88,7 @@ class SiteCreateInput implements InputFilterAwareInterface
         $this->name = (isset($data['name']) && $data['name'] !== '') ? $data['name'] : null;
         $this->url = (isset($data['url']) && $data['url'] !== '') ? $data['url'] : null;
         $this->confirm = !empty($data['confirm']) ? $data['confirm'] : false;
+        $this->back = (isset($data['back']) && $data['back'] === '1') ? $data['back'] : false;
     }
 
     public function getArrayCopy()
@@ -100,5 +102,10 @@ class SiteCreateInput implements InputFilterAwareInterface
     public function isConfirm()
     {
         return $this->confirm !== false;
+    }
+
+    public function isBack()
+    {
+        return $this->back !== false;
     }
 }

@@ -24,6 +24,9 @@ class SiteCreateForm extends Form
             'name' => 'confirm',
             'type' => Text::class,
         ])->add([
+            'name' => 'back',
+            'type' => Text::class,
+        ])->add([
             'name' => 'csrf',
             'type' => Csrf::class,
             'options' => [

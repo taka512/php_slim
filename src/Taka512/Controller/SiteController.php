@@ -33,7 +33,7 @@ class SiteController
         $form->bind($input);
         if ($request->isPost()) {
             $form->setData($request->getParsedBody());
-            if ($form->isValid()) {
+            if ($form->isValid() && !$form->getData()->isBack()) {
                 $site = new Site();
                 $site->setFormArray($form->getData()->getArrayCopy());
                 if ($form->getData()->isConfirm()) {
@@ -66,7 +66,7 @@ class SiteController
         $form->bind($input);
         if ($request->isPost()) {
             $form->setData($request->getParsedBody());
-            if ($form->isValid()) {
+            if ($form->isValid() && !$form->getData()->isBack()) {
                 $site->setFormArray($form->getData()->getArrayCopy());
                 if ($form->getData()->isConfirm()) {
                     return $this->container->get('view')->render($response, 'site/edit_confirm.html.twig', [

@@ -20,6 +20,7 @@ class SiteEditInput implements InputFilterAwareInterface
     public $createdAt;
     public $updatedAt;
     public $confirm = false;
+    public $back = false;
 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
@@ -96,6 +97,7 @@ class SiteEditInput implements InputFilterAwareInterface
         $this->url = (isset($data['url']) && $data['url'] !== '') ? $data['url'] : null;
         $this->delFlg = (isset($data['del_flg']) && $data['del_flg'] == Site::DEL_FLG_ON) ? Site::DEL_FLG_ON: Site::DEL_FLG_OFF;
         $this->confirm = !empty($data['confirm']) ? $data['confirm'] : false;
+        $this->back = (isset($data['back']) && $data['back'] === '1') ? $data['back'] : false;
         $this->createdAt = (isset($data['created_at']) && $data['created_at'] !== '') ? $data['created_at'] : null;
         $this->updatedAt = (isset($data['updated_at']) && $data['updated_at'] !== '') ? $data['updated_at'] : null;
     }
@@ -115,5 +117,10 @@ class SiteEditInput implements InputFilterAwareInterface
     public function isConfirm()
     {
         return $this->confirm !== false;
+    }
+
+    public function isBack()
+    {
+        return $this->back !== false;
     }
 }

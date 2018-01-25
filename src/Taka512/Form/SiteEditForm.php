@@ -2,7 +2,7 @@
 
 namespace Taka512\Form;
 
-use Zend\Session\Container
+use Zend\Session\Container;
 use Zend\Form\Form;
 use Zend\Form\Element\Select;
 use Zend\Form\Element\Hidden;
@@ -51,7 +51,10 @@ class SiteEditForm extends Form
                     'session' => $session,
                     'timeout' => $csrfTimeout,
                 ],
-             ],
+            ],
+        ])->add([
+            'name' => 'back',
+            'type' => Text::class,
         ])->add([
             'name' => 'submit',
             'type' => Submit::class,
