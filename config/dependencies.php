@@ -27,14 +27,13 @@ $container['logger'] = function ($c) {
 };
 
 // Service factory for the ORM
-$container['db'] = function ($c) {
-    $capsule = new \Illuminate\Database\Capsule\Manager;
-    $capsule->addConnection($c['settings']['db']);
-    $capsule->setAsGlobal();
-    $capsule->bootEloquent();
+$capsule = new \Illuminate\Database\Capsule\Manager;
+$capsule->addConnection($container['settings']['db']);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+$container['db'] = function () use ($capsule) {
     return $capsule;
 };
-$container->get('db');
 
 // session
 $container['session'] = function ($c) {
