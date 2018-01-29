@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Taka512\\": "src/Taka512/"
+            "Taka512\\": "src"
         }
     },
     "autoload-dev": {
