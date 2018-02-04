@@ -36,16 +36,16 @@ $container['db'] = function () use ($capsule) {
 };
 
 // session
-$container['session'] = function ($c) {
-    $settings = $c->get('settings')['session'];
-    $config = new \Zend\Session\Config\SessionConfig();
-    $config->setOptions([
-        'name'  => $settings['cookie_name'],
-    ]);
-    return new \Zend\Session\Container(
-        'storage_key',
-        new \Zend\Session\SessionManager($config)
-    );
+$config = new \Zend\Session\Config\SessionConfig();
+$config->setOptions([
+    'name'  => $container['settings']['session']['cookie_name'],
+]);
+$session = new \Zend\Session\Container(
+    'storage_key',
+    new \Zend\Session\SessionManager($config)
+);
+$container['session'] = function () use ($session) {
+    return $session;
 };
 
 $container['form.site_create_form'] = function ($c) {

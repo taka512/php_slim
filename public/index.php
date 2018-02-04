@@ -12,14 +12,14 @@ if (PHP_SAPI == 'cli-server') {
 require __DIR__ . '/../vendor/autoload.php';
 
 // Instantiate the app
-$settings = require __DIR__ . '/../config/settings.php';
+$settings = require __DIR__ . '/../bootstrap/settings.php';
 $app = new \Slim\App($settings);
 
 // Set up dependencies
-require __DIR__ . '/../config/dependencies.php';
+require __DIR__ . '/../bootstrap/dependencies.php';
 
 // Register routes
-require __DIR__ . '/../config/routes.php';
+require __DIR__ . '/../bootstrap/routes.php';
 
 // Run app
 $app->run();
