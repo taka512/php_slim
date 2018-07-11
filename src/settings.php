@@ -20,7 +20,7 @@ return [
         // database
         'db' => [
             'driver' => 'mysql',
-            'host' => 'localhost',
+            'host' => 'db.local',
             'database' => 'sample_slim',
             'username' => 'slim_user',
             'password' => 'slim_pass',
