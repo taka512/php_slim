@@ -22,5 +22,6 @@ RUN apk upgrade --update \
     && apk del tzdata \
     && rm -rf /var/cache/apk/*
 
+WORKDIR /home/php_slim
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_NO_INTERACTION 1

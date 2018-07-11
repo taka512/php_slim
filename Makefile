@@ -51,7 +51,15 @@ docker/rm:
 	docker-compose rm
 # sshで接続
 docker/ssh:
-	docker exec -it -e COLUMNS=$(shell tput cols) -e LINES=$(shell tput lines) $(CONTAINER) /bin/sh
+	docker exec -it -e COLUMNS=$(shell tput cols) -e LINES=$(shell tput lines) $(CONTAINER) ash
 # 未使用イメージの掃除
 docker/prune:
 	docker system prune 
+docker/exec/init:
+	docker exec $(CONTAINER) make composer/install
+docker/exec/update:
+	docker exec $(CONTAINER) make composer/update
+docker/db/status:
+	docker exec $(CONTAINER) php vendor/bin/phpmig status
+docker/db/up:
+	docker exec $(CONTAINER) php vendor/bin/phpmig up
