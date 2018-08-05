@@ -22,22 +22,16 @@ composer.phar:
 ###############
 .PHONY: composer/*
 composer/install:
->>>>>>> 00ac3365ef10e38b97d1462c2dc6f5c7d41f427e
 	php composer.phar install $(COMPOSER_OPT)
 
 composer/update:
 	php composer.phar update $(COMPOSER_OPT)
 
-<<<<<<< HEAD
 composer-self-update:
 	php composer.phar self-update $(COMPOSER_VERSION)
-=======
-composer/self-update:
-	php composer.phar self-update
->>>>>>> 00ac3365ef10e38b97d1462c2dc6f5c7d41f427e
 
 test:
-	php composer.phar test
+	php -d memory_limit=256M vendor/bin/phpunit --configuration ./tests/phpunit.xml tests
 
 ###############
 # docker
@@ -73,5 +67,5 @@ docker/exec/update:
 	docker exec $(CONTAINER) make composer/update
 docker/db/status:
 	docker exec $(CONTAINER) php vendor/bin/phpmig status
-docker/db/up:
+docker/db/migrate:
 	docker exec $(CONTAINER) php vendor/bin/phpmig up

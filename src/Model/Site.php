@@ -4,22 +4,22 @@ namespace Taka512\Model;
 
 class Site extends BaseModel
 {
-    const DEL_FLG_OFF = 0;
-    const DEL_FLG_ON = 1;
+    const FLG_OFF = 0;
+    const FLG_ON = 1;
 
     protected $table = 'site';
-    protected $delFlg = self::DEL_FLG_OFF;
+    protected $delFlg = self::FLG_OFF;
 
     public function isDelete()
     {
-        return $this->delFlg === self::DEL_FLG_ON;
+        return ($this->delFlg === self::FLG_ON);
     }
 
     public function setFormArray(array $data)
     {
-        $this->name = $data['name'];
-        $this->url = $data['url'];
-        $this->delFlg = $data['del_flg'];
+        $this->name = $data['name'] ?? null;
+        $this->url = $data['url'] ?? null;
+        $this->delFlg = $data['del_flg'] ?? null;
     }
 
     public function getFormArray()
