@@ -95,7 +95,7 @@ class SiteEditInput implements InputFilterAwareInterface
         $this->id = (isset($data['id']) && $data['id'] !== '') ? $data['id'] : null;
         $this->name = (isset($data['name']) && $data['name'] !== '') ? $data['name'] : null;
         $this->url = (isset($data['url']) && $data['url'] !== '') ? $data['url'] : null;
-        $this->delFlg = (isset($data['del_flg']) && $data['del_flg'] == Site::DEL_FLG_ON) ? Site::DEL_FLG_ON: Site::DEL_FLG_OFF;
+        $this->delFlg = (isset($data['del_flg']) && $data['del_flg'] == Site::FLG_ON) ? Site::FLG_ON: Site::FLG_OFF;
         $this->confirm = !empty($data['confirm']) ? $data['confirm'] : false;
         $this->back = (isset($data['back']) && $data['back'] === '1') ? $data['back'] : false;
         $this->createdAt = (isset($data['created_at']) && $data['created_at'] !== '') ? $data['created_at'] : null;

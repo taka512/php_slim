@@ -31,8 +31,8 @@ class SiteEditForm extends Form
             'name' => 'del_flg',
             'type' => Checkbox::class,
             'options' => [
-                'checked_value' => Site::DEL_FLG_ON,
-                'unchecked_value' => Site::DEL_FLG_OFF,
+                'checked_value' => Site::FLG_ON,
+                'unchecked_value' => Site::FLG_OFF,
             ],
         ])->add([
             'name' => 'confirm',

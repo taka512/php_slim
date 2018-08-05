@@ -15,7 +15,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $app = new \Slim\App(\Taka512\ContainerFactory::getContainer());
 
 // Set up dependencies
-require __DIR__ . '/../bootstrap/dependencies.php';
+require __DIR__ . '/../bootstrap/http_dependencies.php';
 
 // Register routes
 require __DIR__ . '/../bootstrap/routes.php';

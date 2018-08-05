@@ -18,7 +18,7 @@ class SiteController
 
     public function index($request, $response, $args)
     {
-        $sites = Site::where('del_flg', Site::DEL_FLG_OFF)->orderBy('id', 'desc')->take(10)->get();
+        $sites = Site::where('del_flg', Site::FLG_OFF)->orderBy('id', 'desc')->take(10)->get();
 
         return $this->container->get('view')->render($response, 'site/index.html.twig', [
             'sites' => $sites
