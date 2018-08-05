@@ -12,8 +12,7 @@ if (PHP_SAPI == 'cli-server') {
 require __DIR__ . '/../vendor/autoload.php';
 
 // Instantiate the app
-$settings = require __DIR__ . '/../bootstrap/settings.php';
-$app = new \Slim\App($settings);
+$app = new \Slim\App(\Taka512\ContainerFactory::getContainer());
 
 // Set up dependencies
 require __DIR__ . '/../bootstrap/dependencies.php';
