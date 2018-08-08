@@ -4,4 +4,4 @@
 docker/data/*
 *.swp
 
-
+.env

@@ -15,6 +15,7 @@ class ContainerFactory
         if (isset(self::$container)) {
             return self::$container;
         }
+        Env::loadDotenv();
         self::$container = new Container(Env::getSetting());
         self::loadCommonService();
         self::loadService();
@@ -23,7 +24,6 @@ class ContainerFactory
 
     public static function loadCommonService()
     {
-        // monolog
         self::$container['logger'] = function ($c) {
             $settings = $c['settings']['logger'];
             $logger = new Monolog\Logger($settings['name']);
@@ -32,7 +32,6 @@ class ContainerFactory
             return $logger;
         };
 
-        // Service factory for the ORM
         $capsule = new \Illuminate\Database\Capsule\Manager;
         $capsule->addConnection(self::$container['settings']['db']);
         $capsule->setAsGlobal();
