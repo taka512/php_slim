@@ -9,7 +9,6 @@ class ContainerFactory
 {
     private static $container;
 
-
     public static function getContainer()
     {
         if (isset(self::$container)) {
@@ -44,10 +43,10 @@ class ContainerFactory
             try {
                 $settings = $c['settings']['db'];
                 return new \PDO(
-                        sprintf('mysql:host=%s;port=3306;dbname=%s', $settings['host'], $settings['database']),
-                        $settings['username'],
-                        $settings['password']
-                        );
+                    sprintf('mysql:host=%s;port=3306;dbname=%s', $settings['host'], $settings['database']),
+                    $c['settings']['db']['username'],
+                    $c['settings']['db']['password']
+                );
             } catch (\Exception $e) {
                 throw new \RuntimeException(StdUtil::maskSecret($e->getMessage(), $settings['password']), $e->getCode());
             }
@@ -63,7 +62,6 @@ class ContainerFactory
     {
         self::$container['form.site_create_form'] = function ($c) {
             return new \Taka512\Form\SiteCreateForm(
-                $c['session'],
                 $c['settings']['form']['csrf_timeout']
             );
         };
@@ -74,7 +72,6 @@ class ContainerFactory
 
         self::$container['form.site_edit_form'] = function ($c) {
             return new \Taka512\Form\SiteEditForm(
-                $c['session'],
                 $c['settings']['form']['csrf_timeout']
             );
         };

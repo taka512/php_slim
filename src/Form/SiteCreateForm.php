@@ -11,7 +11,7 @@ use Zend\Form\Element\Csrf;
 
 class SiteCreateForm extends Form
 {
-    public function __construct(Container $session, int $csrfTimeout)
+    public function __construct(int $csrfTimeout)
     {
         parent::__construct('site_create');
         $this->add([
@@ -31,7 +31,6 @@ class SiteCreateForm extends Form
             'type' => Csrf::class,
             'options' => [
                 'csrf_options' => [
-                    'session' => $session,
                     'timeout' => $csrfTimeout,
                 ],
             ],

@@ -15,7 +15,7 @@ use Taka512\Model\Site;
 
 class SiteEditForm extends Form
 {
-    public function __construct(Container $session, int $csrfTimeout)
+    public function __construct(int $csrfTimeout)
     {
         parent::__construct('site_edit');
         $this->add([
@@ -48,7 +48,6 @@ class SiteEditForm extends Form
             'type' => Csrf::class,
             'options' => [
                 'csrf_options' => [
-                    'session' => $session,
                     'timeout' => $csrfTimeout,
                 ],
             ],
