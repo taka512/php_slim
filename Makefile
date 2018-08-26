@@ -68,4 +68,4 @@ docker/exec/update:
 docker/db/status:
 	docker exec $(CONTAINER) php vendor/bin/phpmig status
 docker/db/migrate:
-	docker exec $(CONTAINER) php vendor/bin/phpmig up
+	docker exec $(CONTAINER) php vendor/bin/phpmig migrate

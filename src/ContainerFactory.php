@@ -60,6 +60,16 @@ class ContainerFactory
 
     public static function loadFormService()
     {
+        self::$container['form.admin.user.signin_form'] = function ($c) {
+            return new \Taka512\Form\Admin\User\SigninForm(
+                $c['settings']['form']['csrf_timeout']
+            );
+        };
+
+        self::$container['form.admin.user.signin_input'] = function ($c) {
+            return new \Taka512\Form\Admin\User\SigninInput();
+        };
+
         self::$container['form.site_create_form'] = function ($c) {
             return new \Taka512\Form\SiteCreateForm(
                 $c['settings']['form']['csrf_timeout']
