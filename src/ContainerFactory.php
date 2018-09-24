@@ -70,6 +70,16 @@ class ContainerFactory
             return new \Taka512\Form\Admin\User\SigninInput();
         };
 
+        self::$container['form.admin.user.create_form'] = function ($c) {
+            return new \Taka512\Form\Admin\User\CreateForm(
+                $c['settings']['form']['csrf_timeout']
+            );
+        };
+
+        self::$container['form.admin.user.create_input'] = function ($c) {
+            return new \Taka512\Form\Admin\User\CreateInput();
+        };
+
         self::$container['form.site_create_form'] = function ($c) {
             return new \Taka512\Form\SiteCreateForm(
                 $c['settings']['form']['csrf_timeout']

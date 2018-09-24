@@ -16,7 +16,8 @@ $app->group('/api', function () {
     $this->map(['GET'], '/test', \Taka512\Controller\Api\TestController::class. ':index')->setName('api_test_index');
 });
 
-$app->map(['GET', 'POST'], '/admin/user/signin', \Taka512\Controller\Admin\UserController::class. ':signin')->setName('admin_user_signin_index');
+$app->map(['GET', 'POST'], '/admin/user/signin', \Taka512\Controller\Admin\UserController::class. ':signin')->setName('admin_user_signin');
 $app->group('/admin', function () {
     $this->map(['GET'], '', \Taka512\Controller\Admin\HomeController::class. ':index')->setName('admin_home_index');
+    $this->map(['GET', 'POST'], '/user/create', \Taka512\Controller\Admin\UserController::class. ':create')->setName('admin_user_create');
 })->add(new \Taka512\Middleware\AuthenticationMiddleware($container['auth']));
