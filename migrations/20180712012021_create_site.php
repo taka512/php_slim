@@ -21,7 +21,7 @@ CREATE TABLE `site` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8   
 EOL;
         $container = $this->getContainer();
-        $container['db']->query($sql);
+        $container['pdo.master']->query($sql);
     }
 
     /**
