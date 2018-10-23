@@ -4,6 +4,7 @@ namespace Taka512\Auth;
 
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
+use Taka512\Model\User;
 
 class AuthenticationAdapter implements AdapterInterface
 {
@@ -33,16 +34,15 @@ class AuthenticationAdapter implements AdapterInterface
      */
     public function authenticate()
     {
-        // Retrieve the user's information (e.g. from a database)
-        // and store the result in $row (e.g. associative array).
-        // If you do something like this, always store the passwords using the
-        // PHP password_hash() function!
+        $user = User::where('del_flg', User::FLG_OFF)->where('login_id', $this->loginId)->first();
+        if (is_null($user)) {
+            return new Result(Result::FAILURE_IDENTITY_NOT_FOUND, $this->loginId, ['ユーザが見つかりませんでした']);
+        }
 
-#        if (password_verify($this->password, 'test')) {
-        if ($this->password == 'test') {
+        if (password_verify($this->password, $user->password)) {
             return new Result(Result::SUCCESS, $this->loginId);
         }
 
-        return new Result(Result::FAILURE_CREDENTIAL_INVALID, $this->loginId);
+        return new Result(Result::FAILURE_CREDENTIAL_INVALID, $this->loginId, ['パスワードが正しくありません']);
     }
 }

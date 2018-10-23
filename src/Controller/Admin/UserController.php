@@ -25,6 +25,11 @@ class UserController
             if ($form->isValid()) {
                 $authAdapter = new AuthenticationAdapter($form->getData()->getLoginId(), $form->getData()->getPassword());
                 $result = $this->container->get('auth')->authenticate($authAdapter);
+                if (!$result->isValid()) {
+                    foreach ($result->getMessages() as $message) {
+                        echo "$message\n";
+                    }
+                }
             }
         }
 
