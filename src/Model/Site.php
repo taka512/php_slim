@@ -8,7 +8,6 @@ class Site extends BaseModel
     const FLG_ON = 1;
 
     protected $table = 'site';
-    protected $delFlg = self::FLG_OFF;
 
     public function isDelete()
     {
@@ -19,7 +18,7 @@ class Site extends BaseModel
     {
         $this->name = $data['name'] ?? null;
         $this->url = $data['url'] ?? null;
-        $this->delFlg = $data['del_flg'] ?? null;
+        $this->delFlg = $data['del_flg'] ?? self::FLG_OFF;
     }
 
     public function getFormArray()

@@ -118,6 +118,10 @@ class ContainerFactory
 
     public static function loadRepositoryService()
     {
+        self::$container['repository.site'] = function ($c) {
+            return new \Taka512\Repository\SiteRepository();
+        };
+
         self::$container['repository.user'] = function ($c) {
             return new \Taka512\Repository\UserRepository();
         };

@@ -1,6 +1,11 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}サイト登録{% endblock %}
+{% block title %}サイト編集{% endblock %}
+{% block breadcrumb %}
+      <li><a href="{{ path_for('admin_home_index') }}">Home</a></li>
+      <li><a href="{{ path_for('admin_site_index') }}">サイト一覧</a></li>
+      <li class="active">サイト編集</li>
+{% endblock %}
 {% block content %}
 
   <div class="bs-docs-section">
@@ -15,11 +20,12 @@
     <div class="row">
       <div class="col-lg-10">
         <div class="well bs-component">
-          <form class="form-horizontal" action="/site/create" method="POST">
+          <form class="form-horizontal" action="{{ path_for('admin_site_edit', {'id': form.get('id').getValue()}) }}" method="POST">
+            <input type="hidden" name="id" value="{{ form.get('id').getValue() }}">
             <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">
             <input type="hidden" id="back" name="back" value="0">
             <fieldset>
-              <legend>登録(確認)</legend>
+              <legend>編集(確認)</legend>
               <div class="form-group">
                 <label for="inputName" class="col-lg-2 control-label">サイト名</label>
                 <div class="col-lg-10">
@@ -35,6 +41,31 @@
                   <div class="col-lg-10">
                     <span>{{ form.get('url').getValue() }}</span>
                     <input type="hidden" class="form-control" id="inputUrl" name="url" value="{{ form.get('url').getValue() }}">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputUrl" class="col-lg-2 control-label">削除フラグ</label>
+                <div class="col-lg-10">
+                  <div class="checkbox col-lg-10">
+                    {% if form.get('del_flg').getValue() %}ON{% else %}OFF{% endif %}
+                    <input type="hidden" name="del_flg" value="{{ form.get('del_flg').getValue() }}">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-2 control-label">作成日時</label>
+                <div class="col-lg-10">
+                  <div class="col-lg-10">
+                    <span>{{ form.get('created_at').getValue() }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-2 control-label">更新日時</label>
+                <div class="col-lg-10">
+                  <div class="col-lg-10">
+                    <span>{{ form.get('updated_at').getValue() }}</span>
                   </div>
                 </div>
               </div>

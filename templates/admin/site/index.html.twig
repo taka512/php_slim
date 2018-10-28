@@ -2,7 +2,7 @@
 
 {% block title %}サイト一覧{% endblock %}
 {% block breadcrumb %}
-      <li><a href="/">Home</a></li>
+      <li><a href="{{ path_for('admin_home_index') }}">Home</a></li>
       <li class="active">サイト一覧</li>
 {% endblock %}
 {% block content %}
@@ -25,7 +25,7 @@
             <tbody>
               {% for site in sites %}
               <tr>
-                <td><a href="/site/{{ site.id }}/edit">{{ site.id }}</a></td>
+                <td><a href="{{ path_for('admin_site_edit', {'id': site.id}) }}">{{ site.id }}</a></td>
                 <td>{{ site.name }}</td>
                 <td>{{ site.url }}</td>
               </tr>
@@ -33,7 +33,7 @@
             </tbody>
           </table>
         </div>
-          <form action="/site/create" class="form-horizontal" method="GET">
+          <form action="{{ path_for('admin_site_create') }}" class="form-horizontal" method="GET">
             <fieldset>
               <div class="form-group">
                 <div class="col-lg-11 col-lg-offset-1">
