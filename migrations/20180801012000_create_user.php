@@ -10,7 +10,7 @@ class CreateUser extends Migration
     public function up()
     {
         $sql = <<<EOL
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ユーザID',
   `login_id` varchar(32) NOT NULL COMMENT 'ログインid',
   `password` varchar(256) NOT NULL COMMENT 'パスワード',

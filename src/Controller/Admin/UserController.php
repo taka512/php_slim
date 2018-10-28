@@ -3,7 +3,6 @@
 namespace Taka512\Controller\Admin;
 
 use Taka512\Controller\BaseController;
-use Taka512\Model\User;
 
 class UserController extends BaseController
 {
@@ -39,9 +38,7 @@ class UserController extends BaseController
         if ($request->isPost()) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
-                $user = new User();
-                $user->setCreateFormArray($form->getData()->getArrayCopy());
-                $user->save();
+                $this->get('repository.user')->insert($form->getData()->getArrayCopy());
             }
         }
 
