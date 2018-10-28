@@ -9,7 +9,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Taka512\Repository\UserRepository;
 use Taka512\Validator\Model\User\LoginIdValidator;
-use Taka512\Validator\Model\User\RegisterPasswordValidator;
+use Taka512\Validator\Model\User\PasswordValidator;
 
 class CreateInput implements InputFilterAwareInterface
 {
@@ -75,12 +75,12 @@ class CreateInput implements InputFilterAwareInterface
                     'break_chain_on_failure' => true,
                     'options' => [
                         'messages' => [
-                            NotEmpty::IS_EMPTY => RegisterPasswordValidator::MSG_EMPTY,
+                            NotEmpty::IS_EMPTY => PasswordValidator::MSG_EMPTY,
                         ],
                     ],
                 ],
                 [
-                    'name' => RegisterPasswordValidator::class,
+                    'name' => PasswordValidator::class,
                     'break_chain_on_failure' => true,
                 ],
             ],
@@ -92,8 +92,8 @@ class CreateInput implements InputFilterAwareInterface
 
     public function exchangeArray(array $data)
     {
-        $this->loginId = $data['login_id'] ?? '';
-        $this->password = $data['password'] ?? '';
+        $this->loginId = $data['login_id'] ?? null;
+        $this->password = $data['password'] ?? null;
     }
 
     public function getArrayCopy()
@@ -102,15 +102,5 @@ class CreateInput implements InputFilterAwareInterface
             'login_id' => $this->loginId,
             'password' => $this->password,
         ];
-    }
-
-    public function getLoginId()
-    {
-        return $this->loginId;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
     }
 }

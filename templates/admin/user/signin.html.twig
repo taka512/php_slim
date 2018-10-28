@@ -25,6 +25,11 @@
                     <font color="red">{{ message }}</font><br/>
                   {% endfor %}
                 {% endfor %}
+                {% for message in errors %}
+                  <font color="red">{{ message }}</font><br/>
+                {% endfor %}
+              </div>
+              <div class="form-group">
               </div>
               <div class="form-group">
                 <label for="inputLoginId" class="col-lg-2 control-label">ログインid</label>

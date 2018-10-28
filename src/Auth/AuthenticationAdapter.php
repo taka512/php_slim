@@ -4,17 +4,19 @@ namespace Taka512\Auth;
 
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
-use Taka512\Model\User;
+use Taka512\Repository\UserRepository;
+use Taka512\Validator\Model\User\LoginIdValidator;
+use Taka512\Validator\Model\User\PasswordValidator;
 
 class AuthenticationAdapter implements AdapterInterface
 {
+    private $userRepository;
     private $loginId;
     private $password;
 
-    public function __construct(string $loginId, string $password)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->loginId = $loginId;
-        $this->password = $password;
+        $this->userRepository = $userRepository;
     }
 
     public function setPassword(string $password)
@@ -34,15 +36,15 @@ class AuthenticationAdapter implements AdapterInterface
      */
     public function authenticate()
     {
-        $user = User::where('del_flg', User::FLG_OFF)->where('login_id', $this->loginId)->first();
+        $user = $this->userRepository->findOneByLoginId($this->loginId);
         if (is_null($user)) {
-            return new Result(Result::FAILURE_IDENTITY_NOT_FOUND, $this->loginId, ['ユーザが見つかりませんでした']);
+            return new Result(Result::FAILURE_IDENTITY_NOT_FOUND, $this->loginId, [LoginIdValidator::MSG_NOT_FOUND]);
         }
 
         if (password_verify($this->password, $user->password)) {
             return new Result(Result::SUCCESS, $this->loginId);
         }
 
-        return new Result(Result::FAILURE_CREDENTIAL_INVALID, $this->loginId, ['パスワードが正しくありません']);
+        return new Result(Result::FAILURE_CREDENTIAL_INVALID, $this->loginId, [PasswordValidator::MSG_WRONG]);
     }
 }

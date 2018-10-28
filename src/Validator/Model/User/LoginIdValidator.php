@@ -15,6 +15,7 @@ class LoginIdValidator extends AbstractValidator
 
 
     const MSG_EMPTY = 'ログインIDは必須です';
+    const MSG_NOT_FOUND = 'ログインIDが存在しません';
     const MSG_INVALID_FMT = 'ログインIDは半角英数字を登録してください';
     const MSG_GREATER_THAN_MAX_STR = 'ログインIDが長すぎます。'.self::MAX_STR.'文字以下で指定してください';
     const MSG_DUPLICATE_STR = 'ログインIDは既に登録されています';

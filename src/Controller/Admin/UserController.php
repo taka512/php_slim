@@ -4,7 +4,6 @@ namespace Taka512\Controller\Admin;
 
 use Taka512\Controller\BaseController;
 use Taka512\Model\User;
-use Taka512\Auth\AuthenticationAdapter;
 
 class UserController extends BaseController
 {
@@ -16,18 +15,19 @@ class UserController extends BaseController
         if ($request->isPost()) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
-                $authAdapter = new AuthenticationAdapter($form->getData()->getLoginId(), $form->getData()->getPassword());
-                $result = $this->container->get('auth')->authenticate($authAdapter);
-                if (!$result->isValid()) {
-                    foreach ($result->getMessages() as $message) {
-                        echo "$message\n";
-                    }
+                $authAdapter = $this->get('auth.authentication_adapter');
+                $authAdapter->setLoginId($form->getData()->getLoginId());
+                $authAdapter->setPassword($form->getData()->getPassword());
+                $result = $this->get('auth')->authenticate($authAdapter);
+                if ($result->isValid()) {
+                    return $response->withRedirect($this->get('router')->pathFor('admin_home_index'));
                 }
+                $messages = $result->getMessages();
             }
         }
 
         return $this->get('view')->render($response, 'admin/user/signin.html.twig', [
-            'form' => $form,
+            'form' => $form, 'errors' => $messages,
         ]);
     }
 

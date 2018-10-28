@@ -48,10 +48,6 @@ class SigninInput implements InputFilterAwareInterface
                         ],
                     ],
                 ],
-                [
-                    'name' => LoginIdValidator::class,
-                    'break_chain_on_failure' => true,
-                ],
             ],
         ])->add([
             'name' => 'password',
@@ -70,10 +66,6 @@ class SigninInput implements InputFilterAwareInterface
                         ],
                     ],
                 ],
-                [
-                    'name' => PasswordValidator::class,
-                    'break_chain_on_failure' => true,
-                ],
             ],
         ]);
         $this->inputFilter = $inputFilter;
@@ -83,8 +75,8 @@ class SigninInput implements InputFilterAwareInterface
 
     public function exchangeArray(array $data)
     {
-        $this->loginId = (isset($data['login_id']) && $data['login_id'] !== '') ? $data['login_id'] : null;
-        $this->password = (isset($data['password']) && $data['password'] !== '') ? $data['password'] : null;
+        $this->loginId = $data['login_id'] ?? null;
+        $this->password = $data['password'] ?? null;
     }
 
     public function getArrayCopy()

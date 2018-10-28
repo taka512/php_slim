@@ -55,8 +55,18 @@ class ContainerFactory
 
     public static function loadService()
     {
+        self::loadAuthService();
         self::loadFormService();
         self::loadRepositoryService();
+    }
+
+    public static function loadAuthService()
+    {
+        self::$container['auth.authentication_adapter'] = function ($c) {
+            return new \Taka512\Auth\AuthenticationAdapter(
+                $c['repository.user']
+            );
+        };
     }
 
     public static function loadFormService()

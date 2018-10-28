@@ -4,7 +4,7 @@ namespace Taka512\Validator\Model\User;
 
 use Zend\Validator\AbstractValidator;
 
-class RegisterPasswordValidator extends AbstractValidator
+class PasswordValidator extends AbstractValidator
 {
     const MIN_STR = 8;
     const MAX_STR = 32;
@@ -14,6 +14,7 @@ class RegisterPasswordValidator extends AbstractValidator
     const GREATER_THAN_MAX_STR = 'PasswordGreaterThanMaxStr';
 
     const MSG_EMPTY = 'パスワードは必須です';
+    const MSG_WRONG = 'パスワードが間違っています';
     const MSG_INVALID_FMT = 'パスワードは半角英数字を指定してください';
     const MSG_LESS_THAN_MIN_STR = 'パスワードが短すぎます。'.self::MIN_STR.'文字以上を指定してください';
     const MSG_GREATER_THAN_MAX_STR = 'パスワードが長すぎます。'.self::MAX_STR.'文字以下で指定してください';
