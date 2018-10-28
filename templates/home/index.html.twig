@@ -2,18 +2,19 @@
 
 {% block title %}サンプル{% endblock %}
 {% block content %}
-
-  <div class="page-header" id="banner">
-    <div class="row">
-      <div class="col-lg-8 col-md-7 col-sm-6">
-        <h1>list</h1>
-          {% for site in sites %}
-          <li>{{ site.name }}</li>
-          {% endfor %}
-        </ul>
+      <div class="page-header" id="banner">
+        <div class="row my-4">
+          <div class="col-12">
+            <h1 class="display-3">PHP slim実装</h1>
+            <p class="lead">サンプルサイトです</p>
+            <hr>
+            <p>PHP slimでwebサイトを作成する際の参考実装です</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-
-
+      <ul>
+      {% for site in sites %}
+      <li>{{ site.name }}</li>
+      {% endfor %}
+      </ul>
 {% endblock %}
