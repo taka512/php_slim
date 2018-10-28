@@ -49,4 +49,11 @@ class UserController extends BaseController
             'form' => $form,
         ]);
     }
+
+    public function signout($request, $response, $args)
+    {
+        $this->get('auth')->clearIdentity();
+
+        return $response->withRedirect($this->get('router')->pathFor('top'));
+    }
 }
