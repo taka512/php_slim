@@ -56,6 +56,7 @@ class ContainerFactory
     public static function loadService()
     {
         self::loadFormService();
+        self::loadRepositoryService();
     }
 
     public static function loadFormService()
@@ -67,7 +68,9 @@ class ContainerFactory
         };
 
         self::$container['form.admin.user.signin_input'] = function ($c) {
-            return new \Taka512\Form\Admin\User\SigninInput();
+            return new \Taka512\Form\Admin\User\SigninInput(
+                $c['repository.user']
+            );
         };
 
         self::$container['form.admin.user.create_form'] = function ($c) {
@@ -77,7 +80,9 @@ class ContainerFactory
         };
 
         self::$container['form.admin.user.create_input'] = function ($c) {
-            return new \Taka512\Form\Admin\User\CreateInput();
+            return new \Taka512\Form\Admin\User\CreateInput(
+                $c['repository.user']
+            );
         };
 
         self::$container['form.site_create_form'] = function ($c) {
@@ -98,6 +103,13 @@ class ContainerFactory
 
         self::$container['form.site_edit_input'] = function ($c) {
             return new \Taka512\Form\SiteEditInput();
+        };
+    }
+
+    public static function loadRepositoryService()
+    {
+        self::$container['repository.user'] = function ($c) {
+            return new \Taka512\Repository\UserRepository();
         };
     }
 }

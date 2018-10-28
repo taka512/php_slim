@@ -20,12 +20,6 @@ class CreateForm extends Form
             'name' => 'password',
             'type' => Password::class,
         ])->add([
-            'name' => 'confirm',
-            'type' => Text::class,
-        ])->add([
-            'name' => 'back',
-            'type' => Text::class,
-        ])->add([
             'name' => 'csrf',
             'type' => Csrf::class,
             'options' => [

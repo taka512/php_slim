@@ -15,11 +15,10 @@ class User extends BaseModel
         return ($this->delFlg === self::FLG_ON);
     }
 
-    public function setFormArray(array $data)
+    public function setCreateFormArray(array $data)
     {
-        $this->loginId = $data['login_id'] ?? null;
-        $this->password = $data['password'] ?? null;
-        $this->delFlg = $data['del_flg'] ?? null;
+        $this->loginId = $data['login_id'];
+        $this->password = password_hash($data['password'], \PASSWORD_DEFAULT);
     }
 
     public function getFormArray()

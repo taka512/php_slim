@@ -7,6 +7,7 @@ use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Taka512\Repository\UserRepository;
 use Taka512\Validator\Model\User\LoginIdValidator;
 use Taka512\Validator\Model\User\RegisterPasswordValidator;
 
@@ -14,8 +15,11 @@ class CreateInput implements InputFilterAwareInterface
 {
     public $loginId;
     public $password;
-    public $confirm = false;
-    public $back = false;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
@@ -53,6 +57,9 @@ class CreateInput implements InputFilterAwareInterface
                 [
                     'name' => LoginIdValidator::class,
                     'break_chain_on_failure' => true,
+                    'options' => [
+                        'userRepository' => $this->userRepository,
+                    ],
                 ],
             ],
         ])->add([
@@ -85,10 +92,8 @@ class CreateInput implements InputFilterAwareInterface
 
     public function exchangeArray(array $data)
     {
-        $this->loginId = (isset($data['login_id']) && $data['login_id'] !== '') ? $data['login_id'] : null;
-        $this->password = (isset($data['password']) && $data['password'] !== '') ? $data['password'] : null;
-        $this->confirm = !empty($data['confirm']) ? $data['confirm'] : false;
-        $this->back = (isset($data['back']) && $data['back'] === '1') ? $data['back'] : false;
+        $this->loginId = $data['login_id'] ?? '';
+        $this->password = $data['password'] ?? '';
     }
 
     public function getArrayCopy()
@@ -107,21 +112,5 @@ class CreateInput implements InputFilterAwareInterface
     public function getPassword()
     {
         return $this->password;
-    }
-
-    public function getHashedPassword()
-    {
-        return password_hash($this->password, \PASSWORD_DEFAULT);
-    }
-
-
-    public function isConfirm()
-    {
-        return $this->confirm !== false;
-    }
-
-    public function isBack()
-    {
-        return $this->back !== false;
     }
 }
