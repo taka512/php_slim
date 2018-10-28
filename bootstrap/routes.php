@@ -21,4 +21,4 @@ $app->group('/admin', function () {
     $this->map(['GET'], '', \Taka512\Controller\Admin\HomeController::class. ':index')->setName('admin_home_index');
     $this->map(['GET', 'POST'], '/user/create', \Taka512\Controller\Admin\UserController::class. ':create')->setName('admin_user_create');
     $this->map(['GET'], '/user/signout', \Taka512\Controller\Admin\UserController::class. ':signout')->setName('admin_user_signout');
-})->add(new \Taka512\Middleware\AuthenticationMiddleware($container['auth']));
+})->add(new \Taka512\Middleware\AuthenticationMiddleware($container['router'], $container['auth']));
