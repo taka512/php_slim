@@ -8,7 +8,7 @@ else
 COMPOSER_OPT=
 endif
 
-COMPOSER_VERSION = 1.6.2
+COMPOSER_VERSION = 1.7.2
 PHPUNIT_VERSION := 6.5.5
 
 all:
@@ -21,13 +21,13 @@ composer.phar:
 # compose
 ###############
 .PHONY: composer/*
-composer/install:
+composer/install: composer.phar
 	php composer.phar install $(COMPOSER_OPT)
 
-composer/update:
+composer/update: composer.phar
 	php composer.phar update $(COMPOSER_OPT)
 
-composer-self-update:
+composer-self-update: composer.phar
 	php composer.phar self-update $(COMPOSER_VERSION)
 
 test:
@@ -38,9 +38,15 @@ test:
 ###############
 .PHONY: db/*
 db/status:
-	php vendor/bin/phpmig status
+	php vendor/bin/phpmig status -b config/migration.php
 db/migrate:
-	php vendor/bin/phpmig migrate
+	php vendor/bin/phpmig migrate -b config/migration.php
+db/seed/status:
+	php vendor/bin/phpmig status -b config/seed.php
+db/seed/migrate:
+	php vendor/bin/phpmig migrate -b config/seed.php
+db/seed/down:
+	php vendor/bin/phpmig down $(ID) -b config/seed.php
 
 ###############
 # docker
@@ -78,3 +84,9 @@ docker/db/status:
 	docker exec $(CONTAINER) make db/status
 docker/db/migrate:
 	docker exec $(CONTAINER) make db/migrate
+docker/db/seed/status:
+	docker exec $(CONTAINER) make db/seed/status
+docker/db/seed/migrate:
+	docker exec $(CONTAINER) make db/seed/migrate
+docker/db/seed/down:
+	docker exec $(CONTAINER) make db/seed/down ID=$(ID)

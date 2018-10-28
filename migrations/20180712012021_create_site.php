@@ -10,7 +10,7 @@ class CreateSite extends Migration
     public function up()
     {
         $sql = <<<EOL
-CREATE TABLE `site` (
+CREATE TABLE IF NOT EXISTS `site` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'サイトID',
   `name` varchar(256) NOT NULL COMMENT 'サイト名',
   `url` varchar(256) NOT NULL COMMENT 'url',
