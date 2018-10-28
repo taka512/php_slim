@@ -1,10 +1,10 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}サイト新規登録{% endblock %}
+{% block title %}サイト編集{% endblock %}
 {% block breadcrumb %}
-      <li><a href="/">Home</a></li>
-      <li><a href="/site">サイト一覧</a></li>
-      <li class="active">サイト新規登録</li>
+      <li><a href="{{ path_for('admin_home_index') }}">Home</a></li>
+      <li><a href="{{ path_for('admin_site_index') }}">サイト一覧</a></li>
+      <li class="active">サイト編集</li>
 {% endblock %}
 {% block content %}
 
@@ -20,11 +20,12 @@
     <div class="row">
       <div class="col-lg-10">
         <div class="well bs-component">
-          <form class="form-horizontal" action="/site/create" method="POST">
+          <form class="form-horizontal" action="{{ path_for('admin_site_edit', {'id': form.get('id').getValue()}) }}" method="POST">
+            <input type="hidden" name="id" value="{{ form.get('id').getValue() }}">
             <input type="hidden" name="confirm" value="1">
             <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">
             <fieldset>
-              <legend>新規登録</legend>
+              <legend>編集</legend>
               <div class="box-header with-border">
                 {% for messages in form.getMessages %}
                   {% for message in messages %}
@@ -45,6 +46,33 @@
                 <div class="col-lg-10">
                   <div class="col-lg-10">
                     <input type="text" class="form-control" id="inputUrl" name="url" value="{{ form.get('url').getValue() }}">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputUrl" class="col-lg-2 control-label">削除フラグ</label>
+                <div class="col-lg-10">
+                  <div class="checkbox col-lg-10">
+                    <label>
+                      <input type="hidden" name="del_flg" value="{{ form.get('del_flg').getUncheckedValue() }}">
+                      <input type="checkbox" name="del_flg" value="{{ form.get('del_flg').getCheckedValue() }}" {% if form.get('del_flg').getValue() %}checked{% endif %}> 削除
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-2 control-label">作成日時</label>
+                <div class="col-lg-10">
+                  <div class="col-lg-10">
+                    <span>{{ form.get('created_at').getValue() }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-2 control-label">更新日時</label>
+                <div class="col-lg-10">
+                  <div class="col-lg-10">
+                    <span>{{ form.get('updated_at').getValue() }}</span>
                   </div>
                 </div>
               </div>

@@ -19,11 +19,4 @@ class HomeController
         $sites = Site::all();
         return $this->container->get('view')->render($response, 'home/index.html.twig', ['sites' => $sites]);
     }
-
-    public function hello($request, $response, $args)
-    {
-        return $this->container->get('view')->render($response, 'home/hello.html.twig', [
-            'name' => $args['name']
-        ]);
-    }
 }
