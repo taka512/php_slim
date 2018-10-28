@@ -34,6 +34,15 @@ test:
 	php -d memory_limit=256M vendor/bin/phpunit --configuration ./tests/phpunit.xml tests
 
 ###############
+#  db
+###############
+.PHONY: db/*
+db/status:
+	php vendor/bin/phpmig status
+db/migrate:
+	php vendor/bin/phpmig migrate
+
+###############
 # docker
 ###############
 .PHONY: docker/*
@@ -66,6 +75,6 @@ docker/exec/init:
 docker/exec/update:
 	docker exec $(CONTAINER) make composer/update
 docker/db/status:
-	docker exec $(CONTAINER) php vendor/bin/phpmig status
+	docker exec $(CONTAINER) make db/status
 docker/db/migrate:
-	docker exec $(CONTAINER) php vendor/bin/phpmig up
+	docker exec $(CONTAINER) make db/migrate

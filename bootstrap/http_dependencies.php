@@ -30,3 +30,4 @@ $container['session'] = function () use ($session) {
     return $session;
 };
 
+$container['auth'] = new Zend\Authentication\AuthenticationService();
