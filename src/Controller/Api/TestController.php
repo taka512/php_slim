@@ -2,17 +2,10 @@
 
 namespace Taka512\Controller\Api;
 
-use Psr\Container\ContainerInterface;
+use Taka512\Controller\BaseController;
 
-class TestController
+class TestController extends BaseController
 {
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
     public function index($request, $response, $args)
     {
         return $response
