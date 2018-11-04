@@ -21,6 +21,12 @@ class User extends BaseModel
         $this->password = password_hash($data['password'], \PASSWORD_DEFAULT);
     }
 
+    public function setEditFormArray(array $data)
+    {
+        $this->loginId = $data['login_id'];
+        $this->delFlg = $data['del_flg'];
+    }
+
     public function getFormArray()
     {
         return [

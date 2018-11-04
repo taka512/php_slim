@@ -95,6 +95,18 @@ class ContainerFactory
             );
         };
 
+        self::$container['form.admin.user.edit_form'] = function ($c) {
+            return new \Taka512\Form\Admin\User\EditForm(
+                $c['settings']['form']['csrf_timeout']
+            );
+        };
+
+        self::$container['form.admin.user.edit_input'] = function ($c) {
+            return new \Taka512\Form\Admin\User\EditInput(
+                $c['repository.user']
+            );
+        };
+
         self::$container['form.site_create_form'] = function ($c) {
             return new \Taka512\Form\SiteCreateForm(
                 $c['settings']['form']['csrf_timeout']
