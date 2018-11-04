@@ -40,12 +40,12 @@ class LoginIdEditValidator extends AbstractValidator
 
             return false;
         }
-#        $user = $this->userRepository->findOneByLoginId($value);
-#        if (isset($user)) {
-#            $this->error(self::DUPLICATE_STR);
+        $user = $this->userRepository->findOneByLoginId($value);
+        if (isset($user) && $user->id != $context['id']) {
+            $this->error(self::DUPLICATE_STR);
 
-#            return false;
-#        }
+            return false;
+        }
 
         return true;
     }

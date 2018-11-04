@@ -20,7 +20,7 @@ class UserRepository
 
     public function findOneByLoginId(string $loginId)
     {
-        return User::where('del_flg', User::FLG_OFF)->where('login_id', $loginId)->first();
+        return User::where('login_id', $loginId)->first();
     }
 
     public function findLatestUsers(int $limit = 10)

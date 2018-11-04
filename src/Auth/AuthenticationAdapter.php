@@ -37,7 +37,7 @@ class AuthenticationAdapter implements AdapterInterface
     public function authenticate()
     {
         $user = $this->userRepository->findOneByLoginId($this->loginId);
-        if (is_null($user)) {
+        if (is_null($user) || $user->isDelete()) {
             return new Result(Result::FAILURE_IDENTITY_NOT_FOUND, $this->loginId, [LoginIdValidator::MSG_NOT_FOUND]);
         }
 

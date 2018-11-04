@@ -62,6 +62,9 @@ class EditInput implements InputFilterAwareInterface
                 [
                     'name' => LoginIdEditValidator::class,
                     'break_chain_on_failure' => true,
+                    'options' => [
+                        'userRepository' => $this->userRepository,
+                    ],
                 ],
             ],
         ])->add([
@@ -74,13 +77,13 @@ class EditInput implements InputFilterAwareInterface
     }
     public function exchangeArray(array $data)
     {
-        $this->id = (isset($data['id']) && $data['id'] !== '') ? $data['id'] : null;
-        $this->loginId = (isset($data['login_id']) && $data['login_id'] !== '') ? $data['login_id'] : null;
+        $this->id = $data['id'] ?? null;
+        $this->loginId = $data['login_id'] ?? null;
         $this->delFlg = (isset($data['del_flg']) && $data['del_flg'] == User::FLG_ON) ? User::FLG_ON: User::FLG_OFF;
         $this->confirm = (isset($data['confirm']) && $data['confirm'] === '1') ? true : false;
         $this->back = (isset($data['back']) && $data['back'] === '1') ? true : false;
-        $this->createdAt = (isset($data['created_at']) && $data['created_at'] !== '') ? $data['created_at'] : null;
-        $this->updatedAt = (isset($data['updated_at']) && $data['updated_at'] !== '') ? $data['updated_at'] : null;
+        $this->createdAt = $data['created_at'] ?? null;
+        $this->updatedAt = $data['updated_at'] ?? null;
     }
 
     public function getArrayCopy()
