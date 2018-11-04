@@ -24,6 +24,6 @@ class AddUser extends Migration
     public function down()
     {
         $c = $this->getContainer();
-        $c['pdo.master']->query('DELETE FROM user');
+        $c['pdo.master']->query('PURGE TABLE user');
     }
 }

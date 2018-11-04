@@ -3,7 +3,7 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-$container = $app->getContainer();
+$c = $app->getContainer();
 
 // Routes
 $app->get('/', \Taka512\Controller\HomeController::class . ':index')->setName('top');
@@ -24,4 +24,6 @@ $app->group('/admin', function () {
     $this->map(['GET'], '/site', \Taka512\Controller\Admin\SiteController::class. ':index')->setName('admin_site_index');
     $this->map(['GET', 'POST'], '/site/create', \Taka512\Controller\Admin\SiteController::class. ':create')->setName('admin_site_create');
     $this->map(['GET', 'POST'], '/site/{id}/edit', \Taka512\Controller\Admin\SiteController::class. ':edit')->setName('admin_site_edit');
-})->add(new \Taka512\Middleware\AuthenticationMiddleware($container['router'], $container['auth']));
+})->add(
+    new \Taka512\Middleware\AuthenticationMiddleware($c['router'], $c['auth'], $c['view'], $c['repository.user'])
+);
