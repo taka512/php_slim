@@ -8,7 +8,6 @@ class User extends BaseModel
     const FLG_ON = 1;
 
     protected $table = 'user';
-    protected $delFlg = self::FLG_OFF;
 
     public function isDelete()
     {
@@ -19,6 +18,12 @@ class User extends BaseModel
     {
         $this->loginId = $data['login_id'];
         $this->password = password_hash($data['password'], \PASSWORD_DEFAULT);
+    }
+
+    public function setEditFormArray(array $data)
+    {
+        $this->loginId = $data['login_id'];
+        $this->delFlg = $data['del_flg'];
     }
 
     public function getFormArray()

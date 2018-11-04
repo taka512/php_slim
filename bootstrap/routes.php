@@ -16,7 +16,9 @@ $app->map(['GET', 'POST'], '/admin/user/signin', \Taka512\Controller\Admin\UserC
 $app->group('/admin', function () {
     $this->map(['GET'], '', \Taka512\Controller\Admin\HomeController::class. ':index')->setName('admin_home_index');
     // user
+    $this->map(['GET'], '/user', \Taka512\Controller\Admin\UserController::class. ':index')->setName('admin_user_index');
     $this->map(['GET', 'POST'], '/user/create', \Taka512\Controller\Admin\UserController::class. ':create')->setName('admin_user_create');
+    $this->map(['GET', 'POST'], '/user/{id}/edit', \Taka512\Controller\Admin\UserController::class. ':edit')->setName('admin_user_edit');
     $this->map(['GET'], '/user/signout', \Taka512\Controller\Admin\UserController::class. ':signout')->setName('admin_user_signout');
     // site
     $this->map(['GET'], '/site', \Taka512\Controller\Admin\SiteController::class. ':index')->setName('admin_site_index');

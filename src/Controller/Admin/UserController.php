@@ -6,6 +6,16 @@ use Taka512\Controller\BaseController;
 
 class UserController extends BaseController
 {
+    public function index($request, $response, $args)
+    {
+        $users = $this->get('repository.user')->findLatestUsers();
+
+        return $this->container->get('view')->render($response, 'admin/user/index.html.twig', [
+            'users' => $users
+        ]);
+    }
+
+
     public function signin($request, $response, $args)
     {
         $form = $this->get('form.admin.user.signin_form');
@@ -30,6 +40,13 @@ class UserController extends BaseController
         ]);
     }
 
+    public function signout($request, $response, $args)
+    {
+        $this->get('auth')->clearIdentity();
+
+        return $response->withRedirect($this->get('router')->pathFor('top'));
+    }
+
     public function create($request, $response, $args)
     {
         $form = $this->get('form.admin.user.create_form');
@@ -47,10 +64,35 @@ class UserController extends BaseController
         ]);
     }
 
-    public function signout($request, $response, $args)
+    public function edit($request, $response, $args)
     {
-        $this->get('auth')->clearIdentity();
+        $user = $this->get('repository.user')->findOneById($args['id']);
+        if (is_null($user)) {
+            return $this->get('notFoundHandler')($request, $response);
+        }
 
-        return $response->withRedirect($this->get('router')->pathFor('top'));
+        $form = $this->get('form.admin.user.edit_form');
+        $input = $this->get('form.admin.user.edit_input');
+
+        $input->exchangeArray($user->getFormArray());
+        $form->bind($input);
+        if ($request->isPost()) {
+            $form->setData($request->getParsedBody());
+            if ($form->isValid() && !$form->getData()->isBack()) {
+                if ($form->getData()->isConfirm()) {
+                    return $this->container->get('view')->render($response, 'admin/user/edit_confirm.html.twig', [
+                         'form' => $form
+                    ]);
+                }
+                $user->setEditFormArray($form->getData()->getArrayCopy());
+                $user->save();
+                return $response->withRedirect($this->get('router')->pathFor('admin_user_edit', ['id' => $args['id']]));
+
+            }
+        }
+
+        return $this->get('view')->render($response, 'admin/user/edit.html.twig', [
+            'form' => $form,
+        ]);
     }
 }
