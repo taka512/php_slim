@@ -40,5 +40,7 @@ https://laravel.com/docs/5.5/eloquent
 
 # デザイン
 
-Honoka 3.3.7-aを使用
+Honoka v4.1.3を使用
 http://honokak.osaka/
+
+[@MITLicense](https://twitter.com/MITLicense)

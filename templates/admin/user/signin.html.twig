@@ -1,63 +1,34 @@
-{% extends "layout.html.twig" %}
+{% extends "admin/layout.html.twig" %}
 
-{% block title %}管理画面ログイン{% endblock %}
+{% block title %}ログイン{% endblock %}
 {% block content %}
 
-  <div class="bs-docs-section">
     <div class="row">
       <div class="col-lg-12">
-        <div class="page-header">
-          <h1 id="forms">ログイン</h1>
-        </div>
+        <h2>ログイン</h2>
+          <form class="form-horizontal" action="{{ path_for('admin_user_signin') }}" method="POST">
+          <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">
+          {% for messages in form.getMessages %}
+            {% for message in messages %}
+          <font color="red">{{ message }}</font><br/>
+            {% endfor %}
+          {% endfor %}
+          {% for message in errors %}
+          <font color="red">{{ message }}</font><br/>
+          {% endfor %}
+          <div class="form-group">
+            <label for="inputLoginId">ログインid</label>
+            <input type="text" id="inputLoginId" name="login_id" value="{{ form.get('login_id').getValue() }}" >
+          </div>
+          <div class="form-group">
+            <label for="inputPassword">パスワード </label>
+            <input type="password" id="inputPassword" name="password" value="">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">ログイン</button>
+          </div>
+        </form>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-lg-10">
-        <div class="well bs-component">
-          <form class="form-horizontal" action="/admin/user/signin" method="POST">
-            <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">
-            <fieldset>
-              <legend>ログイン</legend>
-              <div class="box-header with-border">
-                {% for messages in form.getMessages %}
-                  {% for message in messages %}
-                    <font color="red">{{ message }}</font><br/>
-                  {% endfor %}
-                {% endfor %}
-                {% for message in errors %}
-                  <font color="red">{{ message }}</font><br/>
-                {% endfor %}
-              </div>
-              <div class="form-group">
-              </div>
-              <div class="form-group">
-                <label for="inputLoginId" class="col-lg-2 control-label">ログインid</label>
-                <div class="col-lg-10">
-                  <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputLoginId" name="login_id" value="{{ form.get('login_id').getValue() }}" >
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword" class="col-lg-2 control-label">パスワード </label>
-                <div class="col-lg-10">
-                  <div class="col-lg-10">
-                    <input type="password" class="form-control" id="inputPassword" name="password" value="">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2">
-                  <button type="submit" class="btn btn-primary">ログイン</button>
-                </div>
-              </div>
-            </fieldset>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
 {% endblock %}
