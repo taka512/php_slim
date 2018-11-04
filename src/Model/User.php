@@ -8,7 +8,6 @@ class User extends BaseModel
     const FLG_ON = 1;
 
     protected $table = 'user';
-    protected $delFlg = self::FLG_OFF;
 
     public function isDelete()
     {
