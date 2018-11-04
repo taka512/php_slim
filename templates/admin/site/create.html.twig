@@ -1,64 +1,41 @@
-{% extends "layout.html.twig" %}
+{% extends "admin/layout.html.twig" %}
 
-{% block title %}サイト新規登録{% endblock %}
+{% block title %}サイト登録{% endblock %}
 {% block breadcrumb %}
-      <li><a href="{{ path_for('admin_home_index') }}">Home</a></li>
-      <li><a href="{{ path_for('admin_site_index') }}">サイト一覧</a></li>
-      <li class="active">サイト新規登録</li>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path_for('admin_home_index') }}">home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path_for('admin_site_index') }}">サイト一覧</a></li>
+        <li class="breadcrumb-item active">サイト登録</li>
+      </ol>
 {% endblock %}
 {% block content %}
-
-  <div class="bs-docs-section">
     <div class="row">
       <div class="col-lg-12">
-        <div class="page-header">
-          <h1 id="forms">サイト情報</h1>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-10">
-        <div class="well bs-component">
+        <h2>登録</h2>
+        <div class="col-lg-10">
           <form class="form-horizontal" action="{{ path_for('admin_site_create') }}" method="POST">
             <input type="hidden" name="confirm" value="1">
             <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">
-            <fieldset>
-              <legend>新規登録</legend>
-              <div class="box-header with-border">
-                {% for messages in form.getMessages %}
-                  {% for message in messages %}
-                    <font color="red">{{ message }}</font><br/>
-                  {% endfor %}
+            <div class="form-group">
+              {% for messages in form.getMessages %}
+                {% for message in messages %}
+                <font color="red">{{ message }}</font><br/>
                 {% endfor %}
-              </div>
-              <div class="form-group">
-                <label for="inputName" class="col-lg-2 control-label">サイト名</label>
-                <div class="col-lg-10">
-                  <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputName" name="name" value="{{ form.get('name').getValue() }}" >
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputUrl" class="col-lg-2 control-label">サイトURL</label>
-                <div class="col-lg-10">
-                  <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputUrl" name="url" value="{{ form.get('url').getValue() }}">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2">
-                  <button type="submit" class="btn btn-primary">保存</button>
-                </div>
-              </div>
-            </fieldset>
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <label for="inputName">サイト名</label>
+              <input type="text" class="form-control" id="inputName" name="name" value="{{ form.get('name').getValue() }}" >
+            </div>
+            <div class="form-group">
+              <label for="inputUrl">サイトURL</label>
+              <input type="text" class="form-control" id="inputUrl" name="url" value="{{ form.get('url').getValue() }}">
+            </div>
+            <button type="submit" class="btn btn-primary">確認</button>
           </form>
         </div>
       </div>
     </div>
-  </div>
 
 
 {% endblock %}
