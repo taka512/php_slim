@@ -30,6 +30,7 @@ jobs:
       - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run: docker build -t hoge .
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -37,14 +38,13 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: docker build -t hoge .
-      - run: docker run -v .:/home/php_slim make composer/install
-      - run: docker run -v .:/home/php_slim make db/test/migrate
+      - run: docker run -v .:/home/php_slim hoge make composer/install
 
       - save_cache:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
+      - run: docker run -v .:/home/php_slim hoge make db/test/migrate
         
       # run tests!
 #      - run: make test
