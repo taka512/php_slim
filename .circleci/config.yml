@@ -35,8 +35,8 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: pwd
       - run: make composer/install
+      - run: make db/test/migrate
 
       - save_cache:
           paths:
@@ -44,4 +44,4 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
         
       # run tests!
-      - run: make test/unit
+      - run: make test

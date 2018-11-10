@@ -20,7 +20,7 @@ return [
         // database
         'db' => [
             'driver' => 'mysql',
-            'host' => 'db.local',
+            'host' => 'localhost',
             'database' => 'sample_slim_test',
             'username' => 'root',
             'charset'   => 'utf8',
