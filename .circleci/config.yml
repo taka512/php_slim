@@ -37,7 +37,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: docker run make composer/install
+      - run: docker run -d --name test make composer/install
 #      - run: make composer/install
 #      - run: make db/test/migrate
 
