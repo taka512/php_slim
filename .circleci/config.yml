@@ -38,9 +38,8 @@ jobs:
           - v1-dependencies-
 
       - run: docker build -t hoge .
-      - run: docker run hoge pwd
-#      - run: make composer/install
-#      - run: make db/test/migrate
+      - run: docker run -v .:/home/php_slim make composer/install
+      - run: docker run -v .:/home/php_slim make db/test/migrate
 
       - save_cache:
           paths:
@@ -48,4 +47,4 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
         
       # run tests!
-      - run: make test
+#      - run: make test
