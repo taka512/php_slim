@@ -35,8 +35,9 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: make composer/install
-      - run: make db/test/migrate
+      - run: docker run make composer/install
+#      - run: make composer/install
+#      - run: make db/test/migrate
 
       - save_cache:
           paths:
