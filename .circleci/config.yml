@@ -38,7 +38,7 @@ jobs:
           - v1-dependencies-
 
       - run: docker build -t hoge .
-      - run: docker run hoge make composer/install
+      - run: docker run hoge pwd
 #      - run: make composer/install
 #      - run: make db/test/migrate
 
