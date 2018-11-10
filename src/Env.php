@@ -6,6 +6,9 @@ use Dotenv\Dotenv;
 
 class Env
 {
+    const LOCAL = 'local';
+    const PROD = 'prod';
+
     protected static $isLoadDotenv = false;
 
     public static function loadDotenv($envFile = null)
@@ -15,7 +18,7 @@ class Env
         }
 
         if (isset($envFile)) {
-            $dotenv = new Dotenv(__DIR__.'/../'.$envFile);
+            $dotenv = new Dotenv(__DIR__.'/../', $envFile);
         } else {
             $dotenv = new Dotenv(__DIR__.'/../');
         }
@@ -28,6 +31,22 @@ class Env
 
     public static function getSetting()
     {
-        return require sprintf('%s/../config/local/setting.php', __DIR__);
+        return require sprintf('%s/../config/%s/setting.php', __DIR__, self::getEnvironment());
     }
+
+    public static function getTestSetting()
+    {
+        return require sprintf('%s/../config/%s_test/setting.php', __DIR__, self::getEnvironment());
+    }
+
+    public static function getEnvironment()
+    {
+        $env = getenv('APP_ENV');
+        if ($env !== self::LOCAL && $env !== self::PROD) {
+            throw new \RuntimeException('APP_ENV is invalid value:'.$env);
+        }
+
+        return $env;
+    }
+
 }

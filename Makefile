@@ -9,18 +9,17 @@ COMPOSER_OPT=
 endif
 
 COMPOSER_VERSION = 1.7.2
-PHPUNIT_VERSION := 6.5.5
 
 all:
 	@more Makefile
-
-composer.phar:
-	curl -sS https://getcomposer.org/installer | php -- --version=$(COMPOSER_VERSION) --install-dir=./
 
 ###############
 # compose
 ###############
 .PHONY: composer/*
+composer.phar:
+	curl -sS https://getcomposer.org/installer | php -- --version=$(COMPOSER_VERSION) --install-dir=./
+
 composer/install: composer.phar
 	php composer.phar install $(COMPOSER_OPT)
 
@@ -30,9 +29,6 @@ composer/update: composer.phar
 composer-self-update: composer.phar
 	php composer.phar self-update $(COMPOSER_VERSION)
 
-test:
-	php -d memory_limit=256M vendor/bin/phpunit --configuration ./tests/phpunit.xml tests
-
 ###############
 #  db
 ###############
@@ -41,6 +37,10 @@ db/status:
 	php vendor/bin/phpmig status -b config/migration.php
 db/migrate:
 	php vendor/bin/phpmig migrate -b config/migration.php
+db/test/status:
+	php vendor/bin/phpmig status -b config/migration_test.php
+db/test/migrate:
+	php vendor/bin/phpmig migrate -b config/migration_test.php
 db/seed/status:
 	php vendor/bin/phpmig status -b config/seed.php
 db/seed/migrate:
@@ -84,9 +84,29 @@ docker/db/status:
 	docker exec $(CONTAINER) make db/status
 docker/db/migrate:
 	docker exec $(CONTAINER) make db/migrate
+docker/db/test/status:
+	docker exec $(CONTAINER) make db/test/status
+docker/db/test/migrate:
+	docker exec $(CONTAINER) make db/test/migrate
 docker/db/seed/status:
 	docker exec $(CONTAINER) make db/seed/status
 docker/db/seed/migrate:
 	docker exec $(CONTAINER) make db/seed/migrate
 docker/db/seed/down:
 	docker exec $(CONTAINER) make db/seed/down ID=$(ID)
+docker/test:
+	docker exec $(CONTAINER) make test
+
+#########
+# test
+#########
+.PHONY: test/*
+test:
+	make test/unit
+	make test/functional
+
+test/unit:
+	php vendor/bin/phpunit -c ./tests/phpunit.xml tests/Unit
+
+test/functional:
+	php vendor/bin/phpunit -c ./tests/phpunit.xml tests/Functional

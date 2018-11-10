@@ -21,6 +21,18 @@ class ContainerFactory
         return self::$container;
     }
 
+    public static function getTestContainer()
+    {
+        if (isset(self::$container)) {
+            return self::$container;
+        }
+        Env::loadDotenv('env.sample');
+        self::$container = new Container(Env::getTestSetting());
+        self::loadCommonService();
+        self::loadService();
+        return self::$container;
+    }
+
     public static function loadCommonService()
     {
         self::$container['logger'] = function ($c) {
@@ -48,7 +60,7 @@ class ContainerFactory
                     $c['settings']['db']['password']
                 );
             } catch (\Exception $e) {
-                throw new \RuntimeException(StdUtil::maskSecret($e->getMessage(), $settings['password']), $e->getCode());
+                throw new \RuntimeException(StdUtil::maskSecret($e->getMessage(), $c['settings']['db']['password']), $e->getCode());
             }
         };
     }

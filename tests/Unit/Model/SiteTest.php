@@ -2,9 +2,10 @@
 
 namespace Taka512\Test\Unit\Model;
 
+use Taka512\Test\TestCase;
 use Taka512\Model\Site;
 
-class SiteTest extends \PHPUnit_Framework_TestCase
+class SiteTest extends TestCase
 {
     /**
      * @dataProvider providerIsDelete

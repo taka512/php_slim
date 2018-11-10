@@ -13,7 +13,7 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'slim-app',
-            'path' => 'php://stdout'
+            'path' => 'php://stdout',
             'level' => \Monolog\Logger::DEBUG,
         ],
 
@@ -21,7 +21,7 @@ return [
         'db' => [
             'driver' => 'mysql',
             'host' => 'db.local',
-            'database' => 'sample_slim',
+            'database' => 'sample_slim_test',
             'username' => 'slim_user',
             'password' => getenv('DB_PASS'),
             'charset'   => 'utf8',
