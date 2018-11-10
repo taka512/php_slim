@@ -8,7 +8,15 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/php:7.1-browsers
-      
+        environment:
+          APP_ENV: dev
+      - image: circleci/mysql:5.7
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: sample_slim_test
+          MYSQL_USER: slim_user
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+        command: [--character-set-server=utf8, --collation-server=utf8_general_ci, --default-storage-engine=innodb]      
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -18,7 +26,9 @@ jobs:
 
     steps:
       - checkout
-
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
       # Download and cache dependencies
       - restore_cache:
           keys:

@@ -7,6 +7,7 @@ use Dotenv\Dotenv;
 class Env
 {
     const LOCAL = 'local';
+    const DEV = 'dev';
     const PROD = 'prod';
 
     protected static $isLoadDotenv = false;
@@ -42,7 +43,7 @@ class Env
     public static function getEnvironment()
     {
         $env = getenv('APP_ENV');
-        if ($env !== self::LOCAL && $env !== self::PROD) {
+        if ($env !== self::LOCAL && $env !== self::DEV && $env !== self::PROD) {
             throw new \RuntimeException('APP_ENV is invalid value:'.$env);
         }
 
