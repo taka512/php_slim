@@ -26,9 +26,8 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run:
-        - pwd
-        - make composer/install
+      - run: pwd
+      - run: make composer/install
 
       - save_cache:
           paths:
