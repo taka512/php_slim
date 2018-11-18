@@ -10,7 +10,7 @@ class SiteRepositoryTest extends DatabaseTestCase
 {
     protected function getDataSet()
     {
-        return new YamlDataSet(__DIR__."/SiteRepository.yml");
+        return new YamlDataSet(__DIR__.'/SiteRepository.yml');
     }
 
     /**

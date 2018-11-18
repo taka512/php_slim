@@ -27,12 +27,11 @@ class PasswordValidator extends AbstractValidator
 
     public function isValid($value, array $context = null)
     {
-        if (preg_match("/^[a-zA-Z0-9_-]+$/", $value) !== 1) {
+        if (1 !== preg_match('/^[a-zA-Z0-9_-]+$/', $value)) {
             $this->error(self::INVALID_FORMAT);
 
             return false;
         }
-
 
         if (strlen($value) > self::MAX_STR) {
             $this->error(self::GREATER_THAN_MAX_STR);

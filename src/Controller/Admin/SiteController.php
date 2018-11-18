@@ -3,7 +3,6 @@
 namespace Taka512\Controller\Admin;
 
 use Taka512\Controller\BaseController;
-use Taka512\Model\Site;
 
 class SiteController extends BaseController
 {
@@ -12,7 +11,7 @@ class SiteController extends BaseController
         $sites = $this->get('repository.site')->findLatestSites();
 
         return $this->container->get('view')->render($response, 'admin/site/index.html.twig', [
-            'sites' => $sites
+            'sites' => $sites,
         ]);
     }
 
@@ -27,13 +26,13 @@ class SiteController extends BaseController
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
                     return $this->container->get('view')->render($response, 'admin/site/create_confirm.html.twig', [
-                         'form' => $form
+                         'form' => $form,
                     ]);
                 }
                 $this->get('repository.site')->insert($form->getData()->getArrayCopy());
+
                 return $response->withRedirect($this->container->get('router')->pathFor('admin_site_index'));
             }
-
         }
 
         return $this->get('view')->render($response, 'admin/site/create.html.twig', [
@@ -58,13 +57,13 @@ class SiteController extends BaseController
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
                     return $this->container->get('view')->render($response, 'admin/site/edit_confirm.html.twig', [
-                         'form' => $form
+                         'form' => $form,
                     ]);
                 }
                 $site->setFormArray($form->getData()->getArrayCopy());
                 $site->save();
-                return $response->withRedirect($this->get('router')->pathFor('admin_site_edit', ['id' => $args['id']]));
 
+                return $response->withRedirect($this->get('router')->pathFor('admin_site_edit', ['id' => $args['id']]));
             }
         }
 

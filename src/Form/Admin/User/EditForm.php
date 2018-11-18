@@ -2,7 +2,6 @@
 
 namespace Taka512\Form\Admin\User;
 
-use Zend\Session\Container;
 use Zend\Form\Form;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Text;

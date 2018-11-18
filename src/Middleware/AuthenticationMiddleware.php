@@ -32,6 +32,7 @@ class AuthenticationMiddleware
         $user = $this->userRepository->findOneByLoginId($this->auth->getIdentity());
         if (is_null($user) || $user->isDelete()) {
             $this->auth->clearIdentity();
+
             return $response->withRedirect($this->router->pathFor('admin_user_signin'));
         }
         $this->view->offsetSet('user', $user);

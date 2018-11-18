@@ -9,14 +9,14 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Taka512\Validator\Model\Site\NameValidator;
 use Taka512\Validator\Model\Site\UrlValidator;
-use Taka512\Model\Site;
 
 class SiteCreateInput implements InputFilterAwareInterface
 {
-    public $name;
-    public $url;
-    public $confirm = false;
-    public $back = false;
+    protected $name;
+    protected $url;
+    protected $confirm = false;
+    protected $back = false;
+    protected $inputFilter;
 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
@@ -25,7 +25,6 @@ class SiteCreateInput implements InputFilterAwareInterface
             __CLASS__
         ));
     }
-
 
     public function getInputFilter()
     {
@@ -83,12 +82,13 @@ class SiteCreateInput implements InputFilterAwareInterface
 
         return $inputFilter;
     }
+
     public function exchangeArray(array $data)
     {
-        $this->name = (isset($data['name']) && $data['name'] !== '') ? $data['name'] : null;
-        $this->url = (isset($data['url']) && $data['url'] !== '') ? $data['url'] : null;
+        $this->name = (isset($data['name']) && '' !== $data['name']) ? $data['name'] : null;
+        $this->url = (isset($data['url']) && '' !== $data['url']) ? $data['url'] : null;
         $this->confirm = !empty($data['confirm']) ? $data['confirm'] : false;
-        $this->back = (isset($data['back']) && $data['back'] === '1') ? $data['back'] : false;
+        $this->back = (isset($data['back']) && '1' === $data['back']) ? $data['back'] : false;
     }
 
     public function getArrayCopy()
@@ -101,11 +101,11 @@ class SiteCreateInput implements InputFilterAwareInterface
 
     public function isConfirm()
     {
-        return $this->confirm !== false;
+        return false !== $this->confirm;
     }
 
     public function isBack()
     {
-        return $this->back !== false;
+        return false !== $this->back;
     }
 }

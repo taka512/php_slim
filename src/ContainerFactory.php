@@ -18,6 +18,7 @@ class ContainerFactory
         self::$container = new Container(Env::getSetting());
         self::loadCommonService();
         self::loadService();
+
         return self::$container;
     }
 
@@ -30,6 +31,7 @@ class ContainerFactory
         self::$container = new Container(Env::getTestSetting());
         self::loadCommonService();
         self::loadService();
+
         return self::$container;
     }
 
@@ -37,13 +39,14 @@ class ContainerFactory
     {
         self::$container['logger'] = function ($c) {
             $settings = $c['settings']['logger'];
-            $logger = new Monolog\Logger($settings['name']);
-            $logger->pushProcessor(new Monolog\Processor\UidProcessor());
-            $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+            $logger = new \Monolog\Logger($settings['name']);
+            $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
+            $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+
             return $logger;
         };
 
-        $capsule = new \Illuminate\Database\Capsule\Manager;
+        $capsule = new \Illuminate\Database\Capsule\Manager();
         $capsule->addConnection(self::$container['settings']['db']);
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
@@ -54,6 +57,7 @@ class ContainerFactory
         self::$container['pdo.master'] = function ($c) {
             try {
                 $settings = $c['settings']['db'];
+
                 return new \PDO(
                     sprintf('mysql:host=%s;port=3306;dbname=%s', $settings['host'], $settings['database']),
                     $c['settings']['db']['username'],
@@ -90,9 +94,7 @@ class ContainerFactory
         };
 
         self::$container['form.admin.user.signin_input'] = function ($c) {
-            return new \Taka512\Form\Admin\User\SigninInput(
-                $c['repository.user']
-            );
+            return new \Taka512\Form\Admin\User\SigninInput();
         };
 
         self::$container['form.admin.user.create_form'] = function ($c) {

@@ -11,10 +11,9 @@ class UserController extends BaseController
         $users = $this->get('repository.user')->findLatestUsers();
 
         return $this->container->get('view')->render($response, 'admin/user/index.html.twig', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
-
 
     public function signin($request, $response, $args)
     {
@@ -81,13 +80,13 @@ class UserController extends BaseController
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
                     return $this->container->get('view')->render($response, 'admin/user/edit_confirm.html.twig', [
-                         'form' => $form
+                         'form' => $form,
                     ]);
                 }
                 $user->setEditFormArray($form->getData()->getArrayCopy());
                 $user->save();
-                return $response->withRedirect($this->get('router')->pathFor('admin_user_edit', ['id' => $args['id']]));
 
+                return $response->withRedirect($this->get('router')->pathFor('admin_user_edit', ['id' => $args['id']]));
             }
         }
 
