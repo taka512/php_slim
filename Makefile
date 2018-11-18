@@ -94,6 +94,8 @@ docker/db/seed/migrate:
 	docker exec $(CONTAINER) make db/seed/migrate
 docker/db/seed/down:
 	docker exec $(CONTAINER) make db/seed/down ID=$(ID)
+docker/composer/install:
+	docker exec $(CONTAINER) make composer/install ENV=$(ENV)
 docker/test:
 	docker exec $(CONTAINER) make test
 
