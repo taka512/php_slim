@@ -30,6 +30,22 @@ composer-self-update: composer.phar
 	php composer.phar self-update $(COMPOSER_VERSION)
 
 ###############
+#  lint
+###############
+CSFIXER_FULE=@PSR1,@PSR2,@Symfony
+CSFIXER_DRYRUN=--dry-run --diff
+csfixer:
+	php vendor/bin/php-cs-fixer fix ./src $(CSFIXER_DRYRUN) --rules=$(CSFIXER_FULE) --allow-risky=yes
+	php vendor/bin/php-cs-fixer fix ./tests $(CSFIXER_DRYRUN) --rules=$(CSFIXER_FULE) --allow-risky=yes
+
+csfixer-fix:
+	php vendor/bin/php-cs-fixer fix ./src --rules=$(CSFIXER_FULE)
+	php vendor/bin/php-cs-fixer fix ./tests --rules=$(CSFIXER_FULE)
+
+phpstan:
+	php vendor/bin/phpstan analyse -l 0 src
+
+###############
 #  db
 ###############
 .PHONY: db/*
