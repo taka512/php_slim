@@ -31,8 +31,7 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
         
       # run tests!
-      - run: sudo apt-add-repository -y 'deb http://ppa.launchpad.net/ondrej/mysql-experimental/ubuntu precise main'
-      - run: sudo apt-get update && sudo apt-get install -y install mysql-client
+      - run: sudo apt-get update && sudo apt-get install -y mysql-client
       - run: mysql < ./docker/mysql/init/0_init.sql
       - run: make docker/db/test/migrate
 #      - run: make docker/test
