@@ -115,6 +115,8 @@ docker/composer/update:
 	docker exec $(CONTAINER) make composer/update ENV=$(ENV)
 docker/test:
 	docker exec $(CONTAINER) make test
+docker/lint:
+	docker exec $(CONTAINER) make lint
 
 #########
 # test
