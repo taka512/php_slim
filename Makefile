@@ -76,10 +76,6 @@ docker/ssh:
 # 未使用イメージの掃除
 docker/prune:
 	docker system prune 
-docker/exec/init:
-	docker exec $(CONTAINER) make composer/install
-docker/exec/update:
-	docker exec $(CONTAINER) make composer/update
 docker/db/status:
 	docker exec $(CONTAINER) make db/status
 docker/db/migrate:
@@ -94,6 +90,10 @@ docker/db/seed/migrate:
 	docker exec $(CONTAINER) make db/seed/migrate
 docker/db/seed/down:
 	docker exec $(CONTAINER) make db/seed/down ID=$(ID)
+docker/composer/install:
+	docker exec $(CONTAINER) make composer/install ENV=$(ENV)
+docker/composer/update:
+	docker exec $(CONTAINER) make composer/update ENV=$(ENV)
 docker/test:
 	docker exec $(CONTAINER) make test
 

@@ -1,0 +1,37 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  build:
+    machine:
+      docker_layer_caching: true
+
+    working_directory: ~/php_slim
+
+    steps:
+      - checkout
+      - run:
+          command: |
+            set -x
+            make docker/up
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: make docker/composer/install ENV=dev
+
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+        
+      # run tests!
+      - run: sudo apt-get update && sudo apt-get install -y mysql-client
+      - run: mysql -h 127.0.0.1 -u root --password=mypass < ./docker/mysql/init/0_init.sql
+      - run: make docker/db/test/migrate
+      - run: make docker/test

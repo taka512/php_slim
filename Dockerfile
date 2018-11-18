@@ -8,7 +8,7 @@ RUN apk upgrade --update \
         libxml2-dev \
         mysql-client \
         net-tools \
-        openssl-dev \
+        libressl-dev \
         tzdata \
         zlib-dev \
     && docker-php-ext-install \
