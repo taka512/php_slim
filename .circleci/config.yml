@@ -31,7 +31,7 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
         
       # run tests!
-      - run: make lint
+      - run: make docker/lint
       - run: sudo apt-get update && sudo apt-get install -y mysql-client
       - run: mysql -h 127.0.0.1 -u root --password=mypass < ./docker/mysql/init/0_init.sql
       - run: make docker/db/test/migrate
