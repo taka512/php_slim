@@ -31,5 +31,5 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
         
       # run tests!
-      - run: make docker/db/test/migrate
-      - run: make docker/test
+#      - run: make docker/db/test/migrate
+#      - run: make docker/test
