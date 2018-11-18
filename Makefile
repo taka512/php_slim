@@ -34,6 +34,9 @@ composer-self-update: composer.phar
 ###############
 CSFIXER_FULE=@PSR1,@PSR2,@Symfony
 CSFIXER_DRYRUN=--dry-run --diff
+
+lint: csfixer phpstan
+
 csfixer:
 	php vendor/bin/php-cs-fixer fix ./src $(CSFIXER_DRYRUN) --rules=$(CSFIXER_FULE) --allow-risky=yes
 	php vendor/bin/php-cs-fixer fix ./tests $(CSFIXER_DRYRUN) --rules=$(CSFIXER_FULE) --allow-risky=yes
