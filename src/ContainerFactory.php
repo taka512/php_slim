@@ -54,6 +54,7 @@ class ContainerFactory
         self::$container['pdo.master'] = function ($c) {
             try {
                 $settings = $c['settings']['db'];
+                var_dump($c['settings']['db']);
                 return new \PDO(
                     sprintf('mysql:host=%s;port=3306;dbname=%s', $settings['host'], $settings['database']),
                     $c['settings']['db']['username'],
