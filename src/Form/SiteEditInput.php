@@ -30,7 +30,6 @@ class SiteEditInput implements InputFilterAwareInterface
         ));
     }
 
-
     public function getInputFilter()
     {
         if ($this->inputFilter) {
@@ -90,16 +89,17 @@ class SiteEditInput implements InputFilterAwareInterface
 
         return $inputFilter;
     }
+
     public function exchangeArray(array $data)
     {
-        $this->id = (isset($data['id']) && $data['id'] !== '') ? $data['id'] : null;
-        $this->name = (isset($data['name']) && $data['name'] !== '') ? $data['name'] : null;
-        $this->url = (isset($data['url']) && $data['url'] !== '') ? $data['url'] : null;
-        $this->delFlg = (isset($data['del_flg']) && $data['del_flg'] == Site::FLG_ON) ? Site::FLG_ON: Site::FLG_OFF;
+        $this->id = (isset($data['id']) && '' !== $data['id']) ? $data['id'] : null;
+        $this->name = (isset($data['name']) && '' !== $data['name']) ? $data['name'] : null;
+        $this->url = (isset($data['url']) && '' !== $data['url']) ? $data['url'] : null;
+        $this->delFlg = (isset($data['del_flg']) && Site::FLG_ON == $data['del_flg']) ? Site::FLG_ON : Site::FLG_OFF;
         $this->confirm = !empty($data['confirm']) ? $data['confirm'] : false;
-        $this->back = (isset($data['back']) && $data['back'] === '1') ? $data['back'] : false;
-        $this->createdAt = (isset($data['created_at']) && $data['created_at'] !== '') ? $data['created_at'] : null;
-        $this->updatedAt = (isset($data['updated_at']) && $data['updated_at'] !== '') ? $data['updated_at'] : null;
+        $this->back = (isset($data['back']) && '1' === $data['back']) ? $data['back'] : false;
+        $this->createdAt = (isset($data['created_at']) && '' !== $data['created_at']) ? $data['created_at'] : null;
+        $this->updatedAt = (isset($data['updated_at']) && '' !== $data['updated_at']) ? $data['updated_at'] : null;
     }
 
     public function getArrayCopy()
@@ -116,11 +116,11 @@ class SiteEditInput implements InputFilterAwareInterface
 
     public function isConfirm()
     {
-        return $this->confirm !== false;
+        return false !== $this->confirm;
     }
 
     public function isBack()
     {
-        return $this->back !== false;
+        return false !== $this->back;
     }
 }

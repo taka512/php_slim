@@ -28,7 +28,6 @@ class Env
         return true;
     }
 
-
     public static function getSetting()
     {
         return require sprintf('%s/../config/%s/setting.php', __DIR__, self::getEnvironment());
@@ -42,11 +41,10 @@ class Env
     public static function getEnvironment()
     {
         $env = getenv('APP_ENV');
-        if ($env !== self::LOCAL && $env !== self::PROD) {
+        if (self::LOCAL !== $env && self::PROD !== $env) {
             throw new \RuntimeException('APP_ENV is invalid value:'.$env);
         }
 
         return $env;
     }
-
 }

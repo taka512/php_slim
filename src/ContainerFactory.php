@@ -18,6 +18,7 @@ class ContainerFactory
         self::$container = new Container(Env::getSetting());
         self::loadCommonService();
         self::loadService();
+
         return self::$container;
     }
 
@@ -30,6 +31,7 @@ class ContainerFactory
         self::$container = new Container(Env::getTestSetting());
         self::loadCommonService();
         self::loadService();
+
         return self::$container;
     }
 
@@ -40,10 +42,11 @@ class ContainerFactory
             $logger = new Monolog\Logger($settings['name']);
             $logger->pushProcessor(new Monolog\Processor\UidProcessor());
             $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+
             return $logger;
         };
 
-        $capsule = new \Illuminate\Database\Capsule\Manager;
+        $capsule = new \Illuminate\Database\Capsule\Manager();
         $capsule->addConnection(self::$container['settings']['db']);
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
@@ -54,6 +57,7 @@ class ContainerFactory
         self::$container['pdo.master'] = function ($c) {
             try {
                 $settings = $c['settings']['db'];
+
                 return new \PDO(
                     sprintf('mysql:host=%s;port=3306;dbname=%s', $settings['host'], $settings['database']),
                     $c['settings']['db']['username'],

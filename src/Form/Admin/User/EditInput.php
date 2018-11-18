@@ -34,7 +34,6 @@ class EditInput implements InputFilterAwareInterface
         ));
     }
 
-
     public function getInputFilter()
     {
         if ($this->inputFilter) {
@@ -75,13 +74,14 @@ class EditInput implements InputFilterAwareInterface
 
         return $inputFilter;
     }
+
     public function exchangeArray(array $data)
     {
         $this->id = $data['id'] ?? null;
         $this->loginId = $data['login_id'] ?? null;
-        $this->delFlg = (isset($data['del_flg']) && $data['del_flg'] == User::FLG_ON) ? User::FLG_ON: User::FLG_OFF;
-        $this->confirm = (isset($data['confirm']) && $data['confirm'] === '1') ? true : false;
-        $this->back = (isset($data['back']) && $data['back'] === '1') ? true : false;
+        $this->delFlg = (isset($data['del_flg']) && User::FLG_ON == $data['del_flg']) ? User::FLG_ON : User::FLG_OFF;
+        $this->confirm = (isset($data['confirm']) && '1' === $data['confirm']) ? true : false;
+        $this->back = (isset($data['back']) && '1' === $data['back']) ? true : false;
         $this->createdAt = $data['created_at'] ?? null;
         $this->updatedAt = $data['updated_at'] ?? null;
     }
@@ -99,11 +99,11 @@ class EditInput implements InputFilterAwareInterface
 
     public function isConfirm()
     {
-        return $this->confirm !== false;
+        return false !== $this->confirm;
     }
 
     public function isBack()
     {
-        return $this->back !== false;
+        return false !== $this->back;
     }
 }

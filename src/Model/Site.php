@@ -11,7 +11,7 @@ class Site extends BaseModel
 
     public function isDelete()
     {
-        return ($this->delFlg === self::FLG_ON);
+        return self::FLG_ON === $this->delFlg;
     }
 
     public function setFormArray(array $data)
@@ -32,5 +32,4 @@ class Site extends BaseModel
             'updated_at' => $this->updatedAt->format('Y-m-d H:i:s'),
         ];
     }
-
 }

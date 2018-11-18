@@ -29,7 +29,6 @@ class CreateInput implements InputFilterAwareInterface
         ));
     }
 
-
     public function getInputFilter()
     {
         if ($this->inputFilter) {

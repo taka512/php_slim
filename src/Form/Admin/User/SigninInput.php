@@ -23,7 +23,6 @@ class SigninInput implements InputFilterAwareInterface
         ));
     }
 
-
     public function getInputFilter()
     {
         if ($this->inputFilter) {

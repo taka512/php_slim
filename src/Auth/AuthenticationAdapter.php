@@ -30,7 +30,7 @@ class AuthenticationAdapter implements AdapterInterface
     }
 
     /**
-     * Performs an authentication attempt
+     * Performs an authentication attempt.
      *
      * @return Result
      */
