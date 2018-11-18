@@ -13,8 +13,10 @@ use Taka512\Validator\Model\User\PasswordValidator;
 
 class CreateInput implements InputFilterAwareInterface
 {
-    public $loginId;
-    public $password;
+    protected $loginId;
+    protected $password;
+    protected $userRepository;
+    protected $inputFilter;
 
     public function __construct(UserRepository $userRepository)
     {

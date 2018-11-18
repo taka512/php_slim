@@ -12,8 +12,9 @@ use Taka512\Validator\Model\User\PasswordValidator;
 
 class SigninInput implements InputFilterAwareInterface
 {
-    public $loginId;
-    public $password;
+    protected $loginId;
+    protected $password;
+    protected $inputFilter;
 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {

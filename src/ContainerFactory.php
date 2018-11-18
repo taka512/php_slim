@@ -39,9 +39,9 @@ class ContainerFactory
     {
         self::$container['logger'] = function ($c) {
             $settings = $c['settings']['logger'];
-            $logger = new Monolog\Logger($settings['name']);
-            $logger->pushProcessor(new Monolog\Processor\UidProcessor());
-            $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+            $logger = new \Monolog\Logger($settings['name']);
+            $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
+            $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
 
             return $logger;
         };
@@ -94,9 +94,7 @@ class ContainerFactory
         };
 
         self::$container['form.admin.user.signin_input'] = function ($c) {
-            return new \Taka512\Form\Admin\User\SigninInput(
-                $c['repository.user']
-            );
+            return new \Taka512\Form\Admin\User\SigninInput();
         };
 
         self::$container['form.admin.user.create_form'] = function ($c) {

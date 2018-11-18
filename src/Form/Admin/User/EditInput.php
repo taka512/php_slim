@@ -13,13 +13,15 @@ use Taka512\Model\User;
 
 class EditInput implements InputFilterAwareInterface
 {
-    public $id;
-    public $loginId;
-    public $delFlg;
-    public $createdAt;
-    public $updatedAt;
-    public $confirm = false;
-    public $back = false;
+    protected $id;
+    protected $loginId;
+    protected $delFlg;
+    protected $createdAt;
+    protected $updatedAt;
+    protected $confirm = false;
+    protected $back = false;
+    protected $userRepository;
+    protected $inputFilter;
 
     public function __construct(UserRepository $userRepository)
     {

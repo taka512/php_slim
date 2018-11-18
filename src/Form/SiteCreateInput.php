@@ -12,10 +12,11 @@ use Taka512\Validator\Model\Site\UrlValidator;
 
 class SiteCreateInput implements InputFilterAwareInterface
 {
-    public $name;
-    public $url;
-    public $confirm = false;
-    public $back = false;
+    protected $name;
+    protected $url;
+    protected $confirm = false;
+    protected $back = false;
+    protected $inputFilter;
 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {

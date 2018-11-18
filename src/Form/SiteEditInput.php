@@ -13,14 +13,15 @@ use Taka512\Model\Site;
 
 class SiteEditInput implements InputFilterAwareInterface
 {
-    public $id;
-    public $name;
-    public $url;
-    public $delFlg;
-    public $createdAt;
-    public $updatedAt;
-    public $confirm = false;
-    public $back = false;
+    protected $id;
+    protected $name;
+    protected $url;
+    protected $delFlg;
+    protected $createdAt;
+    protected $updatedAt;
+    protected $confirm = false;
+    protected $back = false;
+    protected $inputFilter;
 
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
