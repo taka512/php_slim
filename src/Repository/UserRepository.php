@@ -11,6 +11,7 @@ class UserRepository
     {
         $user = new User();
         $user->setCreateFormArray($data);
+
         return $user->save();
     }
 

@@ -11,6 +11,7 @@ class SiteRepository
     {
         $user = new Site();
         $user->setFormArray($data);
+
         return $user->save();
     }
 

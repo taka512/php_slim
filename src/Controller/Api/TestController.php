@@ -4,7 +4,6 @@ namespace Taka512\Controller\Api;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-
 use Taka512\Controller\BaseController;
 
 class TestController extends BaseController
