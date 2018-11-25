@@ -2,11 +2,13 @@
 
 namespace Taka512\Controller\Admin;
 
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Taka512\Controller\BaseController;
 
 class SiteController extends BaseController
 {
-    public function index($request, $response, $args)
+    public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $sites = $this->get('repository.site')->findLatestSites();
 
@@ -15,10 +17,10 @@ class SiteController extends BaseController
         ]);
     }
 
-    public function create($request, $response, $args)
+    public function create(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $form = $this->get('form.site_create_form');
-        $input = $this->get('form.site_create_input');
+        $form = $this->get('form.admin.site.create_form');
+        $input = $this->get('form.admin.site.create_input');
 
         $form->bind($input);
         if ($request->isPost()) {
@@ -40,15 +42,15 @@ class SiteController extends BaseController
         ]);
     }
 
-    public function edit($request, $response, $args)
+    public function edit(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $site = $this->get('repository.site')->findOneById($args['id']);
         if (is_null($site)) {
             return $this->get('notFoundHandler')($request, $response);
         }
 
-        $form = $this->get('form.site_edit_form');
-        $input = $this->get('form.site_edit_input');
+        $form = $this->get('form.admin.site.edit_form');
+        $input = $this->get('form.admin.site.edit_input');
 
         $input->exchangeArray($site->getFormArray());
         $form->bind($input);

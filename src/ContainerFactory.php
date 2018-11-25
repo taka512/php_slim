@@ -3,13 +3,14 @@
 namespace Taka512;
 
 use Slim\Container;
+use Psr\Container\ContainerInterface;
 use Taka512\Util\StdUtil;
 
 class ContainerFactory
 {
     private static $container;
 
-    public static function getContainer()
+    public static function getContainer(): ContainerInterface
     {
         if (isset(self::$container)) {
             return self::$container;
@@ -22,7 +23,7 @@ class ContainerFactory
         return self::$container;
     }
 
-    public static function getTestContainer()
+    public static function getTestContainer(): ContainerInterface
     {
         if (isset(self::$container)) {
             return self::$container;
@@ -35,7 +36,7 @@ class ContainerFactory
         return self::$container;
     }
 
-    public static function loadCommonService()
+    public static function loadCommonService(): void
     {
         self::$container['logger'] = function ($c) {
             $settings = $c['settings']['logger'];
@@ -69,14 +70,14 @@ class ContainerFactory
         };
     }
 
-    public static function loadService()
+    public static function loadService(): void
     {
         self::loadAuthService();
         self::loadFormService();
         self::loadRepositoryService();
     }
 
-    public static function loadAuthService()
+    public static function loadAuthService(): void
     {
         self::$container['auth.authentication_adapter'] = function ($c) {
             return new \Taka512\Auth\AuthenticationAdapter(
@@ -85,7 +86,7 @@ class ContainerFactory
         };
     }
 
-    public static function loadFormService()
+    public static function loadFormService(): void
     {
         self::$container['form.admin.user.signin_form'] = function ($c) {
             return new \Taka512\Form\Admin\User\SigninForm(
@@ -121,28 +122,28 @@ class ContainerFactory
             );
         };
 
-        self::$container['form.site_create_form'] = function ($c) {
-            return new \Taka512\Form\SiteCreateForm(
+        self::$container['form.admin.site.create_form'] = function ($c) {
+            return new \Taka512\Form\Admin\Site\CreateForm(
                 $c['settings']['form']['csrf_timeout']
             );
         };
 
-        self::$container['form.site_create_input'] = function ($c) {
-            return new \Taka512\Form\SiteCreateInput();
+        self::$container['form.admin.site.create_input'] = function ($c) {
+            return new \Taka512\Form\Admin\Site\CreateInput();
         };
 
-        self::$container['form.site_edit_form'] = function ($c) {
-            return new \Taka512\Form\SiteEditForm(
+        self::$container['form.admin.site.edit_form'] = function ($c) {
+            return new \Taka512\Form\Admin\Site\EditForm(
                 $c['settings']['form']['csrf_timeout']
             );
         };
 
-        self::$container['form.site_edit_input'] = function ($c) {
-            return new \Taka512\Form\SiteEditInput();
+        self::$container['form.admin.site.edit_input'] = function ($c) {
+            return new \Taka512\Form\Admin\Site\EditInput();
         };
     }
 
-    public static function loadRepositoryService()
+    public static function loadRepositoryService(): void
     {
         self::$container['repository.site'] = function ($c) {
             return new \Taka512\Repository\SiteRepository();

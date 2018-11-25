@@ -20,7 +20,7 @@ class UrlValidator extends AbstractValidator
         self::GREATER_THAN_MAX_STR => self::MSG_GREATER_THAN_MAX_STR,
     ];
 
-    public function isValid($value, array $context = null)
+    public function isValid($value, ?array $context = null)
     {
         if (mb_strlen($value) > self::MAX_STR) {
             $this->error(self::GREATER_THAN_MAX_STR);

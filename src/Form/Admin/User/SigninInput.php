@@ -16,7 +16,7 @@ class SigninInput implements InputFilterAwareInterface
     protected $password;
     protected $inputFilter;
 
-    public function setInputFilter(InputFilterInterface $inputFilter)
+    public function setInputFilter(InputFilterInterface $inputFilter): void
     {
         throw new \DomainException(sprintf(
             '%s does not allow injection of an alternate input filter',
@@ -24,7 +24,7 @@ class SigninInput implements InputFilterAwareInterface
         ));
     }
 
-    public function getInputFilter()
+    public function getInputFilter(): InputFilterInterface
     {
         if ($this->inputFilter) {
             return $this->inputFilter;
@@ -73,13 +73,13 @@ class SigninInput implements InputFilterAwareInterface
         return $inputFilter;
     }
 
-    public function exchangeArray(array $data)
+    public function exchangeArray(array $data): void
     {
         $this->loginId = $data['login_id'] ?? null;
         $this->password = $data['password'] ?? null;
     }
 
-    public function getArrayCopy()
+    public function getArrayCopy(): array
     {
         return [
             'login_id' => $this->loginId,
@@ -87,12 +87,12 @@ class SigninInput implements InputFilterAwareInterface
         ];
     }
 
-    public function getLoginId()
+    public function getLoginId(): ?string
     {
         return $this->loginId;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }

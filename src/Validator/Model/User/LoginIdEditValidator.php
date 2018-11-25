@@ -26,7 +26,7 @@ class LoginIdEditValidator extends AbstractValidator
         self::DUPLICATE_STR => self::MSG_DUPLICATE_STR,
     ];
 
-    public function isValid($value, array $context = null)
+    public function isValid($value, ?array $context = null)
     {
         if (1 !== preg_match('/^[a-zA-Z0-9_-]+$/', $value)) {
             $this->error(self::INVALID_FORMAT);
@@ -49,7 +49,7 @@ class LoginIdEditValidator extends AbstractValidator
         return true;
     }
 
-    public function setUserRepository(UserRepository $userRepository)
+    public function setUserRepository(UserRepository $userRepository): void
     {
         $this->userRepository = $userRepository;
     }

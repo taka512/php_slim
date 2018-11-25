@@ -2,11 +2,13 @@
 
 namespace Taka512\Controller;
 
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Taka512\Model\Site;
 
 class HomeController extends BaseController
 {
-    public function index($request, $response, $args)
+    public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $sites = Site::all();
 

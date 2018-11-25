@@ -28,7 +28,7 @@ class EditInput implements InputFilterAwareInterface
         $this->userRepository = $userRepository;
     }
 
-    public function setInputFilter(InputFilterInterface $inputFilter)
+    public function setInputFilter(InputFilterInterface $inputFilter): void
     {
         throw new \DomainException(sprintf(
             '%s does not allow injection of an alternate input filter',
@@ -36,7 +36,7 @@ class EditInput implements InputFilterAwareInterface
         ));
     }
 
-    public function getInputFilter()
+    public function getInputFilter(): InputFilterInterface
     {
         if ($this->inputFilter) {
             return $this->inputFilter;
@@ -77,7 +77,7 @@ class EditInput implements InputFilterAwareInterface
         return $inputFilter;
     }
 
-    public function exchangeArray(array $data)
+    public function exchangeArray(array $data): void
     {
         $this->id = $data['id'] ?? null;
         $this->loginId = $data['login_id'] ?? null;
@@ -88,7 +88,7 @@ class EditInput implements InputFilterAwareInterface
         $this->updatedAt = $data['updated_at'] ?? null;
     }
 
-    public function getArrayCopy()
+    public function getArrayCopy(): array
     {
         return [
             'id' => $this->id,
@@ -99,12 +99,12 @@ class EditInput implements InputFilterAwareInterface
         ];
     }
 
-    public function isConfirm()
+    public function isConfirm(): bool
     {
         return false !== $this->confirm;
     }
 
-    public function isBack()
+    public function isBack(): bool
     {
         return false !== $this->back;
     }

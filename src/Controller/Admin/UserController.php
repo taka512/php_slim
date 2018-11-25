@@ -2,11 +2,14 @@
 
 namespace Taka512\Controller\Admin;
 
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Taka512\Controller\BaseController;
+use Taka512\Util\StdUtil;
 
 class UserController extends BaseController
 {
-    public function index($request, $response, $args)
+    public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $users = $this->get('repository.user')->findLatestUsers();
 
@@ -15,7 +18,7 @@ class UserController extends BaseController
         ]);
     }
 
-    public function signin($request, $response, $args)
+    public function signin(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $form = $this->get('form.admin.user.signin_form');
         $input = $this->get('form.admin.user.signin_input');
@@ -23,14 +26,19 @@ class UserController extends BaseController
         if ($request->isPost()) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
-                $authAdapter = $this->get('auth.authentication_adapter');
-                $authAdapter->setLoginId($form->getData()->getLoginId());
-                $authAdapter->setPassword($form->getData()->getPassword());
-                $result = $this->get('auth')->authenticate($authAdapter);
-                if ($result->isValid()) {
-                    return $response->withRedirect($this->get('router')->pathFor('admin_home_index'));
+                try {
+                    $authAdapter = $this->get('auth.authentication_adapter');
+                    $authAdapter
+                        ->setLoginId($form->getData()->getLoginId())
+                        ->setPassword($form->getData()->getPassword());
+                    $result = $this->get('auth')->authenticate($authAdapter);
+                    if ($result->isValid()) {
+                        return $response->withRedirect($this->get('router')->pathFor('admin_home_index'));
+                    }
+                    $messages = $result->getMessages();
+                } catch (\Exception $e) {
+                    throw new \RuntimeException(StdUtil::maskSecret($e->getMessage(), $form->getData()->getPassword()), $e->getCode());
                 }
-                $messages = $result->getMessages();
             }
         }
 
@@ -39,14 +47,14 @@ class UserController extends BaseController
         ]);
     }
 
-    public function signout($request, $response, $args)
+    public function signout(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $this->get('auth')->clearIdentity();
 
         return $response->withRedirect($this->get('router')->pathFor('top'));
     }
 
-    public function create($request, $response, $args)
+    public function create(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $form = $this->get('form.admin.user.create_form');
         $input = $this->get('form.admin.user.create_input');
@@ -63,7 +71,7 @@ class UserController extends BaseController
         ]);
     }
 
-    public function edit($request, $response, $args)
+    public function edit(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $user = $this->get('repository.user')->findOneById($args['id']);
         if (is_null($user)) {

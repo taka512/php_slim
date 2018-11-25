@@ -9,24 +9,24 @@ class User extends BaseModel
 
     protected $table = 'user';
 
-    public function isDelete()
+    public function isDelete(): bool
     {
         return self::FLG_ON === $this->delFlg;
     }
 
-    public function setCreateFormArray(array $data)
+    public function setCreateFormArray(array $data): void
     {
         $this->loginId = $data['login_id'];
         $this->password = password_hash($data['password'], \PASSWORD_DEFAULT);
     }
 
-    public function setEditFormArray(array $data)
+    public function setEditFormArray(array $data): void
     {
         $this->loginId = $data['login_id'];
         $this->delFlg = $data['del_flg'];
     }
 
-    public function getFormArray()
+    public function getFormArray(): array
     {
         return [
             'id' => $this->id,

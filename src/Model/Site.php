@@ -9,19 +9,19 @@ class Site extends BaseModel
 
     protected $table = 'site';
 
-    public function isDelete()
+    public function isDelete(): bool
     {
         return self::FLG_ON === $this->delFlg;
     }
 
-    public function setFormArray(array $data)
+    public function setFormArray(array $data): void
     {
         $this->name = $data['name'] ?? null;
         $this->url = $data['url'] ?? null;
         $this->delFlg = $data['del_flg'] ?? self::FLG_OFF;
     }
 
-    public function getFormArray()
+    public function getFormArray(): array
     {
         return [
             'id' => $this->id,
