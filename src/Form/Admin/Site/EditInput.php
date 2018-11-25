@@ -1,6 +1,6 @@
 <?php
 
-namespace Taka512\Form;
+namespace Taka512\Form\Admin\Site;
 
 use Zend\Filter\StringTrim;
 use Zend\Validator\NotEmpty;
@@ -11,7 +11,7 @@ use Taka512\Validator\Model\Site\NameValidator;
 use Taka512\Validator\Model\Site\UrlValidator;
 use Taka512\Model\Site;
 
-class SiteEditInput implements InputFilterAwareInterface
+class EditInput implements InputFilterAwareInterface
 {
     protected $id;
     protected $name;
@@ -23,7 +23,7 @@ class SiteEditInput implements InputFilterAwareInterface
     protected $back = false;
     protected $inputFilter;
 
-    public function setInputFilter(InputFilterInterface $inputFilter)
+    public function setInputFilter(InputFilterInterface $inputFilter): void
     {
         throw new \DomainException(sprintf(
             '%s does not allow injection of an alternate input filter',
@@ -31,7 +31,7 @@ class SiteEditInput implements InputFilterAwareInterface
         ));
     }
 
-    public function getInputFilter()
+    public function getInputFilter(): InputFilterInterface
     {
         if ($this->inputFilter) {
             return $this->inputFilter;
@@ -91,7 +91,7 @@ class SiteEditInput implements InputFilterAwareInterface
         return $inputFilter;
     }
 
-    public function exchangeArray(array $data)
+    public function exchangeArray(array $data): void
     {
         $this->id = (isset($data['id']) && '' !== $data['id']) ? $data['id'] : null;
         $this->name = (isset($data['name']) && '' !== $data['name']) ? $data['name'] : null;
@@ -103,7 +103,7 @@ class SiteEditInput implements InputFilterAwareInterface
         $this->updatedAt = (isset($data['updated_at']) && '' !== $data['updated_at']) ? $data['updated_at'] : null;
     }
 
-    public function getArrayCopy()
+    public function getArrayCopy(): array
     {
         return [
             'id' => $this->id,
@@ -115,12 +115,12 @@ class SiteEditInput implements InputFilterAwareInterface
         ];
     }
 
-    public function isConfirm()
+    public function isConfirm(): bool
     {
         return false !== $this->confirm;
     }
 
-    public function isBack()
+    public function isBack(): bool
     {
         return false !== $this->back;
     }

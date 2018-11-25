@@ -11,7 +11,7 @@ class Env
 
     protected static $isLoadDotenv = false;
 
-    public static function loadDotenv($envFile = null)
+    public static function loadDotenv($envFile = null): bool
     {
         if (self::$isLoadDotenv) {
             return true;
@@ -28,17 +28,17 @@ class Env
         return true;
     }
 
-    public static function getSetting()
+    public static function getSetting(): array
     {
         return require sprintf('%s/../config/%s/setting.php', __DIR__, self::getEnvironment());
     }
 
-    public static function getTestSetting()
+    public static function getTestSetting(): array
     {
         return require sprintf('%s/../config/%s_test/setting.php', __DIR__, self::getEnvironment());
     }
 
-    public static function getEnvironment()
+    public static function getEnvironment(): string
     {
         $env = getenv('APP_ENV');
         if (self::LOCAL !== $env && self::PROD !== $env) {

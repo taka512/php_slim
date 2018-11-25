@@ -19,22 +19,21 @@ class AuthenticationAdapter implements AdapterInterface
         $this->userRepository = $userRepository;
     }
 
-    public function setPassword(string $password)
+    public function setPassword(string $password): AdapterInterface
     {
         $this->password = $password;
+
+        return $this;
     }
 
-    public function setLoginId(string $loginId)
+    public function setLoginId(string $loginId): AdapterInterface
     {
         $this->loginId = $loginId;
+
+        return $this;
     }
 
-    /**
-     * Performs an authentication attempt.
-     *
-     * @return Result
-     */
-    public function authenticate()
+    public function authenticate(): Result
     {
         $user = $this->userRepository->findOneByLoginId($this->loginId);
         if (is_null($user) || $user->isDelete()) {

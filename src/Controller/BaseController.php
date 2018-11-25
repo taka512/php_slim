@@ -13,7 +13,7 @@ abstract class BaseController
         $this->container = $container;
     }
 
-    public function get($name)
+    public function get(string $name)
     {
         return $this->container->get($name);
     }

@@ -25,7 +25,7 @@ class PasswordValidator extends AbstractValidator
         self::GREATER_THAN_MAX_STR => self::MSG_GREATER_THAN_MAX_STR,
     ];
 
-    public function isValid($value, array $context = null)
+    public function isValid($value, ?array $context = null)
     {
         if (1 !== preg_match('/^[a-zA-Z0-9_-]+$/', $value)) {
             $this->error(self::INVALID_FORMAT);

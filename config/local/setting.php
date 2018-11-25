@@ -13,7 +13,7 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'slim-app',
-            'path' => 'php://stdout'
+            'path' => 'php://stdout',
             'level' => \Monolog\Logger::DEBUG,
         ],
 
