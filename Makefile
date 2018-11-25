@@ -125,9 +125,13 @@ docker/lint:
 test:
 	make test/unit
 	make test/functional
+	make test/e2e
 
 test/unit:
 	php vendor/bin/phpunit -c ./tests/phpunit.xml tests/Unit
 
 test/functional:
 	php vendor/bin/phpunit -c ./tests/phpunit.xml tests/Functional
+
+test/e2e:
+	php vendor/bin/phpunit -c ./tests/phpunit.xml tests/E2e
