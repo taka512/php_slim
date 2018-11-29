@@ -36,5 +36,16 @@ return [
         'form' => [
             'csrf_timeout' => 7200,
         ],
+        // test
+        'test' => [
+            'goutte' => [
+                'base_uri' => 'http://web.local',
+                'debug' => false,
+            ],
+            'user' => [
+                'login_id' => 'admin',
+                'password' => '12345678',
+            ],
+        ],
     ],
 ];

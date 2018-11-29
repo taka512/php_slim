@@ -36,5 +36,9 @@ return [
         'form' => [
             'csrf_timeout' => 7200,
         ],
+        // test
+        'test' => [
+           # not used
+        ],
     ],
 ];

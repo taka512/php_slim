@@ -15,7 +15,10 @@ jobs:
       - run:
           command: |
             set -x
+            docker network prune -f
             make docker/up
+            docker-compose logs
+            docker ps
       # Download and cache dependencies
       - restore_cache:
           keys:

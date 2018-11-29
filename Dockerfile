@@ -3,6 +3,8 @@ FROM php:7.2-fpm-alpine
 RUN apk upgrade --update \
     && apk add \
         alpine-sdk \
+        chromium \
+        chromium-chromedriver \
         curl-dev \
         iputils \
         libxml2-dev \
@@ -23,5 +25,4 @@ RUN apk upgrade --update \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /home/php_slim
-ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV COMPOSER_NO_INTERACTION 1
+ENV PANTHER_CHROME_DRIVER_BINARY /usr/lib/chromium/chromedriver
