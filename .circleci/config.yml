@@ -16,6 +16,7 @@ jobs:
           command: |
             set -x
             make docker/up
+            docker-compose logs
             docker ps
       # Download and cache dependencies
       - restore_cache:
