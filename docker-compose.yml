@@ -1,4 +1,4 @@
-version: "3"
+version: "3.3"
 services:
   web:
     container_name: web.local
@@ -16,7 +16,8 @@ services:
         max-size: "10m"
         max-file: "3"
     networks:
-      - webnet
+      webnet:
+        ipv4_address: 192.168.1.30
   app:
     container_name: app.local
     build: .
@@ -34,7 +35,8 @@ services:
         max-size: "10m"
         max-file: "3"
     networks:
-      - webnet
+      webnet:
+        ipv4_address: 192.168.1.40
   cache:
     container_name: cache.local
     image: memcached:alpine
@@ -44,7 +46,8 @@ services:
         max-size: "10m"
         max-file: "3"
     networks:
-      - webnet
+      webnet:
+        ipv4_address: 192.168.1.50
   db:
     container_name: db.local
     image: mysql:5.5
@@ -62,10 +65,16 @@ services:
         max-size: "10m"
         max-file: "3"
     networks:
-      - webnet
+      webnet:
+        ipv4_address: 192.168.1.60
 
 networks:
   webnet:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: 192.168.1.0/24
 
 volumes:
   db-data:
