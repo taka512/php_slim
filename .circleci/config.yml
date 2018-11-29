@@ -15,6 +15,7 @@ jobs:
       - run:
           command: |
             set -x
+            docker system prune -f
             make docker/up
             docker-compose logs
             docker ps
