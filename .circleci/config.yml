@@ -17,6 +17,7 @@ jobs:
             set -x
             make docker/build
             make docker/up
+            docker ps
       # Download and cache dependencies
       - restore_cache:
           keys:
