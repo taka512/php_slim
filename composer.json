@@ -1,14 +1,14 @@
 {
-    "name": "slim/slim-skeleton",
-    "description": "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework", "rest", "router", "psr7"],
-    "homepage": "http://github.com/slimphp/Slim-Skeleton",
+    "name": "taka512/php_slim",
+    "description": "A Slim Framework sample application for rapid development",
+    "keywords": ["microframework", "slim", "rest", "router", "psr7"],
+    "homepage": "",
     "license": "MIT",
     "authors": [
         {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
+            "name": "takahashi",
+            "email": "kapu512@gmail.com",
+            "homepage": "http://taka512.net"
         }
     ],
     "require": {

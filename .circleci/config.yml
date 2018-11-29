@@ -15,6 +15,7 @@ jobs:
       - run:
           command: |
             set -x
+            make docker/build
             make docker/up
       # Download and cache dependencies
       - restore_cache:
