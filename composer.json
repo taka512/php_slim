@@ -2,7 +2,7 @@
     "name": "taka512/php_slim",
     "description": "A Slim Framework sample application for rapid development",
     "keywords": ["microframework", "slim", "rest", "router", "psr7"],
-    "homepage": "",
+    "homepage": "http://taka512.net",
     "license": "MIT",
     "authors": [
         {
