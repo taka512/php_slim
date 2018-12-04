@@ -12,11 +12,9 @@ return [
 
         // Monolog settings
         'logger' => [
-            'name' => 'slim-app',
-            'path' => '/var/tmp/logs/app.log',
+            'path' => '/var/tmp/log',
             'level' => \Monolog\Logger::INFO,
         ],
-
         // database
         'db' => [
             'driver' => 'mysql',
