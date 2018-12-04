@@ -43,6 +43,7 @@ class ContainerFactory
         self::$container['batch.crawler'] = function ($c) {
             $app = new \Symfony\Component\Console\Application();
             $app->add(new \Taka512\Command\Crawler\SiteCrawlerCommand());
+
             return $app;
         };
     }
