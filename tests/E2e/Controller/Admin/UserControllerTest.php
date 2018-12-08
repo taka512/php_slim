@@ -4,7 +4,7 @@ namespace Taka512\Test\E2e\Controller\Admin;
 
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Test\E2eTestCase;
-use Taka512\Http\Scraper\ClientFactory;
+use Taka512\Http\ClientFactory;
 
 class UserControllerTest extends E2eTestCase
 {
@@ -15,7 +15,7 @@ class UserControllerTest extends E2eTestCase
 
     public function testIndex()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['goutte']);
+        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
         $this->login($client);
         $crawler = $client->request('GET', '/admin/user');
         $this->assertRegExp('/admin/', $crawler->html());
@@ -23,7 +23,7 @@ class UserControllerTest extends E2eTestCase
 
     public function testCreate()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['goutte']);
+        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
         $this->login($client);
         $crawler = $client->request('GET', '/admin/user/create');
         $form = $crawler->selectButton('登録')->form();
@@ -33,7 +33,7 @@ class UserControllerTest extends E2eTestCase
 
     public function testEdit()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['goutte']);
+        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
         $this->login($client);
         $crawler = $client->request('GET', '/admin/user/1/edit');
         $form = $crawler->selectButton('確認')->form();

@@ -36,7 +36,7 @@ return [
         ],
         // test
         'test' => [
-            'goutte' => [
+            'client' => [
                 'base_uri' => 'http://web.local',
                 'debug' => false,
             ],

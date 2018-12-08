@@ -25,4 +25,6 @@ RUN apk upgrade --update \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /home/php_slim
+
+ENV PANTHER_NO_SANDBOX 1
 ENV PANTHER_CHROME_DRIVER_BINARY /usr/lib/chromium/chromedriver

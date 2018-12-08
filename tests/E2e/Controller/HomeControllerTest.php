@@ -4,7 +4,7 @@ namespace Taka512\Test\E2e\Controller;
 
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Test\E2eTestCase;
-use Taka512\Http\Scraper\ClientFactory;
+use Taka512\Http\ClientFactory;
 
 class HomeControllerTest extends E2eTestCase
 {
@@ -18,7 +18,7 @@ class HomeControllerTest extends E2eTestCase
      */
     public function testIndex($msg, $expected)
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['goutte']);
+        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
         $crawler = $client->request('GET', '/');
         $this->assertRegExp($expected, $crawler->html());
     }
