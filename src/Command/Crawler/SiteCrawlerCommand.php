@@ -33,7 +33,7 @@ class SiteCrawlerCommand extends BaseCommand
         $client = ClientFactory::createChrome();
         $crawler = $client->request('GET', 'https://www.google.co.jp/search?q=test');
         $nodeValues = $crawler->filterXPath('//div[contains(@class, "rc")]')->each(function ($node, $i) {
-          return $node->text();
+            return $node->text();
         });
         foreach ($nodeValues as $v) {
             $this->get('logger')->info($v);
