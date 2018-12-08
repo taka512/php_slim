@@ -12,18 +12,16 @@ return [
 
         // Monolog settings
         'logger' => [
-            'name' => 'slim-app',
-            'path' => 'php://stdout',
+            'path' => fopen('php://stdout', 'w'),
             'level' => \Monolog\Logger::DEBUG,
         ],
-
         // database
         'db' => [
-            'driver' => 'mysql',
-            'host' => 'db.local',
-            'database' => 'sample_slim',
-            'username' => 'slim_user',
-            'password' => getenv('DB_PASS'),
+            'driver'    => 'mysql',
+            'host'      => 'db.local',
+            'database'  => 'sample_slim',
+            'username'  => 'slim_user',
+            'password'  => getenv('DB_PASS'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

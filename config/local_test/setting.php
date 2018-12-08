@@ -12,11 +12,9 @@ return [
 
         // Monolog settings
         'logger' => [
-            'name' => 'slim-app',
             'path' => 'php://stdout',
             'level' => \Monolog\Logger::DEBUG,
         ],
-
         // database
         'db' => [
             'driver' => 'mysql',
@@ -38,7 +36,7 @@ return [
         ],
         // test
         'test' => [
-            'goutte' => [
+            'client' => [
                 'base_uri' => 'http://web.local',
                 'debug' => false,
             ],

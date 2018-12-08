@@ -1,7 +1,13 @@
 <?php
 
+use Taka512\LoggerFactory;
+
 // WEBからアクセスされる事が前提のサービスを定義
 $container = $app->getContainer();
+LoggerFactory::initLoggerByApp(
+    $container['settings']['logger']['path'],
+    $container['settings']['logger']['level']
+);
 
 $container['view'] = function ($c) {
     $settings = $c->get('settings')['view'];

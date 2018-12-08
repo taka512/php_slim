@@ -16,6 +16,7 @@ jobs:
           command: |
             set -x
             docker network prune -f
+            make docker/build
             make docker/up
             docker-compose logs
             docker ps

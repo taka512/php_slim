@@ -17,6 +17,7 @@ class ContainerFactory
         }
         Env::loadDotenv();
         self::$container = new Container(Env::getSetting());
+        self::loadBatchService();
         self::loadCommonService();
         self::loadService();
 
@@ -30,21 +31,27 @@ class ContainerFactory
         }
         Env::loadDotenv('env.sample');
         self::$container = new Container(Env::getTestSetting());
+        self::loadBatchService();
         self::loadCommonService();
         self::loadService();
 
         return self::$container;
     }
 
+    public static function loadBatchService(): void
+    {
+        self::$container['batch.crawler'] = function ($c) {
+            $app = new \Symfony\Component\Console\Application();
+            $app->add(new \Taka512\Command\Crawler\SiteCrawlerCommand());
+
+            return $app;
+        };
+    }
+
     public static function loadCommonService(): void
     {
         self::$container['logger'] = function ($c) {
-            $settings = $c['settings']['logger'];
-            $logger = new \Monolog\Logger($settings['name']);
-            $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
-            $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
-
-            return $logger;
+            return \Taka512\LoggerFactory::getLogger();
         };
 
         $capsule = new \Illuminate\Database\Capsule\Manager();
