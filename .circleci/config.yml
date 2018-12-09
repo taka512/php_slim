@@ -52,7 +52,7 @@ jobs:
             echo "TEST"
 workflows:
   version: 2
-  build_and_test: # name of your workflow
+  branch_test:
     jobs:
       - lint_test:
           filters:
