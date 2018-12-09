@@ -59,7 +59,7 @@ workflows:
             branches:
               ignore:
                 - master
-      - lint_test
+      - lint_test:
           requires:
             - branch_push
   deploy:
@@ -69,7 +69,7 @@ workflows:
             branches:
               only:
                 - master
-      - lint_test
+      - lint_test:
           requires:
             - master_merge
       - hold:
