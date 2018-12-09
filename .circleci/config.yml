@@ -13,13 +13,13 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |
-          set -x
-          docker network prune -f
-          make docker/build
-          make docker/up
-          docker-compose logs
-          docker ps
+          command: |
+            set -x
+            docker network prune -f
+            make docker/build
+            make docker/up
+            docker-compose logs
+            docker ps
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -48,8 +48,8 @@ jobs:
 
     steps:
       - run:
-        command: |
-          echo "TEST"
+          command: |
+            echo "TEST"
 workflows:
   version: 2
   build_and_test: # name of your workflow
