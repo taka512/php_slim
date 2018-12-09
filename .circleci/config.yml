@@ -1,15 +1,14 @@
-# PHP CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-php/ for more details
-#
-version: 2
-jobs:
-  lint_test:
+# PHP CircleCI 2.1 configuration file
+version: 2.1
+
+executors:
+  backbone-executor:
     machine:
       docker_layer_caching: true
-
     working_directory: ~/php_slim
-
+jobs:
+  lint_test:
+    executor: backbone-executor
     steps:
       - checkout
       - run:
@@ -41,11 +40,7 @@ jobs:
       - run: make docker/db/test/migrate
       - run: make docker/test
   echo:
-    machine:
-      docker_layer_caching: true
-
-    working_directory: ~/php_slim
-
+    executor: backbone-executor
     steps:
       - run:
           command: |
