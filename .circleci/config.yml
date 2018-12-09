@@ -55,7 +55,7 @@ workflows:
   build_and_test: # name of your workflow
     jobs:
       - lint_test
-      - echo
+      - echo:
         type: approval
         requires:
           - lint_test
