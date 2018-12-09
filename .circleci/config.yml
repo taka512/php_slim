@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  test:
     machine:
       docker_layer_caching: true
 
@@ -40,3 +40,8 @@ jobs:
       - run: mysql -h 127.0.0.1 -u root --password=mypass < ./docker/mysql/init/0_init.sql
       - run: make docker/db/test/migrate
       - run: make docker/test
+  workflows:
+    version: 2
+    build_and_test: # name of your workflow
+      jobs:
+        - test
