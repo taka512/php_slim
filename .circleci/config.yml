@@ -60,5 +60,6 @@ workflows:
 #        requires:
 #          - lint_test
       - echo:
-        requires:
-          - lint_test
+          requires:
+            - lint_test
+
