@@ -54,7 +54,24 @@ workflows:
   version: 2
   build_and_test: # name of your workflow
     jobs:
+      - branch_push:
+          filters:
+            branches:
+              ignore:
+                - master
       - lint_test
+          requires:
+            - branch_push
+  deploy:
+    jobs:
+      - master_merge:
+          filters:
+            branches:
+              only:
+                - master
+      - lint_test
+          requires:
+            - master_merge
       - hold:
           type: approval
           requires:
