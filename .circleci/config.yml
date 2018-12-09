@@ -55,6 +55,11 @@ workflows:
   build_and_test: # name of your workflow
     jobs:
       - lint_test
-      - echo:
-        requires:
-          - lint_test
+#      - hold:
+#        type: approval
+#        requires:
+#          - lint_test
+      - echo
+#      - echo:
+#        requires:
+#          - lint_test
