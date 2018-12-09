@@ -56,7 +56,7 @@ workflows:
     jobs:
       - lint_test
       - hold:
-        type: approval
+#        type: approval
         requires:
           - lint_test
       - echo:
