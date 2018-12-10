@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `updated_at` datetime NOT NULL COMMENT '更新日',
   PRIMARY KEY (`id`),
   UNIQUE KEY uniq_login (`login_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8   
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'ユーザマスター'
 EOL;
         $container = $this->getContainer();
         $container['pdo.master']->query($sql);
