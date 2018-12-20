@@ -4,13 +4,13 @@ namespace Taka512\Test\Functional\Repository;
 
 use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
-use Taka512\Model\Site;
+use Taka512\Model\Tag;
 
-class SiteRepositoryTest extends DatabaseTestCase
+class TagRepositoryTest extends DatabaseTestCase
 {
     protected function getDataSet()
     {
-        return new YamlDataSet(__DIR__.'/SiteRepository.yml');
+        return new YamlDataSet(__DIR__.'/TagRepository.yml');
     }
 
     /**
@@ -18,7 +18,7 @@ class SiteRepositoryTest extends DatabaseTestCase
      */
     public function testInsert($msg, $data, $expected)
     {
-        $actual = $this->get('repository.site')->insert($data);
+        $actual = $this->get('repository.tag')->insert($data);
         $this->assertSame($expected, $actual);
     }
 
@@ -29,7 +29,6 @@ class SiteRepositoryTest extends DatabaseTestCase
                 'insert success and return id:2',
                 [
                     'name' => 'test name2',
-                    'url' => 'test url2',
                 ],
                 2,
             ],
@@ -41,28 +40,28 @@ class SiteRepositoryTest extends DatabaseTestCase
      */
     public function testFindOneById($msg, $id, $expected)
     {
-        $actual = $this->get('repository.site')->findOneById($id);
-        $this->assertSame($expected, ($actual instanceof Site));
+        $actual = $this->get('repository.tag')->findOneById($id);
+        $this->assertSame($expected, ($actual instanceof Tag));
     }
 
     public function providerFindOneById()
     {
         return [
             ['case id:1 is found', 1, true],
-            ['case id:2 is not found(not Site)', 2, false],
+            ['case id:2 is not found(not Tag)', 2, false],
         ];
     }
 
     /**
-     * @dataProvider providerFindLatestSites
+     * @dataProvider providerFindLatestTags
      */
-    public function testFindLatestSites($msg, $limit, $expected)
+    public function testFindLatestTags($msg, $limit, $expected)
     {
-        $actual = $this->get('repository.site')->findLatestSites($limit);
+        $actual = $this->get('repository.tag')->findLatestTags($limit);
         $this->assertCount($expected, $actual);
     }
 
-    public function providerFindLatestSites()
+    public function providerFindLatestTags()
     {
         return [
             ['site count is 1', 10, 1],

@@ -2,7 +2,7 @@
 
 use Phpmig\Migration\Migration;
 
-class CreateSite extends Migration
+class CreateTag extends Migration
 {
     /**
      * Do the migration
@@ -10,15 +10,14 @@ class CreateSite extends Migration
     public function up()
     {
         $sql = <<<EOL
-CREATE TABLE IF NOT EXISTS `site` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'サイトID',
-  `name` varchar(256) NOT NULL COMMENT 'サイト名',
-  `url` varchar(256) NOT NULL COMMENT 'url',
-  `del_flg` tinyint(4) NOT NULL DEFAULT '0' COMMENT '削除フラグ',
+CREATE TABLE IF NOT EXISTS `tag` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'タグID',
+  `name` varchar(64) NOT NULL COMMENT 'タグ名',
   `created_at` datetime NOT NULL COMMENT '登録日',
   `updated_at` datetime NOT NULL COMMENT '更新日',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'サイトマスター'
+  PRIMARY KEY (`id`),
+  UNIQUE KEY uniq_name (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'タグマスター'
 EOL;
         $container = $this->getContainer();
         $container['pdo.master']->query($sql);

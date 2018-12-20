@@ -129,6 +129,36 @@ class ContainerFactory
             );
         };
 
+        self::$container['form.admin.tag.create_form'] = function ($c) {
+            return new \Taka512\Form\Admin\Tag\CreateForm(
+                $c['settings']['form']['csrf_timeout']
+            );
+        };
+
+        self::$container['form.admin.tag.create_input'] = function ($c) {
+            return new \Taka512\Form\Admin\Tag\CreateInput();
+        };
+
+        self::$container['form.admin.tag.edit_form'] = function ($c) {
+            return new \Taka512\Form\Admin\Tag\EditForm(
+                $c['settings']['form']['csrf_timeout']
+            );
+        };
+
+        self::$container['form.admin.tag.edit_input'] = function ($c) {
+            return new \Taka512\Form\Admin\Tag\EditInput();
+        };
+
+        self::$container['form.admin.tag.delete_form'] = function ($c) {
+            return new \Taka512\Form\Admin\Tag\DeleteForm(
+                $c['settings']['form']['csrf_timeout']
+            );
+        };
+
+        self::$container['form.admin.tag.delete_input'] = function ($c) {
+            return new \Taka512\Form\Admin\Tag\DeleteInput();
+        };
+
         self::$container['form.admin.site.create_form'] = function ($c) {
             return new \Taka512\Form\Admin\Site\CreateForm(
                 $c['settings']['form']['csrf_timeout']
@@ -154,6 +184,10 @@ class ContainerFactory
     {
         self::$container['repository.site'] = function ($c) {
             return new \Taka512\Repository\SiteRepository();
+        };
+
+        self::$container['repository.tag'] = function ($c) {
+            return new \Taka512\Repository\TagRepository();
         };
 
         self::$container['repository.user'] = function ($c) {
