@@ -9,6 +9,9 @@ use Zend\InputFilter\InputFilterInterface;
 class DeleteInput implements InputFilterAwareInterface
 {
     protected $id;
+    protected $name;
+    protected $createdAt;
+    protected $updatedAt;
     protected $inputFilter;
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
