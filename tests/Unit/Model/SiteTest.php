@@ -25,4 +25,35 @@ class SiteTest extends TestCase
             ['FLAGがOFFの場合、false', Site::FLG_OFF, false],
         ];
     }
+
+    /**
+     * @dataProvider providerSetFormArray
+     */
+    public function testSetFormArray($msg, $expected)
+    {
+        $site = new Site();
+        $site->setFormArray($expected);
+        $this->assertSame(
+            $expected,
+            [
+                'name' => $site->name,
+                'url' => $site->url,
+                'del_flg' => $site->delFlg,
+            ]
+        );
+    }
+
+    public function providerSetFormArray()
+    {
+        return [
+            [
+                'set array data test',
+                [
+                    'name' => 'test name',
+                    'url' => 'test url',
+                    'del_flg' => Site::FLG_ON,
+                ],
+            ],
+        ];
+    }
 }

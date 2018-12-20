@@ -12,8 +12,8 @@ class SiteRepository
         $site = new Site();
         $site->setFormArray($data);
         $site->save();
-        return $site->id;
 
+        return $site->id;
     }
 
     public function findOneById(int $id): ?Site

@@ -31,7 +31,7 @@ class UserRepositoryTest extends DatabaseTestCase
                     'login_id' => 'login_id2',
                     'password' => 'password',
                 ],
-                2
+                2,
             ],
         ];
     }

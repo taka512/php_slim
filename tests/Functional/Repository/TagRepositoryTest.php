@@ -30,7 +30,7 @@ class TagRepositoryTest extends DatabaseTestCase
                 [
                     'name' => 'test name2',
                 ],
-                2
+                2,
             ],
         ];
     }

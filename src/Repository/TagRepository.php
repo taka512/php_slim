@@ -12,6 +12,7 @@ class TagRepository
         $tag = new Tag();
         $tag->setFormArray($data);
         $tag->save();
+
         return $tag->id;
     }
 

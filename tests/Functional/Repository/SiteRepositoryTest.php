@@ -31,7 +31,7 @@ class SiteRepositoryTest extends DatabaseTestCase
                     'name' => 'test name2',
                     'url' => 'test url2',
                 ],
-                2
+                2,
             ],
         ];
     }
