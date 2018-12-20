@@ -26,9 +26,9 @@
                 サブメニュー
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/menu1">メニュー1</a>
-                <a class="dropdown-item" href="/menu2">メニュー2</a>
-                <a class="dropdown-item" href="/menu3">メニュー3</a>
+                <a class="dropdown-item" href="{{ path_for('admin_user_index') }}">ユーザ</a>
+                <a class="dropdown-item" href="{{ path_for('admin_site_index') }}">サイト</a>
+                <a class="dropdown-item" href="{{ path_for('admin_tag_index') }}">タグ</a>
               </div>
             </li>
           </ul>

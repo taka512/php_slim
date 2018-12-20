@@ -24,6 +24,11 @@ $app->group('/admin', function () {
     $this->map(['GET'], '/site', \Taka512\Controller\Admin\SiteController::class. ':index')->setName('admin_site_index');
     $this->map(['GET', 'POST'], '/site/create', \Taka512\Controller\Admin\SiteController::class. ':create')->setName('admin_site_create');
     $this->map(['GET', 'POST'], '/site/{id}/edit', \Taka512\Controller\Admin\SiteController::class. ':edit')->setName('admin_site_edit');
+    // tag
+    $this->map(['GET'], '/tag', \Taka512\Controller\Admin\TagController::class. ':index')->setName('admin_tag_index');
+    $this->map(['GET', 'POST'], '/tag/create', \Taka512\Controller\Admin\TagController::class. ':create')->setName('admin_tag_create');
+    $this->map(['GET', 'POST'], '/tag/{id}/edit', \Taka512\Controller\Admin\TagController::class. ':edit')->setName('admin_tag_edit');
+    $this->map(['GET', 'POST'], '/tag/{id}/delete', \Taka512\Controller\Admin\TagController::class. ':delete')->setName('admin_tag_delete');
 })->add(
     new \Taka512\Middleware\AuthenticationMiddleware($c['router'], $c['auth'], $c['view'], $c['repository.user'])
 );

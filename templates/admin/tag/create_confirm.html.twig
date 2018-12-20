@@ -1,0 +1,32 @@
+{% extends "admin/layout.html.twig" %}
+
+{% block title %}タグ登録(確認）{% endblock %}
+{% block breadcrumb %}
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path_for('admin_home_index') }}">home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path_for('admin_tag_index') }}">タグ一覧</a></li>
+        <li class="breadcrumb-item active">タグ登録(確認)</li>
+      </ol>
+{% endblock %}
+{% block content %}
+    <div class="row">
+      <div class="col-lg-12">
+        <h2>登録（確認）</h2>
+        <div class="col-lg-10">
+          <form class="form-horizontal" action="{{ path_for('admin_tag_create') }}" method="POST">
+            <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">
+            <input type="hidden" id="back" name="back" value="0">
+            <div class="form-group">
+              <label for="inputName">タグ名</label>
+              <p>{{ form.get('name').getValue() }}</p>
+              <input type="hidden" class="form-control" id="inputName" name="name" value="{{ form.get('name').getValue() }}" >
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-secondary" onclick="javascript:document.getElementById('back').value = 1;">キャンセル</button>
+              <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
