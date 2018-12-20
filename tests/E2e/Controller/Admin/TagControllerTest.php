@@ -54,6 +54,5 @@ class TagControllerTest extends E2eTestCase
         $crawler = $client->submit($form);
         $crawler = $client->request('GET', '/admin/tag/1/delete');
         $this->assertSame($client->getResponse()->getStatus(), 404);
-
     }
 }

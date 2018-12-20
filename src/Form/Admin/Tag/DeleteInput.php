@@ -2,12 +2,9 @@
 
 namespace Taka512\Form\Admin\Tag;
 
-use Zend\Filter\StringTrim;
-use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
-use Taka512\Validator\Model\Tag\NameValidator;
 
 class DeleteInput implements InputFilterAwareInterface
 {
