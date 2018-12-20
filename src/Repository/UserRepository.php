@@ -7,12 +7,12 @@ use Taka512\Model\User;
 
 class UserRepository
 {
-    public function insert(array $data): bool
+    public function insert(array $data): ?int
     {
         $user = new User();
         $user->setCreateFormArray($data);
-
-        return $user->save();
+        $user->save();
+        return $user->id;
     }
 
     public function findOneById(int $id): ?User

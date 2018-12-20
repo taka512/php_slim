@@ -7,12 +7,12 @@ use Taka512\Model\Tag;
 
 class TagRepository
 {
-    public function insert(array $data): bool
+    public function insert(array $data): ?int
     {
         $tag = new Tag();
         $tag->setFormArray($data);
-
-        return $tag->save();
+        $tag->save();
+        return $tag->id;
     }
 
     public function findOneById(int $id): ?Tag

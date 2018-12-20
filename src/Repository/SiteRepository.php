@@ -7,12 +7,13 @@ use Taka512\Model\Site;
 
 class SiteRepository
 {
-    public function insert(array $data): bool
+    public function insert(array $data): ?int
     {
-        $user = new Site();
-        $user->setFormArray($data);
+        $site = new Site();
+        $site->setFormArray($data);
+        $site->save();
+        return $site->id;
 
-        return $user->save();
     }
 
     public function findOneById(int $id): ?Site
