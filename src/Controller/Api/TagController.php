@@ -11,13 +11,21 @@ class TagController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/tag",
-     *     @OA\Response(response="200", description="An example resource")
+     *     @OA\Response(response="200", description="get tag list")
      * )
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        return $response
-            ->withHeader('Content-type', 'application/json')
-            ->withJson(['hoge' => 'test']);
+        $form = $this->get('form.api.tag.search_form');
+        $input = $this->get('form.api.tag.search_input');
+
+        $form->bind($input);
+        $form->setData($request->getQueryParams());
+        $tags = [];
+        if ($form->isValid()) {
+            $tags = $this->get('repository.tag')->findBySearchConditions($form->getData()->getArrayCopy());
+        }
+
+        return $this->get('form.api.tag.search_renderer')->render($response, $tags);
     }
 }
