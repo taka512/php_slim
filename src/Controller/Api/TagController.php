@@ -6,11 +6,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Taka512\Controller\BaseController;
 
-class TestController extends BaseController
+class TagController extends BaseController
 {
     /**
      * @OA\Get(
-     *     path="/api/test",
+     *     path="/api/tag",
      *     @OA\Response(response="200", description="An example resource")
      * )
      */

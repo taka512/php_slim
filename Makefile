@@ -1,3 +1,5 @@
+.PHONY: composer/* db/* test/* docker/*
+
 CONTAINER?=app.local
 
 ifeq ($(ENV),dev)
@@ -13,10 +15,12 @@ COMPOSER_VERSION = 1.7.2
 all:
 	@more Makefile
 
+api/create:
+	vendor/bin/openapi --output data/openapi.yaml src
+
 ###############
 # compose
 ###############
-.PHONY: composer/*
 composer.phar:
 	curl -sS https://getcomposer.org/installer | php -- --version=$(COMPOSER_VERSION) --install-dir=./
 
@@ -51,7 +55,6 @@ phpstan:
 ###############
 #  db
 ###############
-.PHONY: db/*
 db/status:
 	php vendor/bin/phpmig status -b config/migration.php
 db/migrate:
@@ -70,29 +73,20 @@ db/seed/down:
 ###############
 # docker
 ###############
-.PHONY: docker/*
-# YAMLに「build:」があれば、そのイメージをまとめてビルド
 docker/build:
 	docker-compose build
-# YAMLに「image:」があれば、そのイメージをまとめてプル
 docker/pull:
 	docker-compose pull
-# docker-compose build, docker-compose pullをした後にdocker run
 docker/up:
 	docker-compose up -d
-# 関係するコンテナすべての出力を表示
 docker/logs:
 	docker-compose logs -f
-# 関係するコンテナをまとめて終了
 docker/stop:
 	docker-compose stop
-# 関係するコンテナをまとめて削除
 docker/rm:
 	docker-compose rm
-# sshで接続
 docker/ssh:
 	docker exec -it -e COLUMNS=$(shell tput cols) -e LINES=$(shell tput lines) $(CONTAINER) ash
-# 未使用イメージの掃除
 docker/prune:
 	docker system prune 
 docker/db/status:
@@ -121,7 +115,6 @@ docker/lint:
 #########
 # test
 #########
-.PHONY: test/*
 test:
 	make test/unit
 	make test/functional
@@ -135,3 +128,4 @@ test/functional:
 
 test/e2e:
 	php vendor/bin/phpunit -c ./tests/phpunit.xml tests/E2e
+

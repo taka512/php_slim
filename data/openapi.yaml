@@ -1,0 +1,27 @@
+openapi: 3.0.0
+info:
+  title: 'Testing annotations from bugreports'
+  version: 1.0.0
+servers:
+  -
+    url: '{schema}://host.dev'
+    description: 'OpenApi parameters'
+    variables:
+      schema:
+        enum:
+          - https
+          - http
+        default: https
+paths:
+  /api/tag:
+    get:
+      operationId: 'Taka512\Controller\Api\TagController::index'
+      responses:
+        '200':
+          description: 'An example resource'
+  /api/test:
+    get:
+      operationId: 'Taka512\Controller\Api\TestController::index'
+      responses:
+        '200':
+          description: 'An example resource'
