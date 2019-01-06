@@ -15,10 +15,40 @@ servers:
 paths:
   /api/tag:
     get:
-      operationId: 'Taka512\Controller\Api\TagController::index'
+      tags:
+        - tag
+      summary: 'find tag by search condition'
+      description: 'Returns array tag'
+      operationId: getTagsBySearchConditions
+      parameters:
+        -
+          name: name
+          in: query
+          description: 'seach tags to return'
+          required: false
+          schema:
+            type: string
+        -
+          name: limit
+          in: query
+          description: 'maximum number of results to return'
+          required: false
+          schema:
+            type: integer
+            format: int32
+        -
+          name: offset
+          in: query
+          description: 'offset of results to return'
+          required: false
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
-          description: 'get tag list'
+          description: 'successful operation'
+        '400':
+          description: 'Invalid Search Conditions supplied'
   /api/test:
     get:
       operationId: 'Taka512\Controller\Api\TestController::index'
