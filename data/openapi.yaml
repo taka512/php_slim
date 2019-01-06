@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
-  title: 'Testing annotations from bugreports'
+  title: 'php samle api'
   version: 1.0.0
 servers:
   -
-    url: '{schema}://host.dev'
+    url: '{schema}://localhost'
     description: 'OpenApi parameters'
     variables:
       schema:
@@ -18,7 +18,7 @@ paths:
       operationId: 'Taka512\Controller\Api\TagController::index'
       responses:
         '200':
-          description: 'An example resource'
+          description: 'get tag list'
   /api/test:
     get:
       operationId: 'Taka512\Controller\Api\TestController::index'

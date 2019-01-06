@@ -1,15 +1,15 @@
 <?php
 
-/*
+/**
  * @OA\Info(
- *   title="Testing annotations from bugreports",
+ *   title="php samle api",
  *    version="1.0.0"
  * )
  */
 
-/*
+/**
  * @OA\Server(
- *      url="{schema}://host.dev",
+ *      url="{schema}://localhost",
  *      description="OpenApi parameters",
  *      @OA\ServerVariable(
  *          serverVariable="schema",

@@ -18,6 +18,7 @@ class TestController extends BaseController
     {
         return $response
             ->withHeader('Content-type', 'application/json')
+            ->withAddedHeader('Access-Control-Allow-Origin', '*')
             ->withJson(['hoge' => 'test']);
     }
 }

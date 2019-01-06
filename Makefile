@@ -15,7 +15,7 @@ COMPOSER_VERSION = 1.7.2
 all:
 	@more Makefile
 
-api/create:
+api/yaml/build:
 	vendor/bin/openapi --output data/openapi.yaml src
 
 ###############
@@ -36,7 +36,7 @@ composer-self-update: composer.phar
 ###############
 #  lint
 ###############
-CSFIXER_FULE=@PSR1,@PSR2,@Symfony
+CSFIXER_FULE=@PSR1,@PSR2
 CSFIXER_DRYRUN=--dry-run --diff
 
 lint: csfixer phpstan
