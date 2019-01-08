@@ -24,8 +24,12 @@ class TagRepository
 
     public function findBySearchConditions(array $conditions): Collection
     {
-        return Tag::where('name', 'LIKE', '%'.SqlUtil::escapeLike($conditions['name']).'%')
-            ->offset($conditions['offset'])->limit($conditions['limit'])->get();
+        if (empty($conditions['name'])) {
+            return Tag::orderBy('id', 'desc')->offset($conditions['offset'])->limit($conditions['limit'])->get();
+        } else {
+            return Tag::where('name', 'LIKE', '%'.SqlUtil::escapeLike($conditions['name']).'%')
+                ->orderBy('id', 'desc')->offset($conditions['offset'])->limit($conditions['limit'])->get();
+        }
     }
 
     public function findLatestTags(int $limit = 10): Collection

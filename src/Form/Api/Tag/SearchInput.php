@@ -11,9 +11,13 @@ use Taka512\Validator\Model\Tag\NameValidator;
 
 class SearchInput implements InputFilterAwareInterface
 {
-    protected $name;
-    protected $limit;
-    protected $offset;
+    const DEFAULT_NAME = '';
+    const DEFAULT_LIMIT = '30';
+    const DEFAULT_OFFSET = '0';
+
+    protected $name = self::DEFAULT_NAME;
+    protected $limit = self::DEFAULT_LIMIT;
+    protected $offset = self::DEFAULT_OFFSET;
     protected $inputFilter;
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
@@ -33,7 +37,7 @@ class SearchInput implements InputFilterAwareInterface
         $inputFilter = new InputFilter();
         $inputFilter->add([
             'name' => 'name',
-            'required' => true,
+            'required' => false,
             'break_on_failure' => true,
             'filters' => [
                 ['name' => StringTrim::class],
@@ -61,9 +65,9 @@ class SearchInput implements InputFilterAwareInterface
 
     public function exchangeArray(array $data): void
     {
-        $this->name = $data['name'] ?? '';
-        $this->limit = empty($data['limit']) ? 30 : $data['limit'];
-        $this->offset = empty($data['offset']) ? 0 : $data['offset'];
+        $this->name = empty($data['name']) ? self::DEFAULT_NAME : $data['name'];
+        $this->limit = empty($data['limit']) ? self::DEFAULT_LIMIT : $data['limit'];
+        $this->offset = empty($data['offset']) ? self::DEFAULT_OFFSET : $data['offset'];
     }
 
     public function getArrayCopy(): array

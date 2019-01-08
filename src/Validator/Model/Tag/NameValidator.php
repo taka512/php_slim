@@ -6,7 +6,7 @@ use Zend\Validator\AbstractValidator;
 
 class NameValidator extends AbstractValidator
 {
-    const MAX_STR = 32;
+    const MAX_STR = 1;
 
     const INVALID_FORMAT = 'NameInvalidFormat';
     const GREATER_THAN_MAX_STR = 'NameGreaterThanMaxStr';

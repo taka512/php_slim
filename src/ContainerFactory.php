@@ -179,6 +179,10 @@ class ContainerFactory
             return new \Taka512\Form\Admin\Site\EditInput();
         };
 
+        self::$container['form.api.error_renderer'] = function ($c) {
+            return new \Taka512\Form\Api\ErrorRenderer();
+        };
+
         self::$container['form.api.tag.search_form'] = function ($c) {
             return new \Taka512\Form\Api\Tag\SearchForm();
         };
