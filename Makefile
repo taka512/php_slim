@@ -36,7 +36,7 @@ composer-self-update: composer.phar
 ###############
 #  lint
 ###############
-CSFIXER_FULE=@PSR1,@PSR2
+CSFIXER_FULE=@PSR1,@PSR2,@Symfony
 CSFIXER_DRYRUN=--dry-run --diff
 
 lint: csfixer phpstan

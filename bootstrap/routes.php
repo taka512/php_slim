@@ -10,7 +10,7 @@ $app->get('/', \Taka512\Controller\HomeController::class . ':index')->setName('t
 
 $app->group('/api', function () {
     $this->map(['GET'], '/tag', \Taka512\Controller\Api\TagController::class. ':index')->setName('api_tag_index');
-    $this->map(['GET'], '/test', \Taka512\Controller\Api\TestController::class. ':index')->setName('api_test_index');
+    $this->map(['GET'], '/home', \Taka512\Controller\Api\HomeController::class. ':index')->setName('api_home_index');
 });
 
 $app->map(['GET', 'POST'], '/admin/user/signin', \Taka512\Controller\Admin\UserController::class. ':signin')->setName('admin_user_signin');

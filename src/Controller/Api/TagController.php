@@ -64,10 +64,10 @@ class TagController extends BaseController
         $tags = [];
         if ($form->isValid()) {
             $tags = $this->get('repository.tag')->findBySearchConditions($form->getData()->getArrayCopy());
+
             return $this->get('form.api.tag.search_renderer')->render($response, $tags);
         } else {
             return $this->get('form.api.error_renderer')->render400($response, $form->getMessages());
         }
-
     }
 }

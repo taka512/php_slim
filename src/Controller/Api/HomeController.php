@@ -6,11 +6,29 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Taka512\Controller\BaseController;
 
-class TestController extends BaseController
+/**
+ * @OA\Info(
+ *   title="php samle api",
+ *    version="1.0.0"
+ * )
+ */
+
+/**
+ * @OA\Server(
+ *      url="{schema}://localhost",
+ *      description="OpenApi parameters",
+ *      @OA\ServerVariable(
+ *          serverVariable="schema",
+ *          enum={"https", "http"},
+ *          default="https"
+ *      )
+ * )
+ */
+class HomeController extends BaseController
 {
     /**
      * @OA\Get(
-     *     path="/api/test",
+     *     path="/api/home",
      *     @OA\Response(response="200", description="An example resource")
      * )
      */

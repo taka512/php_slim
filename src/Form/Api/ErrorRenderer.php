@@ -11,6 +11,7 @@ class ErrorRenderer
         $data = [];
         foreach ($errors as $error) {
         }
+
         return $response
             ->withHeader('Content-type', 'application/json')
             ->withAddedHeader('Access-Control-Allow-Origin', '*')
