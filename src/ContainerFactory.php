@@ -178,6 +178,22 @@ class ContainerFactory
         self::$container['form.admin.site.edit_input'] = function ($c) {
             return new \Taka512\Form\Admin\Site\EditInput();
         };
+
+        self::$container['form.api.error_renderer'] = function ($c) {
+            return new \Taka512\Form\Api\ErrorRenderer();
+        };
+
+        self::$container['form.api.tag.search_form'] = function ($c) {
+            return new \Taka512\Form\Api\Tag\SearchForm();
+        };
+
+        self::$container['form.api.tag.search_input'] = function ($c) {
+            return new \Taka512\Form\Api\Tag\SearchInput();
+        };
+
+        self::$container['form.api.tag.search_renderer'] = function ($c) {
+            return new \Taka512\Form\Api\Tag\SearchRenderer();
+        };
     }
 
     public static function loadRepositoryService(): void

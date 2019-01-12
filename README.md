@@ -36,6 +36,9 @@ ELOQUENTのマニュアル
 
 https://laravel.com/docs/5.5/eloquent
 
+# query builder
+
+https://www.ritolab.com/entry/93
 
 # デザイン
 

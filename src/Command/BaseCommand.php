@@ -18,7 +18,8 @@ abstract class BaseCommand extends Command
         LoggerFactory::initLoggerByBatch(
             $this->getName(),
             $this->container['settings']['logger']['path'],
-            $this->container['settings']['logger']['level']);
+            $this->container['settings']['logger']['level']
+        );
         try {
             $this->process($input);
         } catch (\Exception $e) {

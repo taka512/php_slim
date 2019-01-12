@@ -1,0 +1,57 @@
+openapi: 3.0.0
+info:
+  title: 'php samle api'
+  version: 1.0.0
+servers:
+  -
+    url: '{schema}://localhost'
+    description: 'OpenApi parameters'
+    variables:
+      schema:
+        enum:
+          - https
+          - http
+        default: https
+paths:
+  /api/home:
+    get:
+      operationId: 'Taka512\Controller\Api\HomeController::index'
+      responses:
+        '200':
+          description: 'An example resource'
+  /api/tag:
+    get:
+      tags:
+        - tag
+      summary: 'find tag by search condition'
+      description: 'Returns array tag'
+      operationId: getTagsBySearchConditions
+      parameters:
+        -
+          name: name
+          in: query
+          description: 'search tags condition'
+          required: false
+          schema:
+            type: string
+        -
+          name: limit
+          in: query
+          description: 'maximum number of results to return'
+          required: false
+          schema:
+            type: integer
+            format: int32
+        -
+          name: offset
+          in: query
+          description: 'offset of results to return'
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 'successful operation'
+        '400':
+          description: 'Invalid Search Conditions supplied'
