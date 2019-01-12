@@ -26,11 +26,11 @@ class TagRepositoryTest extends DatabaseTestCase
     {
         return [
             [
-                'insert success and return id:2',
+                'insert success and return id:5',
                 [
-                    'name' => 'test name2',
+                    'name' => 'test name5',
                 ],
-                2,
+                5,
             ],
         ];
     }
@@ -48,7 +48,26 @@ class TagRepositoryTest extends DatabaseTestCase
     {
         return [
             ['case id:1 is found', 1, true],
-            ['case id:2 is not found(not Tag)', 2, false],
+            ['case id:99 is not found(not Tag)', 99, false],
+        ];
+    }
+
+    /**
+     * @dataProvider providerFindBySearchConditions
+     */
+    public function testFindBySearchConditions($msg, $conditions, $expected)
+    {
+        $actual = $this->get('repository.tag')->findBySearchConditions($conditions);
+        $this->assertCount($expected, $actual);
+    }
+
+    public function providerFindBySearchConditions()
+    {
+        return [
+            ['tag count is 3(search name:tag)', ['name' => 'tag', 'offset' => 0, 'limit' => 30], 3],
+            ['tag count is 4(search all)', ['offset' => 0, 'limit' => 30], 4],
+            ['tag count is 1(search limit 1)', ['offset' => 0, 'limit' => 1], 1],
+            ['tag count is 3(search offset 1)', ['offset' => 1, 'limit' => 30], 3],
         ];
     }
 
@@ -64,7 +83,7 @@ class TagRepositoryTest extends DatabaseTestCase
     public function providerFindLatestTags()
     {
         return [
-            ['site count is 1', 10, 1],
+            ['tag count is 4(limit 10)', 10, 4],
         ];
     }
 }

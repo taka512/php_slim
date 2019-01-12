@@ -13,6 +13,12 @@ servers:
           - http
         default: https
 paths:
+  /api/home:
+    get:
+      operationId: 'Taka512\Controller\Api\HomeController::index'
+      responses:
+        '200':
+          description: 'An example resource'
   /api/tag:
     get:
       tags:
@@ -24,7 +30,7 @@ paths:
         -
           name: name
           in: query
-          description: 'seach tags to return'
+          description: 'search tags condition'
           required: false
           schema:
             type: string
@@ -49,9 +55,3 @@ paths:
           description: 'successful operation'
         '400':
           description: 'Invalid Search Conditions supplied'
-  /api/test:
-    get:
-      operationId: 'Taka512\Controller\Api\TestController::index'
-      responses:
-        '200':
-          description: 'An example resource'
