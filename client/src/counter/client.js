@@ -5,7 +5,6 @@ import Counter from './components/Counter'
 import counter from './reducers'
 
 const store = createStore(counter)
-const rootEl = document.getElementById('root')
 
 const render = () => ReactDOM.render(
   <Counter
@@ -13,7 +12,7 @@ const render = () => ReactDOM.render(
     onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
     onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
   />,
-  rootEl
+  document.getElementById('root')
 )
 
 render()

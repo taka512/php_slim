@@ -3,19 +3,21 @@ var webpack = require('webpack');
 var path    = require('path');
 
 module.exports = {
-  context: path.join(__dirname, "src"),
   // モード値を production に設定すると最適化された状態で、
   // development に設定するとソースマップ有効でJSファイルが出力される
   mode: 'production',
 
   // メインとなるJavaScriptファイル（エントリーポイント）
-  entry: './js/client.js',
+  entry: {
+    "counter/client": "./src/counter/client.js",
+    "todo/client": "./src/todo/client.js",
+  },
   // ファイルの出力設定
   output: {
     //  出力ファイルのディレクトリ名
     path: `${__dirname}/../public/dist`,
     // 出力ファイル名
-    filename: 'client.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
