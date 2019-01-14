@@ -24,18 +24,91 @@ https://ics.media/entry/16028
 **webpack-dev-server**  
 https://qiita.com/riversun/items/d27f6d3ab7aaa119deab
 
+## react routerについて学ぶ
+
+react-routerはjs内でurlを持たせる機能です
+https://reacttraining.com/react-router/web/guides/quick-start
+
 ## reduxについて学ぶ
 
 webページを作るにはreact+redux(flux)のように状態管理ライブラリを組み合わせて実装されます。  
 reduxを使っているのでreduxについて学びましょう
 
 **redux**  
-https://qiita.com/erukiti/items/e16aa13ad81d5938374e
+https://redux.js.org/introduction/getting-started
 
-## react routerについて学ぶ
 
-react-routerはjs内でurlを持たせる機能です
-https://reacttraining.com/react-router/web/guides/quick-start
+基本的な流れとしては「Actions -> Reducers -> Store」でStoreが状態（state）を持ち、Actionが発生した際に、Reducerを使ってStoreの状態（State）を更新する
+
+### action
+
+Actionとは、アクションの種別を表すtypeと、任意のパラメータを持ったアクション時に発生するデータの定義
+
+Action Creatorsは、アクションを作成する関数
+
+```
+ex)
+/*
+ * action types
+ */
+
+export const ADD_TODO = 'ADD_TODO'
+
+/*
+ * action creators
+ */
+
+export function addTodo(text) {
+  return { type: ADD_TODO, text }
+}
+```
+
+### reducer
+
+「Reducer」は、Actionに呼応してアプリケーションの状態（state）をどのように変化させるか指定する役割を持った関数です。  
+Reducerは、「現在の状態（state）」と「受け取ったAction」を引数に取り、新しい状態を返す関数として実装  
+
+```
+ex)
+function todoApp(state = initialState, action) {
+  switch (action.type) {
+    case ADD_TODO:
+      return Object.assign({}, state, {
+        todos: [
+          ...state.todos,
+          {
+            text: action.text,
+            completed: false
+          }
+        ]
+      })
+    default:
+      return state
+  }
+}
+```
+
+### store
+
+* アプリケーションの状態（state）を保持します
+* getState()メソッドを通して状態（state）へのアクセスを許可します
+* dispatch(action)メソッドを通して状態（state）の更新を許可します
+* subscribe(listener)メソッドを通してリスナーを登録します
+* subscribe(listener)メソッドによって返された関数を通してリスナーの登録解除をハンドリングします
+
+### Presentational Components
+
+データがどこから来たのか、どのように変更するのかを知らずレンダリングするだけのコンポーネントでreduxに依存しない
+
+### Container Components
+
+プレゼンテーションコンポーネントをReduxに接続するためのコンテナコンポーネント
+
+### react-redux
+
+reactとreduxの連携に必要
+
+https://react-redux.js.org/introduction/quick-start
 
 ## typescriptについて学ぶ
 
@@ -43,5 +116,5 @@ typescriptはjavascriptに型を導入して、コードの品質を向上させ
 
 ## jestについて学ぶ
 
-testはjestを使います。fluct_ms側で使用してるので採用しました
+testはjestを使います。
 
