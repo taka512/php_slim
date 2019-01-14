@@ -114,6 +114,8 @@ https://react-redux.js.org/introduction/quick-start
 
 typescriptはjavascriptに型を導入して、コードの品質を向上させます。 
 
+https://www.typescriptlang.org/docs/handbook/react-&-webpack.html
+
 ## jestについて学ぶ
 
 testはjestを使います。
