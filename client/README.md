@@ -26,7 +26,7 @@ https://qiita.com/riversun/items/d27f6d3ab7aaa119deab
 
 ## react routerについて学ぶ
 
-react-routerはjs内でurlを持たせる機能です
+react-routerはjs内でurlを持たせる機能です  
 https://reacttraining.com/react-router/web/guides/quick-start
 
 ## reduxについて学ぶ
