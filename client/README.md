@@ -116,6 +116,28 @@ typescriptはjavascriptに型を導入して、コードの品質を向上させ
 
 https://www.typescriptlang.org/docs/handbook/react-&-webpack.html
 
+## linter&formatter
+
+### prettier
+
+コードフォーマッター
+
+### tslint
+
+typescript向けlintルールチェック
+
+### tslint-config-prettier
+
+tsLintの設定のうちPrettierと衝突するものを無効化してくれるパッケージ
+
+### tslint-plugin-prettier
+
+tslintのチェックをかけるときに一緒にprettierのチェックもかけてくれるプラグイン
+
+### tslint-config-standard
+
+lintにJavaScript Standard Styleを適用してくれる
+
 ## jestについて学ぶ
 
 testはjestを使います。
