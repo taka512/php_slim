@@ -14,6 +14,9 @@ class SearchForm extends Form
             'name' => 'name',
             'type' => Text::class,
         ])->add([
+            'name' => 'site_id',
+            'type' => Text::class,
+        ])->add([
             'name' => 'limit',
             'type' => Text::class,
         ])->add([

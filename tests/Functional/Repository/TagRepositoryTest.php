@@ -65,6 +65,8 @@ class TagRepositoryTest extends DatabaseTestCase
     {
         return [
             ['tag count is 3(search name:tag)', ['name' => 'tag', 'offset' => 0, 'limit' => 30], 3],
+            ['tag count is 2(search site_id:1)', ['site_id' => '1', 'offset' => 0, 'limit' => 30], 2],
+            ['tag count is 1(search site_id:1, name:tag1)', ['name' => 'tag1', 'site_id' => '1', 'offset' => 0, 'limit' => 30], 1],
             ['tag count is 4(search all)', ['offset' => 0, 'limit' => 30], 4],
             ['tag count is 1(search limit 1)', ['offset' => 0, 'limit' => 1], 1],
             ['tag count is 3(search offset 1)', ['offset' => 1, 'limit' => 30], 3],

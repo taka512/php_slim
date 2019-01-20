@@ -60,6 +60,20 @@ class TagControllerTest extends E2eTestCase
                 ],
             ],
             [
+                'site_id parameter is [site_id]',
+                '?site_id=1',
+                [
+                    [
+                        'id' => 2,
+                        'name' => 'tag2',
+                    ],
+                    [
+                        'id' => 1,
+                        'name' => 'tag1',
+                    ],
+                ],
+            ],
+            [
                 'name,limit parameters',
                 '?name=tag&limit=1',
                 [

@@ -104,11 +104,50 @@ function todoApp(state = initialState, action) {
 
 プレゼンテーションコンポーネントをReduxに接続するためのコンテナコンポーネント
 
-### react-redux
+## react-redux
 
 reactとreduxの連携に必要
 
 https://react-redux.js.org/introduction/quick-start
+
+### mapStateToProps
+
+stateとownProps(オプショナル）からのデータを処理  
+接続されたコンポーネントが必要とするデータの一部をストアから選択するために使用されます。 略して単にmapStateと呼ばれることがよくあります  
+ストアの状態が変わるたびに呼び出されます  
+ストア状態全体を受け取り、このコンポーネントが必要とするデータのオブジェクトを返す必要があります  
+この関数はconnectの最初の引数として渡されるべきで、Reduxストアの状態が変わるたびに呼び出されます。 ストアを購読したくない場合は、mapStateToPropsの代わりにnullまたはundefinedを渡して接続します  
+mapStateToProps関数の最初の引数は、Reduxストア全体の状態（store.getState（）の呼び出しによって返される値と同じ）です  
+
+```
+const mapStateToProps = (state, ownProps) => ({
+})
+```
+
+### mapDispatchToProps
+
+ストアへのアクションのディスパッチに使用されます  
+ディスパッチはReduxストアの機能です。 アクションをディスパッチするにはstore.dispatchを呼び出します。 これが状態変化を引き起こす唯一の方法です  
+dispatch関数を受け取ってプロパティに変換します。dispatch関数はstoreにアクションを流し込む為のもので、たとえば、上記の例だとhandleClickというプロパティは引数なしの関数で実行するとincrement()した戻り値をdispatchします
+
+```
+function mapDispatchToProps(dispatch) {
+  return {
+    handleClick: () => { dispatch(increment()) }
+  }
+}
+```
+
+### connect
+
+
+
+```
+connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Component)
+```
 
 ## typescriptについて学ぶ
 
