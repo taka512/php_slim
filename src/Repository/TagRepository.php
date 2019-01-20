@@ -31,6 +31,7 @@ class TagRepository
         if (!empty($conditions['site_id'])) {
             $builder->join('tag_site', 'tag.id', '=', 'tag_site.tag_id')->where('tag_site.site_id', '=', $conditions['site_id']);
         }
+
         return $builder->get();
     }
 
