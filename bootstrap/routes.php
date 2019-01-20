@@ -9,8 +9,9 @@ $c = $app->getContainer();
 $app->get('/', \Taka512\Controller\HomeController::class . ':index')->setName('top');
 
 $app->group('/api', function () {
-    $this->map(['GET'], '', \Taka512\Controller\Api\HomeController::class. ':index')->setName('api_home_index');
-    $this->map(['GET'], '/tag', \Taka512\Controller\Api\TagController::class. ':index')->setName('api_tag_index');
+    $this->map(['GET'], '', \Taka512\Controller\Api\HomeController::class. ':index')->setName('api_home');
+    $this->map(['GET'], '/tag', \Taka512\Controller\Api\TagController::class. ':index')->setName('api_tag');
+    $this->map(['POST'], '/tag/site', \Taka512\Controller\Api\TagSiteController::class. ':index')->setName('api_tag_site');
 });
 
 $app->map(['GET', 'POST'], '/admin/user/signin', \Taka512\Controller\Admin\UserController::class. ':signin')->setName('admin_user_signin');

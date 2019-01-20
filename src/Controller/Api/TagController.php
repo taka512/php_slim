@@ -18,10 +18,20 @@ class TagController extends BaseController
      *     @OA\Parameter(
      *         name="name",
      *         in="query",
-     *         description="search tags condition",
+     *         description="search by tag name",
      *         required=false,
      *         @OA\Schema(
      *           type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="site_id",
+     *         in="query",
+     *         description="search by site id",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int32"
      *         )
      *     ),
      *     @OA\Parameter(
