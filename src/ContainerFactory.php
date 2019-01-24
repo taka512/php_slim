@@ -194,6 +194,14 @@ class ContainerFactory
         self::$container['form.api.tag.search_renderer'] = function ($c) {
             return new \Taka512\Form\Api\Tag\SearchRenderer();
         };
+
+        self::$container['form.api.tag_site.create_form'] = function ($c) {
+            return new \Taka512\Form\Api\TagSite\CreateForm();
+        };
+
+        self::$container['form.api.tag_site.create_input'] = function ($c) {
+            return new \Taka512\Form\Api\TagSite\CreateInput();
+        };
     }
 
     public static function loadRepositoryService(): void

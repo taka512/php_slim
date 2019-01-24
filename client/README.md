@@ -35,8 +35,8 @@ webページを作るにはreact+redux(flux)のように状態管理ライブラ
 reduxを使っているのでreduxについて学びましょう
 
 **redux**  
-https://redux.js.org/introduction/getting-started
-
+https://redux.js.org/introduction/getting-started  
+https://speakerdeck.com/jmblog/fen-wei-qi-deyatuteruren-xiang-kefalse-redux-zai-ru-men  
 
 基本的な流れとしては「Actions -> Reducers -> Store」でStoreが状態（state）を持ち、Actionが発生した際に、Reducerを使ってStoreの状態（State）を更新する
 
