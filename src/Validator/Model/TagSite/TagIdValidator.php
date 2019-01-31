@@ -41,7 +41,7 @@ class TagIdValidator extends AbstractValidator
         }
 
         if (empty($context['site_id'])) {
-            throw new \RuntimeException('site_id is not specified');
+            return false;
         }
 
         if ($this->isDuplicated($value, $context['site_id'])) {
