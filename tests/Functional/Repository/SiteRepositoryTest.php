@@ -19,7 +19,7 @@ class SiteRepositoryTest extends DatabaseTestCase
     public function testInsert($msg, $data, $expected)
     {
         $actual = $this->get('repository.site')->insert($data);
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual->id);
     }
 
     public function providerInsert()

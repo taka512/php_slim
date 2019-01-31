@@ -10,24 +10,24 @@ class TagSiteControllerTest extends E2eTestCase
 {
     protected function getDataSet()
     {
-        return new YamlDataSet(__DIR__.'/TagController.yml');
+        return new YamlDataSet(__DIR__.'/TagSiteController.yml');
     }
 
     /**
      * @dataProvider providerCreate
      */
-    public function testCreate($msg, $json, $expected)
+    public function testCreate($msg, $json, $expectedStatus, $expectedContent)
     {
         $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
         $crawler = $client->request('POST', '/api/tag_site' , [], [], ['HTTP_CONTENT_TYPE' => 'application/json'], json_encode($json));
-        var_dump($client->getResponse()->getContent());
-        $this->assertSame($expected, $client->getResponse()->getStatus());
+        $this->assertSame($expectedStatus, $client->getResponse()->getStatus(), 'ステータスコードの比較');
+        $this->assertSame($expectedContent, json_decode($client->getResponse()->getContent(), true), 'コンテンツの比較');
     }
 
     public function providerCreate()
     {
         return [
-            ['create success tag_site data', ['tag_id' => '1', 'site_id' => '1'], 200],
+            ['create success tag_site data', ['tag_id' => '2', 'site_id' => '2'], 200, ['tag_id' => '2', 'site_id' => '2']],
         ];
     }
 }

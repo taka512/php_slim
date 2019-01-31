@@ -34,9 +34,9 @@ class TagSiteController extends BaseController
         $this->get('logger')->info(print_r($data, true));
         $form->setData($data);
         if ($form->isValid()) {
-#            $tags = $this->get('repository.tag')->findBySearchConditions($form->getData()->getArrayCopy());
-#
-#            return $this->get('form.api.tag.search_renderer')->render($response, $tags);
+            $tag = $this->get('repository.tag_site')->insert($form->getData()->getArrayCopy());
+
+            return $this->get('form.api.tag_site.create_renderer')->render($response, $tag);
         } else {
             return $this->get('form.api.error_renderer')->render400($response, $form->getMessages());
         }

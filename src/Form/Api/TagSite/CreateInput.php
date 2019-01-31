@@ -7,12 +7,30 @@ use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Taka512\Validator\Model\TagSite\TagIdValidator;
+use Taka512\Validator\Model\TagSite\SiteIdValidator;
+use Taka512\Repository\TagRepository;
+use Taka512\Repository\SiteRepository;
+use Taka512\Repository\TagSiteRepository;
 
 class CreateInput implements InputFilterAwareInterface
 {
     protected $tagId;
     protected $siteId;
+    protected $tagRepository;
+    protected $siteRepository;
+    protected $tagSiteRepository;
     protected $inputFilter;
+
+    public function __construct(
+        TagRepository $tagRepository,
+        SiteRepository $siteRepository,
+        TagSiteRepository $tagSiteRepository)
+    {
+        $this->tagRepository = $tagRepository;
+        $this->siteRepository = $siteRepository;
+        $this->tagSiteRepository = $tagSiteRepository;
+    }
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
     {
@@ -42,8 +60,16 @@ class CreateInput implements InputFilterAwareInterface
                     'break_chain_on_failure' => true,
                     'options' => [
                         'messages' => [
-                            NotEmpty::IS_EMPTY => 'タグidの入力は必須です',
+                            NotEmpty::IS_EMPTY => TagIdValidator::MSG_REQUIRE,
                         ],
+                    ],
+                ],
+                [
+                    'name' => TagIdValidator::class,
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'tagRepository' => $this->tagRepository,
+                        'tagSiteRepository' => $this->tagSiteRepository,
                     ],
                 ],
             ],
@@ -60,8 +86,15 @@ class CreateInput implements InputFilterAwareInterface
                     'break_chain_on_failure' => true,
                     'options' => [
                         'messages' => [
-                            NotEmpty::IS_EMPTY => 'サイトidの入力は必須です',
+                            NotEmpty::IS_EMPTY => SiteIdValidator::MSG_REQUIRE,
                         ],
+                    ],
+                ],
+                [
+                    'name' => SiteIdValidator::class,
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'siteRepository' => $this->siteRepository,
                     ],
                 ],
             ],
