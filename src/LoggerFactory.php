@@ -20,7 +20,7 @@ class LoggerFactory
     {
         $logger = new Logger('app');
         $logger->pushProcessor(new IntrospectionProcessor(Logger::WARNING));
-        if (is_resource($path)) {
+        if (is_resource($path) || 'php://stdout' == $path) {
             $logger->pushHandler(new StreamHandler($path, $level));
         } else {
             $now = new \DateTime();

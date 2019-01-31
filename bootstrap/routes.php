@@ -11,8 +11,10 @@ $app->get('/', \Taka512\Controller\HomeController::class . ':index')->setName('t
 $app->group('/api', function () {
     $this->map(['GET'], '', \Taka512\Controller\Api\HomeController::class. ':index')->setName('api_home');
     $this->map(['GET'], '/tag', \Taka512\Controller\Api\TagController::class. ':index')->setName('api_tag');
-    $this->map(['POST'], '/tag/site', \Taka512\Controller\Api\TagSiteController::class. ':index')->setName('api_tag_site');
-});
+    $this->map(['POST'], '/tag_site', \Taka512\Controller\Api\TagSiteController::class. ':create')->setName('api_tag_site_create');
+})->add(
+    new \Taka512\Middleware\Api\ExceptionHandlerMiddleware($c['form.api.error_renderer'])
+);
 
 $app->map(['GET', 'POST'], '/admin/user/signin', \Taka512\Controller\Admin\UserController::class. ':signin')->setName('admin_user_signin');
 $app->group('/admin', function () {

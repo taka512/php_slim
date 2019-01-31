@@ -180,7 +180,9 @@ class ContainerFactory
         };
 
         self::$container['form.api.error_renderer'] = function ($c) {
-            return new \Taka512\Form\Api\ErrorRenderer();
+            return new \Taka512\Form\Api\ErrorRenderer(
+                $c['logger']
+            );
         };
 
         self::$container['form.api.tag.search_form'] = function ($c) {
@@ -194,6 +196,22 @@ class ContainerFactory
         self::$container['form.api.tag.search_renderer'] = function ($c) {
             return new \Taka512\Form\Api\Tag\SearchRenderer();
         };
+
+        self::$container['form.api.tag_site.create_form'] = function ($c) {
+            return new \Taka512\Form\Api\TagSite\CreateForm();
+        };
+
+        self::$container['form.api.tag_site.create_input'] = function ($c) {
+            return new \Taka512\Form\Api\TagSite\CreateInput(
+                $c['repository.tag'],
+                $c['repository.site'],
+                $c['repository.tag_site']
+            );
+        };
+
+        self::$container['form.api.tag_site.create_renderer'] = function ($c) {
+            return new \Taka512\Form\Api\TagSite\CreateRenderer();
+        };
     }
 
     public static function loadRepositoryService(): void
@@ -204,6 +222,10 @@ class ContainerFactory
 
         self::$container['repository.tag'] = function ($c) {
             return new \Taka512\Repository\TagRepository();
+        };
+
+        self::$container['repository.tag_site'] = function ($c) {
+            return new \Taka512\Repository\TagSiteRepository();
         };
 
         self::$container['repository.user'] = function ($c) {
