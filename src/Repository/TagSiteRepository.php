@@ -2,7 +2,6 @@
 
 namespace Taka512\Repository;
 
-use Illuminate\Database\Eloquent\Collection;
 use Taka512\Model\TagSite;
 
 class TagSiteRepository

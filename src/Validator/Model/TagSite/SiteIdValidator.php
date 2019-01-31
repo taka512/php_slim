@@ -22,7 +22,6 @@ class SiteIdValidator extends AbstractValidator
 
     public function isValid($value, ?array $context = null): bool
     {
-
         if (empty($value)) {
             return $this->error(self::INVALID_FMT);
         }

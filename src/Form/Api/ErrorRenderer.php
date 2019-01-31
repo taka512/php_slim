@@ -42,6 +42,7 @@ class ErrorRenderer
     public function render500(ResponseInterface $response, $msg): ResponseInterface
     {
         $this->logger->error($msg);
+
         return $response
             ->withStatus(500);
     }

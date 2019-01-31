@@ -43,12 +43,14 @@ class TagIdValidator extends AbstractValidator
         if ($this->isDuplicated($value, $context['site_id'])) {
             return $this->error(self::DUPLICATE_ID);
         }
+
         return true;
     }
 
     public function isDuplicated($tagId, $siteId): bool
     {
         $tagSite = $this->tagSiteRepository->findOneByTagSite($tagId, $siteId);
+
         return isset($tagSite);
     }
 
