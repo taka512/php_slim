@@ -28,12 +28,16 @@ class TagIdValidator extends AbstractValidator
     public function isValid($value, ?array $context = null): bool
     {
         if (empty($value)) {
-            return $this->error(self::INVALID_FMT);
+            $this->error(self::INVALID_FMT);
+
+            return false;
         }
 
         $tag = $this->tagRepository->findOneById($value);
         if (is_null($tag)) {
-            return $this->error(self::NOT_FOUND_ID);
+            $this->error(self::NOT_FOUND_ID);
+
+            return false;
         }
 
         if (empty($context['site_id'])) {
@@ -41,7 +45,9 @@ class TagIdValidator extends AbstractValidator
         }
 
         if ($this->isDuplicated($value, $context['site_id'])) {
-            return $this->error(self::DUPLICATE_ID);
+            $this->error(self::DUPLICATE_ID);
+
+            return false;
         }
 
         return true;

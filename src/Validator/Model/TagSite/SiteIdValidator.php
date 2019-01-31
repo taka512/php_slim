@@ -23,12 +23,16 @@ class SiteIdValidator extends AbstractValidator
     public function isValid($value, ?array $context = null): bool
     {
         if (empty($value)) {
-            return $this->error(self::INVALID_FMT);
+            $this->error(self::INVALID_FMT);
+
+            return false;
         }
 
         $site = $this->siteRepository->findOneById($value);
         if (is_null($site)) {
-            return $this->error(self::NOT_FOUND_ID);
+            $this->error(self::NOT_FOUND_ID);
+
+            return false;
         }
 
         return true;
