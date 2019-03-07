@@ -31,17 +31,19 @@ class TagControllerTest extends E2eTestCase
                 'query no parameter',
                 '',
                 [
-                    [
-                        'id' => 3,
-                        'name' => 'hoge1',
-                    ],
-                    [
-                        'id' => 2,
-                        'name' => 'tag2',
-                    ],
-                    [
-                        'id' => 1,
-                        'name' => 'tag1',
+                    'tags' => [
+                        [
+                            'id' => 3,
+                            'name' => 'hoge1',
+                        ],
+                        [
+                            'id' => 2,
+                            'name' => 'tag2',
+                        ],
+                        [
+                            'id' => 1,
+                            'name' => 'tag1',
+                        ],
                     ],
                 ],
             ],
@@ -49,13 +51,15 @@ class TagControllerTest extends E2eTestCase
                 'name parameter is [tag]',
                 '?name=tag',
                 [
-                    [
-                        'id' => 2,
-                        'name' => 'tag2',
-                    ],
-                    [
-                        'id' => 1,
-                        'name' => 'tag1',
+                    'tags' => [
+                        [
+                            'id' => 2,
+                            'name' => 'tag2',
+                        ],
+                        [
+                            'id' => 1,
+                            'name' => 'tag1',
+                        ],
                     ],
                 ],
             ],
@@ -63,13 +67,15 @@ class TagControllerTest extends E2eTestCase
                 'site_id parameter is [site_id]',
                 '?site_id=1',
                 [
-                    [
-                        'id' => 2,
-                        'name' => 'tag2',
-                    ],
-                    [
-                        'id' => 1,
-                        'name' => 'tag1',
+                    'tags' => [
+                        [
+                            'id' => 2,
+                            'name' => 'tag2',
+                        ],
+                        [
+                            'id' => 1,
+                            'name' => 'tag1',
+                        ],
                     ],
                 ],
             ],
@@ -77,9 +83,11 @@ class TagControllerTest extends E2eTestCase
                 'name,limit parameters',
                 '?name=tag&limit=1',
                 [
-                    [
-                        'id' => 2,
-                        'name' => 'tag2',
+                    'tags' => [
+                        [
+                            'id' => 2,
+                            'name' => 'tag2',
+                        ],
                     ],
                 ],
             ],
@@ -87,9 +95,11 @@ class TagControllerTest extends E2eTestCase
                 'name,limit,offset parameters',
                 '?name=tag&limit=1&offset=1',
                 [
-                    [
-                        'id' => 1,
-                        'name' => 'tag1',
+                    'tags' => [
+                        [
+                            'id' => 1,
+                            'name' => 'tag1',
+                        ],
                     ],
                 ],
             ],
