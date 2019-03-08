@@ -54,7 +54,9 @@ export interface GetTagsResponseAction extends Action {
   payload: { [tags: string]: TagListState }
 }
 
-export const getTagsResponseCreator = (tags: TagListState): GetTagsResponseAction => ({
+export const getTagsResponseCreator = (
+  tags: TagListState
+): GetTagsResponseAction => ({
   type: ActionNames.GET_TAGS_RESPONSE,
   payload: { tags: tags }
 })

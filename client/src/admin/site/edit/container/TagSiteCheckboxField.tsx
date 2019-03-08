@@ -5,8 +5,6 @@ import { FieldUnionActions } from '../action'
 import TagSiteCheckboxField from '../component/TagSiteCheckboxField'
 import { TagSiteCombineState } from '../state'
 
-export default connect(
-  (state: TagSiteCombineState) => ({
-    tags: state.field.tags
-  })
-)(TagSiteCheckboxField)
+export default connect((state: TagSiteCombineState) => ({
+  tags: state.field.tags
+}))(TagSiteCheckboxField)
