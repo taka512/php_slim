@@ -4,7 +4,6 @@ import { TagState, TagListState, ErrorMessages } from '../state'
 
 export enum ActionNames {
   SET_SEARCH_WORD = 'SET_SEARCH_WORD',
-  GET_TAGS_REQUEST = 'GET_TAGS_REQUEST',
   GET_TAGS_RESPONSE = 'GET_TAGS_RESPONSE',
   ON_ERROR = 'ON_ERROR'
 }
@@ -45,10 +44,6 @@ export interface GetTagsRequestAction extends Action {
   type: string
 }
 
-export const getTagsRequestCreator = (): GetTagsRequestAction => ({
-  type: ActionNames.GET_TAGS_REQUEST
-})
-
 export interface GetTagsResponseAction extends Action {
   type: string
   payload: { [tags: string]: TagListState }
@@ -65,7 +60,6 @@ export const getTagsResponseCreator = (
 export const getTagsAsyncProcessor = (word: string): any => {
   return (dispatch: Dispatch<FieldUnionActions>) => {
     dispatch(setSearchWordCreator(word))
-    dispatch(getTagsRequestCreator())
     fetch('/api/tag?name=' + word)
       .then(response => {
         if (response.ok) {
@@ -75,15 +69,16 @@ export const getTagsAsyncProcessor = (word: string): any => {
         }
       })
       .then(json => {
-        let hash: TagListState = {}
+        let tagList: TagListState = {}
         for (let v of json.tags) {
-          let tag = new TagState()
-          tag.id = v.id
-          tag.name = v.name
-          hash[tag.id] = tag
+          let tag: TagState = {
+            id: v.id,
+            name: v.name
+          }
+          tagList[v.id] = tag
         }
 
-        dispatch(getTagsResponseCreator(hash))
+        dispatch(getTagsResponseCreator(tagList))
       })
       .catch(err => {
         console.info('getTagsAsyncProcessor error:', err)

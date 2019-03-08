@@ -13,11 +13,6 @@ export const fieldReducer = (
   action: FieldIntersectActions
 ): FieldState => {
   switch (action.type) {
-    case ActionNames.GET_TAGS_REQUEST: {
-      return {
-        ...state
-      }
-    }
     case ActionNames.GET_TAGS_RESPONSE: {
       return {
         ...state,
