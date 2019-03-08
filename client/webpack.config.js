@@ -11,16 +11,16 @@ module.exports = {
   entry: {
     "admin/site/edit": "./src/admin/site/edit/index.tsx",
   },
+  resolve: {
+    // Add '.ts' and '.tsx' as resolvable extensions.
+    extensions: [".ts", ".tsx", ".js", ".json", ".jsx"]
+  },
   // ファイルの出力設定
   output: {
     //  出力ファイルのディレクトリ名
     path: `${__dirname}/../public/dist`,
     // 出力ファイル名
     filename: '[name].js'
-  },
-  resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js", ".json"]
   },
   module: {
     rules: [

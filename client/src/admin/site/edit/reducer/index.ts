@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { FieldState } from '../store'
+import { FieldState } from '../state'
 import { FieldIntersectActions, ActionNames } from '../action'
 
 const initialFieldState: FieldState = {

@@ -2,8 +2,8 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
-import TagSiteField from './container/TagSiteField'
 import { store } from './store'
+import TagSiteField from './container/TagSiteField'
 
 ReactDOM.render(
   <Provider store={store}>

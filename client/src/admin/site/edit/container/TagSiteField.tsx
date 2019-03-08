@@ -1,18 +1,17 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { FieldIntersectActions } from '../action'
-import { ThunkAction } from 'redux-thunk'
+import { FieldUnionActions } from '../action'
 
 import TagSiteField from '../component/TagSiteField'
-import { TagSiteCombineState } from '../store'
+import { TagSiteCombineState } from '../state'
 import { ActionDispatcher } from '../dispatcher'
 
 export default connect(
   (state: TagSiteCombineState) => ({
-    searchWord: state.fieldReducer.searchWord,
-    tags: state.fieldReducer.tags
+    searchWord: state.field.searchWord,
+    tags: state.field.tags
   }),
-  (dispatch: Dispatch<FieldIntersectActions>) => ({
+  (dispatch: Dispatch<FieldUnionActions>) => ({
     actions: new ActionDispatcher(dispatch)
   })
 )(TagSiteField)

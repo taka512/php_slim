@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { ActionDispatcher } from '../dispatcher'
-import { Tag } from '../model/Tag'
+import { TagState } from '../state'
 
 interface TagSiteFieldProps {
   searchWord: string
-  tags: { [key: number]: Tag }
+  tags: { [key: number]: TagState }
   actions: ActionDispatcher
 }
 
