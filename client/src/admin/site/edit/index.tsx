@@ -3,11 +3,13 @@ import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 import { store } from './store'
-import TagSiteField from './container/TagSiteField'
+import TagSiteTextField from './container/TagSiteTextField'
+import TagSiteCheckboxField from './container/TagSiteCheckboxField'
 
 ReactDOM.render(
   <Provider store={store}>
-    <TagSiteField />
+    <TagSiteTextField />
+    <TagSiteCheckboxField />
   </Provider>,
   document.getElementById('root')
 )

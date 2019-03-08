@@ -42,5 +42,5 @@ export const fieldReducer = (
 }
 
 export default combineReducers({
-  fieldReducer
+  field: fieldReducer
 })

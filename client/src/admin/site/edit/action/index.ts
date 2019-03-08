@@ -1,6 +1,6 @@
 import { Dispatch, Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { TagState, ErrorMessages } from '../state'
+import { TagState, TagListState, ErrorMessages } from '../state'
 
 export enum ActionNames {
   SET_SEARCH_WORD = 'SET_SEARCH_WORD',
@@ -51,12 +51,10 @@ export const getTagsRequestCreator = (): GetTagsRequestAction => ({
 
 export interface GetTagsResponseAction extends Action {
   type: string
-  payload: { [tags: string]: { [key: number]: TagState } }
+  payload: { [tags: string]: TagListState }
 }
 
-export const getTagsResponseCreator = (tags: {
-  [key: number]: TagState
-}): GetTagsResponseAction => ({
+export const getTagsResponseCreator = (tags: TagListState): GetTagsResponseAction => ({
   type: ActionNames.GET_TAGS_RESPONSE,
   payload: { tags: tags }
 })
@@ -75,7 +73,7 @@ export const getTagsAsyncProcessor = (word: string): any => {
         }
       })
       .then(json => {
-        let hash: { [key: number]: TagState } = {}
+        let hash: TagListState = {}
         for (let v of json.tags) {
           let tag = new TagState()
           tag.id = v.id
