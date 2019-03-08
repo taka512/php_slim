@@ -13,8 +13,7 @@
     "fmt": "tslint src/**/*.ts src/**/*tsx --format stylish --project . --fix",
     "lint": "tslint src/**/*.ts src/**/*tsx --format stylish --project .",
     "start": "npm install && webpack-dev-server --mode development --inline",
-    "test": "jest",
-    "tsc": "tsc"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
