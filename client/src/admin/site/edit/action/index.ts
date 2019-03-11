@@ -5,15 +5,18 @@ import { TagState, TagListState, ErrorMessages } from '../state'
 export enum ActionNames {
   SET_SEARCH_WORD = 'SET_SEARCH_WORD',
   REFRESH_TAGS = 'REFRESH_TAGS',
+  CHECK_TAG = 'CHECK_TAG',
   ON_ERROR = 'ON_ERROR'
 }
 
 export type FieldUnionActions =
   | SetSearchWordAction
   | RefreshTagsAction
+  | CheckTagAction
   | OnErrorAction
 export type FieldIntersectActions = SetSearchWordAction &
   RefreshTagsAction &
+  CheckTagAction &
   OnErrorAction
 
 export interface OnErrorAction extends Action {
@@ -65,7 +68,8 @@ export const getTagsAsyncProcessor = (word: string): any => {
         for (let v of json.tags) {
           let tag: TagState = {
             id: v.id,
-            name: v.name
+            name: v.name,
+            isChecked: false
           }
           tagList[v.id] = tag
         }
@@ -82,3 +86,13 @@ export const getTagsAsyncProcessor = (word: string): any => {
       })
   }
 }
+
+export interface CheckTagAction extends Action {
+  type: string
+  payload: { tag: TagState }
+}
+
+export const checkTagCreator = (tag: TagState): CheckTagAction => ({
+  type: ActionNames.CHECK_TAG,
+  payload: { tag: tag }
+})

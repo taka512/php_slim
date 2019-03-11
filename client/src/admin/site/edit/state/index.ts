@@ -19,4 +19,5 @@ export interface TagListState {
 export class TagState {
   id: number
   name: string
+  isChecked: boolean
 }

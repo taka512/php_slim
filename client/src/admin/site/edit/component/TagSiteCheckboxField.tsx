@@ -4,6 +4,7 @@ import { TagListState } from '../state'
 
 interface TagSiteCheckboxFieldProps {
   tags: TagListState
+  actions: ActionDispatcher
 }
 
 export default class TagSiteCheckboxField extends React.Component<
@@ -22,6 +23,8 @@ export default class TagSiteCheckboxField extends React.Component<
             type="checkbox"
             name="tags[]"
             value={tag.id}
+            checked={tag.isChecked}
+            onChange={e => this.props.actions.checkTag(tag)}
             className="form-check-input"
           />
           <label htmlFor={tagId} className="form-check-label">
