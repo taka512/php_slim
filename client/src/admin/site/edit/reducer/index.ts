@@ -13,7 +13,7 @@ export const fieldReducer = (
   action: FieldIntersectActions
 ): FieldState => {
   switch (action.type) {
-    case ActionNames.GET_TAGS_RESPONSE: {
+    case ActionNames.REFRESH_TAGS: {
       return {
         ...state,
         tags: action.payload.tags

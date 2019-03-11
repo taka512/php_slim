@@ -4,18 +4,16 @@ import { TagState, TagListState, ErrorMessages } from '../state'
 
 export enum ActionNames {
   SET_SEARCH_WORD = 'SET_SEARCH_WORD',
-  GET_TAGS_RESPONSE = 'GET_TAGS_RESPONSE',
+  REFRESH_TAGS = 'REFRESH_TAGS',
   ON_ERROR = 'ON_ERROR'
 }
 
 export type FieldUnionActions =
   | SetSearchWordAction
-  | GetTagsRequestAction
-  | GetTagsResponseAction
+  | RefreshTagsAction
   | OnErrorAction
 export type FieldIntersectActions = SetSearchWordAction &
-  GetTagsRequestAction &
-  GetTagsResponseAction &
+  RefreshTagsAction &
   OnErrorAction
 
 export interface OnErrorAction extends Action {
@@ -40,19 +38,13 @@ export const setSearchWordCreator = (word: string): SetSearchWordAction => ({
   payload: { word: word }
 })
 
-export interface GetTagsRequestAction extends Action {
-  type: string
-}
-
-export interface GetTagsResponseAction extends Action {
+export interface RefreshTagsAction extends Action {
   type: string
   payload: { [tags: string]: TagListState }
 }
 
-export const getTagsResponseCreator = (
-  tags: TagListState
-): GetTagsResponseAction => ({
-  type: ActionNames.GET_TAGS_RESPONSE,
+export const refreshTagsCreator = (tags: TagListState): RefreshTagsAction => ({
+  type: ActionNames.REFRESH_TAGS,
   payload: { tags: tags }
 })
 
@@ -78,7 +70,7 @@ export const getTagsAsyncProcessor = (word: string): any => {
           tagList[v.id] = tag
         }
 
-        dispatch(getTagsResponseCreator(tagList))
+        dispatch(refreshTagsCreator(tagList))
       })
       .catch(err => {
         console.info('getTagsAsyncProcessor error:', err)
