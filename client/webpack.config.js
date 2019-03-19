@@ -9,9 +9,11 @@ module.exports = {
 
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: {
-    "counter/client": "./src/counter/client.js",
-    "todo/client": "./src/todo/client.js",
-    "ts_hello/client": "./src/ts_hello/client.tsx",
+    "admin/site/edit": "./src/admin/site/edit/index.tsx",
+  },
+  resolve: {
+    // Add '.ts' and '.tsx' as resolvable extensions.
+    extensions: [".ts", ".tsx", ".js", ".json", ".jsx"]
   },
   // ファイルの出力設定
   output: {
@@ -20,22 +22,12 @@ module.exports = {
     // 出力ファイル名
     filename: '[name].js'
   },
-  resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js", ".json"]
-  },
   module: {
     rules: [
       {
         // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
         test: /\.tsx?$/,
         loader: "awesome-typescript-loader"
-      },
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        loader: "source-map-loader"
       },
       {
         // 拡張子 .js|jsx の場合
@@ -55,6 +47,11 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        loader: "source-map-loader"
       }
     ]
   },
@@ -62,7 +59,7 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
   ],
-  devtool: 'source-map',//ブラウザでのデバッグ用にソースマップを出力する
+  devtool: 'source-map',//デバッグ用にソースマップを出力する
   devServer: {
     open: false,//ブラウザを自動で開くかどうか
     openPage: "index.html",//自動で指定したページを開く

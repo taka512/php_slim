@@ -7,7 +7,7 @@ executors:
       docker_layer_caching: true
     working_directory: ~/php_slim
 jobs:
-  lint_test:
+  lint_test_for_server:
     executor: backbone-executor
     steps:
       - checkout
@@ -22,16 +22,14 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "composer.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - v1-vendor-{{ checksum "composer.json" }}
 
       - run: make docker/composer/install ENV=dev
 
       - save_cache:
           paths:
             - ./vendor
-          key: v1-dependencies-{{ checksum "composer.json" }}
+          key: v1-vendor-{{ checksum "composer.json" }}
         
       # run tests!
       - run: make docker/lint
@@ -39,6 +37,21 @@ jobs:
       - run: mysql -h 127.0.0.1 -u root --password=mypass < ./docker/mysql/init/0_init.sql
       - run: make docker/db/test/migrate
       - run: make docker/test
+  lint_test_for_client:
+    executor: backbone-executor
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-client-package-{{ checksum "./client/package.json" }}
+      - run: make docker/client/install
+      - save_cache:
+          paths:
+            - ./client/node_modules
+          key: v1-client-package-{{ checksum "./client/package.json" }}
+      - run: make docker/client/lint
+      - run: make docker/client/test
   echo:
     executor: backbone-executor
     steps:
@@ -49,14 +62,24 @@ workflows:
   version: 2
   branch_test:
     jobs:
-      - lint_test:
+      - lint_test_for_server:
+          filters:
+            branches:
+              ignore:
+                - master
+      - lint_test_for_client:
           filters:
             branches:
               ignore:
                 - master
   deploy:
     jobs:
-      - lint_test:
+      - lint_test_for_server:
+          filters:
+            branches:
+              only:
+                - master
+      - lint_test_for_client:
           filters:
             branches:
               only:
@@ -64,7 +87,8 @@ workflows:
       - hold:
           type: approval
           requires:
-            - lint_test
+            - lint_test_for_server
+            - lint_test_for_client
       - echo:
           requires:
             - hold

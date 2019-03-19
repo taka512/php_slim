@@ -16,6 +16,9 @@ lint:
 fmt:
 	npm run fmt
 
+test:
+	npm run test
+
 start:
 	npm run start
 
