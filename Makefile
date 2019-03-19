@@ -112,6 +112,15 @@ docker/test:
 docker/lint:
 	docker exec $(CONTAINER) make lint
 
+docker/client/install:
+	docker run -w /home/php_slim/client -v `pwd`:/home/php_slim -it node:10.15-alpine npm install
+docker/client/lint:
+	docker run -w /home/php_slim/client -v `pwd`:/home/php_slim -it node:10.15-alpine npm run lint
+docker/client/build:
+	docker run -w /home/php_slim/client -v `pwd`:/home/php_slim -it node:10.15-alpine npm run build
+docker/client/test:
+	docker run -w /home/php_slim/client -v `pwd`:/home/php_slim -it node:10.15-alpine npm run test
+
 #########
 # test
 #########
