@@ -51,6 +51,7 @@ jobs:
             - ./client/node_modules
           key: v1-client-package-{{ checksum "./client/package.json" }}
       - run: make docker/client/lint
+      - run: make docker/client/test
   echo:
     executor: backbone-executor
     steps:
@@ -78,16 +79,16 @@ workflows:
             branches:
               only:
                 - master
-#      - lint_test_for_client:
-#          filters:
-#            branches:
-#              only:
-#                - master
+      - lint_test_for_client:
+          filters:
+            branches:
+              only:
+                - master
       - hold:
           type: approval
           requires:
             - lint_test_for_server
-#            - lint_test_for_client
+            - lint_test_for_client
       - echo:
           requires:
             - hold
