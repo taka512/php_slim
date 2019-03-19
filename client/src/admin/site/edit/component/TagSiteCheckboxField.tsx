@@ -17,7 +17,7 @@ export default class TagSiteCheckboxField extends React.Component<
       let tag = this.props.tags[i]
       let tagId = 'tagSite' + tag.id
       list.push(
-        <div className="form-check form-check-inline">
+        <div key={tag.id} className="form-check form-check-inline">
           <input
             id={tagId}
             type="checkbox"

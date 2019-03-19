@@ -13,16 +13,16 @@ export const fieldReducer = (
   action: FieldIntersectActions
 ): FieldState => {
   switch (action.type) {
-    case ActionNames.REFRESH_TAGS: {
-      return {
-        ...state,
-        tags: refreshTags(state.tags, action.payload.tags)
-      }
-    }
     case ActionNames.SET_SEARCH_WORD: {
       return {
         ...state,
         searchWord: action.payload.word
+      }
+    }
+    case ActionNames.REFRESH_TAGS: {
+      return {
+        ...state,
+        tags: refreshTags(state.tags, action.payload.tags)
       }
     }
     case ActionNames.CHECK_TAG: {
