@@ -37,23 +37,23 @@ jobs:
       - run: mysql -h 127.0.0.1 -u root --password=mypass < ./docker/mysql/init/0_init.sql
       - run: make docker/db/test/migrate
       - run: make docker/test
-  lint_test_for_client:
-    executor: backbone-executor
-    steps:
-      - checkout
+#  lint_test_for_client:
+#    executor: backbone-executor
+#    steps:
+#      - checkout
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-client-package-{{ checksum "./client/package.json" }}
+#      - restore_cache:
+#          keys:
+#          - v1-client-package-{{ checksum "./client/package.json" }}
 
-      - run: make docker/client/install
+#      - run: make docker/client/install
 
-      - save_cache:
-          paths:
-            - ./client/node_modules
-          key: v1-client-package-{{ checksum "./client/package.json" }}
+#      - save_cache:
+#          paths:
+#            - ./client/node_modules
+#          key: v1-client-package-{{ checksum "./client/package.json" }}
 
-      - run: make docker/client/lint
+#      - run: make docker/client/lint
   echo:
     executor: backbone-executor
     steps:
@@ -69,11 +69,11 @@ workflows:
             branches:
               ignore:
                 - master
-      - lint_test_for_client:
-          filters:
-            branches:
-              ignore:
-                - master
+#      - lint_test_for_client:
+#          filters:
+#            branches:
+#              ignore:
+#                - master
   deploy:
     jobs:
       - lint_test_for_server:
@@ -81,16 +81,16 @@ workflows:
             branches:
               only:
                 - master
-      - lint_test_for_client:
-          filters:
-            branches:
-              only:
-                - master
+#      - lint_test_for_client:
+#          filters:
+#            branches:
+#              only:
+#                - master
       - hold:
           type: approval
           requires:
             - lint_test_for_server
-            - lint_test_for_client
+#            - lint_test_for_client
       - echo:
           requires:
             - hold
