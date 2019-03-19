@@ -58,7 +58,7 @@ jobs:
     executor: backbone-executor
     steps:
       - run:
-        command: |
+          command: |
             echo "TEST"
 workflows:
   version: 2
