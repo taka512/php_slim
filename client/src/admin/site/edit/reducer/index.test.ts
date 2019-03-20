@@ -86,10 +86,10 @@ describe('reducer/index.ts test case:', () => {
     const reduceResult = reducer(
       { field: initFieldState },
       loadTagsCreator({
-        3 : {
-        id: 3,
-        name: 'test3',
-        isChecked: true
+        3: {
+          id: 3,
+          name: 'test3',
+          isChecked: true
         }
       })
     )
