@@ -3,6 +3,7 @@ import {
   setSearchWordCreator,
   refreshTagsCreator,
   checkTagCreator,
+  loadTagsCreator,
   onErrorCreator
 } from '../action'
 import { FieldState } from '../state'
@@ -76,6 +77,26 @@ describe('reducer/index.ts test case:', () => {
       2: {
         id: 2,
         name: 'test2',
+        isChecked: true
+      }
+    })
+  })
+
+  it('LOAD_TAGS action test', () => {
+    const reduceResult = reducer(
+      { field: initFieldState },
+      loadTagsCreator({
+        3 : {
+        id: 3,
+        name: 'test3',
+        isChecked: true
+        }
+      })
+    )
+    expect(reduceResult['field']['tags']).toEqual({
+      3: {
+        id: 3,
+        name: 'test3',
         isChecked: true
       }
     })

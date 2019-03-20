@@ -16,6 +16,7 @@ class EditInput implements InputFilterAwareInterface
     protected $id;
     protected $name;
     protected $url;
+    protected $tags;
     protected $delFlg;
     protected $createdAt;
     protected $updatedAt;
@@ -83,6 +84,9 @@ class EditInput implements InputFilterAwareInterface
                 ],
             ],
         ])->add([
+            'name' => 'tags',
+            'required' => false,
+        ])->add([
             'name' => 'del_flg',
             'required' => false,
         ]);
@@ -96,6 +100,7 @@ class EditInput implements InputFilterAwareInterface
         $this->id = (isset($data['id']) && '' !== $data['id']) ? $data['id'] : null;
         $this->name = (isset($data['name']) && '' !== $data['name']) ? $data['name'] : null;
         $this->url = (isset($data['url']) && '' !== $data['url']) ? $data['url'] : null;
+        $this->tags = (isset($data['tags']) && '' !== $data['tags']) ? $data['tags'] : [];
         $this->delFlg = (isset($data['del_flg']) && Site::FLG_ON == $data['del_flg']) ? Site::FLG_ON : Site::FLG_OFF;
         $this->confirm = !empty($data['confirm']) ? $data['confirm'] : false;
         $this->back = (isset($data['back']) && '1' === $data['back']) ? $data['back'] : false;
@@ -109,6 +114,7 @@ class EditInput implements InputFilterAwareInterface
             'id' => $this->id,
             'name' => $this->name,
             'url' => $this->url,
+            'tags' => $this->tags,
             'del_flg' => $this->delFlg,
             'created_at' => $this->createdAt,
             'updated_at' => $this->updatedAt,
@@ -123,5 +129,23 @@ class EditInput implements InputFilterAwareInterface
     public function isBack(): bool
     {
         return false !== $this->back;
+    }
+
+    public function isCheckedByTagId($tagId): bool
+    {
+        return in_array($tagId, $this->tags);
+    }
+
+    public function getSiteTags(): array
+    {
+        $tags = [];
+        foreach ($this->tags as $tagId) {
+            $tags[] = [
+               'site_id' => $this->id,
+               'tag_id' => $tagId,
+           ];
+        }
+
+        return $tags;
     }
 }

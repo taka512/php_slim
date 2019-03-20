@@ -21,4 +21,9 @@ class TagSiteRepository
     {
         return TagSite::where('tag_id', $tagId)->where('site_id', $siteId)->first();
     }
+
+    public function deleteBySiteId(int $siteId): int
+    {
+        return TagSite::where('site_id', $siteId)->delete();
+    }
 }
