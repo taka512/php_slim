@@ -31,6 +31,12 @@ export const fieldReducer = (
         tags: checkTag(state.tags, action.payload.tag)
       }
     }
+    case ActionNames.LOAD_TAGS: {
+      return {
+        ...state,
+        tags: action.payload.tags
+      }
+    }
     case ActionNames.ON_ERROR: {
       return {
         ...state,

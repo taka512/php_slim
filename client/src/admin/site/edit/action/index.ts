@@ -6,6 +6,7 @@ export enum ActionNames {
   SET_SEARCH_WORD = 'SET_SEARCH_WORD',
   REFRESH_TAGS = 'REFRESH_TAGS',
   CHECK_TAG = 'CHECK_TAG',
+  LOAD_TAGS = 'LOAD_TAGS',
   ON_ERROR = 'ON_ERROR'
 }
 
@@ -13,10 +14,12 @@ export type FieldUnionActions =
   | SetSearchWordAction
   | RefreshTagsAction
   | CheckTagAction
+  | LoadTagsAction
   | OnErrorAction
 export type FieldIntersectActions = SetSearchWordAction &
   RefreshTagsAction &
   CheckTagAction &
+  LoadTagsAction &
   OnErrorAction
 
 export interface OnErrorAction extends Action {
@@ -51,7 +54,6 @@ export const refreshTagsCreator = (tags: TagListState): RefreshTagsAction => ({
   payload: { tags: tags }
 })
 
-// TODO: 戻値定義をThunkActionにしたいが上手くいかないのでanyで回避(をなんとかしたい)
 export const getTagsAsyncProcessor = (word: string): any => {
   return (dispatch: Dispatch<FieldUnionActions>) => {
     dispatch(setSearchWordCreator(word))
@@ -95,4 +97,48 @@ export interface CheckTagAction extends Action {
 export const checkTagCreator = (tag: TagState): CheckTagAction => ({
   type: ActionNames.CHECK_TAG,
   payload: { tag: tag }
+})
+
+export const loadTagsAsyncProcessor = (siteId: string): any => {
+  return (dispatch: Dispatch<FieldUnionActions>) => {
+    fetch('/api/tag?site_id=' + siteId)
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          throw new Error('response status invalid:' + response.status)
+        }
+      })
+      .then(json => {
+        let tagList: TagListState = {}
+        for (let v of json.tags) {
+          let tag: TagState = {
+            id: v.id,
+            name: v.name,
+            isChecked: true
+          }
+          tagList[v.id] = tag
+        }
+
+        dispatch(loadTagsCreator(tagList))
+      })
+      .catch(err => {
+        console.info('loadTagsAsyncProcessor error:', err)
+        dispatch(
+          onErrorCreator({
+            request: ['リクエストに失敗[loadTagsAsyncProcessor]']
+          })
+        )
+      })
+  }
+}
+
+export interface LoadTagsAction extends Action {
+  type: string
+  payload: { tags: TagListState }
+}
+
+export const loadTagsCreator = (tags: TagListState): LoadTagsAction => ({
+  type: ActionNames.LOAD_TAGS,
+  payload: { tags: tags }
 })
