@@ -28,6 +28,13 @@
             <input type="hidden" class="form-control" id="inputUrl" name="url" value="{{ form.get('url').getValue() }}">
           </div>
           <div class="form-group">
+            {% for id,name in form.get('tags').getValueOptions() %}
+              {% if form.getData().isCheckedByTagId(id) %}
+                <input type="hidden" name="tags[]" value="{{id}}">{{name}}
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="form-group">
             <label for="inputUrl">削除フラグ</label>
             <p>{% if form.get('del_flg').getValue() %}ON{% else %}OFF{% endif %}</p>
             <input type="hidden" name="del_flg" value="{{ form.get('del_flg').getValue() }}">

@@ -5,15 +5,22 @@ namespace Taka512\Form\Admin\Site;
 use Zend\Form\Form;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Text;
+use Zend\Form\Element\MultiCheckbox;
 use Zend\Form\Element\Checkbox;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Csrf;
 use Taka512\Model\Site;
+use Taka512\Repository\TagRepository;
 
 class EditForm extends Form
 {
-    public function __construct(int $csrfTimeout)
+    public function __construct(TagRepository $tagRepository, int $csrfTimeout)
     {
+        $tagValues = [];
+        $tags = $tagRepository->findLatestTags();
+        foreach ($tags as $tag) {
+            $tagValues[$tag->id] = $tag->name;
+        }
         parent::__construct('site_edit');
         $this->add([
             'name' => 'id',
@@ -24,6 +31,12 @@ class EditForm extends Form
         ])->add([
             'name' => 'url',
             'type' => Text::class,
+        ])->add([
+            'name' => 'tags',
+            'type' => MultiCheckbox::class,
+            'options' => [
+                'value_options' => $tagValues,
+            ],
         ])->add([
             'name' => 'del_flg',
             'type' => Checkbox::class,

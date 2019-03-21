@@ -171,6 +171,7 @@ class ContainerFactory
 
         self::$container['form.admin.site.edit_form'] = function ($c) {
             return new \Taka512\Form\Admin\Site\EditForm(
+                $c['repository.tag'],
                 $c['settings']['form']['csrf_timeout']
             );
         };

@@ -2,7 +2,8 @@ import { Dispatch, Action } from 'redux'
 import {
   getTagsAsyncProcessor,
   checkTagCreator,
-  FieldUnionActions
+  FieldUnionActions,
+  loadTagsAsyncProcessor
 } from '../action'
 import { TagState } from '../state'
 
@@ -15,5 +16,9 @@ export class ActionDispatcher {
 
   public checkTag(tag: TagState) {
     this.dispatch(checkTagCreator(tag))
+  }
+
+  public loadTags(siteId: string) {
+    this.dispatch(loadTagsAsyncProcessor(siteId))
   }
 }

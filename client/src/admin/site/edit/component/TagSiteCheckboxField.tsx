@@ -11,6 +11,16 @@ export default class TagSiteCheckboxField extends React.Component<
   TagSiteCheckboxFieldProps,
   {}
 > {
+  componentDidMount() {
+    const element: HTMLInputElement = document.getElementById(
+      'id'
+    ) as HTMLInputElement
+    if (element) {
+      const id: string = element.value
+      this.props.actions.loadTags(id)
+    }
+  }
+
   render() {
     let list = []
     for (let i in this.props.tags) {

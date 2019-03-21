@@ -64,6 +64,10 @@ class SiteController extends BaseController
                 }
                 $site->setFormArray($form->getData()->getArrayCopy());
                 $site->save();
+                $this->get('repository.tag_site')->deleteBySiteId($site->id);
+                foreach ($form->getData()->getTagSiteData() as $tag) {
+                    $this->get('repository.tag_site')->insert($tag);
+                }
 
                 return $response->withRedirect($this->get('router')->pathFor('admin_site_edit', ['id' => $args['id']]));
             }
