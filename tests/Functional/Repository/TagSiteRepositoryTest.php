@@ -52,4 +52,21 @@ class TagSiteRepositoryTest extends DatabaseTestCase
             ['case tag_id:2 site_id:1 is not found(not TagSite)', 2, 1, false],
         ];
     }
+
+    /**
+     * @dataProvider providerDeleteBySiteId
+     */
+    public function testDeleteBySiteId($msg, $siteId, $expected)
+    {
+        $actual = $this->get('repository.tag_site')->deleteBySiteId($siteId);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function providerDeleteBySiteId()
+    {
+        return [
+            ['case site_id:1(one data) is delete', 1, 1],
+            ['case site_id:99(no data) is delete', 99, 0],
+        ];
+    }
 }

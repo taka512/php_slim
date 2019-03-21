@@ -85,7 +85,8 @@ class TagRepositoryTest extends DatabaseTestCase
     public function providerFindLatestTags()
     {
         return [
-            ['tag count is 4(limit 10)', 10, 4],
+            ['tag count is 2(limit 2)', 2, 2],
+            ['tag count is 4(limit is null)', null, 4],
         ];
     }
 }

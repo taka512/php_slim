@@ -136,7 +136,7 @@ class EditInput implements InputFilterAwareInterface
         return in_array($tagId, $this->tags);
     }
 
-    public function getSiteTags(): array
+    public function getTagSiteData(): array
     {
         $tags = [];
         foreach ($this->tags as $tagId) {
