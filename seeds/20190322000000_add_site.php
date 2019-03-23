@@ -2,7 +2,7 @@
 
 use Phpmig\Migration\Migration;
 
-class AddUser extends Migration
+class AddSite extends Migration
 {
     /**
      * Do the migration
@@ -11,10 +11,10 @@ class AddUser extends Migration
     {
         $c = $this->getContainer();
         $data = [
-            ['login_id' => 'admin', 'password' => '12345678'],
+            ['name' => 'テストサイト', 'url' => 'https://google.com'],
         ];
-        foreach ($data as $user) {
-            $c['repository.user']->insert($user);
+        foreach ($data as $site) {
+            $c['repository.site']->insert($site);
         }
     }
 
@@ -25,7 +25,7 @@ class AddUser extends Migration
     {
         $c = $this->getContainer();
         $c['pdo.master']->query('set foreign_key_checks = 0');
-        $c['pdo.master']->query('TRUNCATE TABLE user');
+        $c['pdo.master']->query('TRUNCATE TABLE site');
         $c['pdo.master']->query('set foreign_key_checks = 1');
     }
 }

@@ -69,6 +69,11 @@ db/seed/migrate:
 	php vendor/bin/phpmig migrate -b config/seed.php
 db/seed/down:
 	php vendor/bin/phpmig down $(ID) -b config/seed.php
+db/seed/down/all:
+	php vendor/bin/phpmig down 20190323000000 -b config/seed.php
+	php vendor/bin/phpmig down 20190322000000 -b config/seed.php
+	php vendor/bin/phpmig down 20190105000000 -b config/seed.php
+	php vendor/bin/phpmig down 20181027000000 -b config/seed.php
 
 ###############
 # docker
@@ -101,8 +106,8 @@ docker/db/seed/status:
 	docker exec $(CONTAINER) make db/seed/status
 docker/db/seed/migrate:
 	docker exec $(CONTAINER) make db/seed/migrate
-docker/db/seed/down:
-	docker exec $(CONTAINER) make db/seed/down ID=$(ID)
+docker/db/seed/down/all:
+	docker exec $(CONTAINER) make db/seed/down/all
 docker/composer/install:
 	docker exec $(CONTAINER) make composer/install ENV=$(ENV)
 docker/composer/update:
