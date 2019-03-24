@@ -17,7 +17,6 @@ class ContainerFactory
         }
         Env::loadDotenv();
         self::$container = new Container(Env::getSetting());
-        self::loadBatchService();
         self::loadCommonService();
         self::loadService();
 
@@ -31,21 +30,10 @@ class ContainerFactory
         }
         Env::loadDotenv('env.sample');
         self::$container = new Container(Env::getTestSetting());
-        self::loadBatchService();
         self::loadCommonService();
         self::loadService();
 
         return self::$container;
-    }
-
-    public static function loadBatchService(): void
-    {
-        self::$container['batch.crawler'] = function ($c) {
-            $app = new \Symfony\Component\Console\Application();
-            $app->add(new \Taka512\Command\Crawler\SiteCrawlerCommand());
-
-            return $app;
-        };
     }
 
     public static function loadCommonService(): void
@@ -62,6 +50,7 @@ class ContainerFactory
             return $capsule;
         };
 
+        // use migration
         self::$container['pdo.master'] = function ($c) {
             try {
                 $settings = $c['settings']['db'];
@@ -80,7 +69,9 @@ class ContainerFactory
     public static function loadService(): void
     {
         self::loadAuthService();
+        self::loadBatchService();
         self::loadFormService();
+        self::loadManagerService();
         self::loadRepositoryService();
     }
 
@@ -90,6 +81,16 @@ class ContainerFactory
             return new \Taka512\Auth\AuthenticationAdapter(
                 $c['repository.user']
             );
+        };
+    }
+
+    public static function loadBatchService(): void
+    {
+        self::$container['batch.crawler'] = function ($c) {
+            $app = new \Symfony\Component\Console\Application();
+            $app->add(new \Taka512\Command\Crawler\SiteCrawlerCommand());
+
+            return $app;
         };
     }
 
@@ -212,6 +213,15 @@ class ContainerFactory
 
         self::$container['form.api.tag_site.create_renderer'] = function ($c) {
             return new \Taka512\Form\Api\TagSite\CreateRenderer();
+        };
+    }
+
+    public static function loadManagerService(): void
+    {
+        self::$container['manager.tag'] = function ($c) {
+            return new \Taka512\Manager\TagManager(
+                $c['repository.tag']
+            );
         };
     }
 
