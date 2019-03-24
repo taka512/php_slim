@@ -76,17 +76,35 @@ class TagRepositoryTest extends DatabaseTestCase
     /**
      * @dataProvider providerFindLatestTags
      */
-    public function testFindLatestTags($msg, $limit, $expected)
+    public function testFindLatestTags($msg, $offset, $limit, $expected)
     {
-        $actual = $this->get('repository.tag')->findLatestTags($limit);
+        $actual = $this->get('repository.tag')->findLatestTags($offset, $limit);
         $this->assertCount($expected, $actual);
     }
 
     public function providerFindLatestTags()
     {
         return [
-            ['tag count is 2(limit 2)', 2, 2],
-            ['tag count is 4(limit is null)', null, 4],
+            ['tag get count is 2(limit 2)', 0, 2, 2],
+            ['tag get count is 4(limit is null)', 0, null, 4],
+            ['tag get count is 4(offset,limit is null)', null, null, 4],
+            ['tag get count is 1(offset is 3,limit is 10)', 3, 10, 1],
+        ];
+    }
+
+    /**
+     * @dataProvider providerCount
+     */
+    public function testCount($msg, $expected)
+    {
+        $actual = $this->get('repository.tag')->count();
+        $this->assertSame($expected, $actual);
+    }
+
+    public function providerCount()
+    {
+        return [
+            ['all tag count is 4', 4],
         ];
     }
 }

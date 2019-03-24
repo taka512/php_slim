@@ -36,6 +36,11 @@
             {% endfor %}
           </tbody>
         </table>
+        <center>
+          <div class="pagerfanta">
+            {{ page_html | raw }}
+          </div>
+        </center>
         <form action="{{ path_for('admin_tag_create') }}" class="form-horizontal" method="GET">
           <div class="form-group">
             <button type="submit" class="btn btn-primary">新規登録</button>

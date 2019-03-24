@@ -35,12 +35,20 @@ class TagRepository
         return $builder->get();
     }
 
-    public function findLatestTags(?int $limit = null): Collection
+    public function findLatestTags(?int $offset = null, ?int $limit = null): Collection
     {
-        if (is_null($limit)) {
-            return Tag::orderBy('id', 'desc')->get();
-        } else {
-            return Tag::orderBy('id', 'desc')->limit($limit)->get();
+        $offset = isset($offset) ? $offset : 0;
+
+        $query = Tag::orderBy('id', 'desc');
+        if (isset($limit)) {
+            $query = $query->offset($offset)->limit($limit);
         }
+
+        return $query->get();
+    }
+
+    public function count(): int
+    {
+        return Tag::count();
     }
 }

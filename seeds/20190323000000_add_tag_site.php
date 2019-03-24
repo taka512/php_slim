@@ -2,7 +2,7 @@
 
 use Phpmig\Migration\Migration;
 
-class AddUser extends Migration
+class AddTagSite extends Migration
 {
     /**
      * Do the migration
@@ -11,10 +11,10 @@ class AddUser extends Migration
     {
         $c = $this->getContainer();
         $data = [
-            ['login_id' => 'admin', 'password' => '12345678'],
+            ['tag_id' => '1', 'site_id' => '1'],
         ];
-        foreach ($data as $user) {
-            $c['repository.user']->insert($user);
+        foreach ($data as $tagSite) {
+            $c['repository.tag_site']->insert($tagSite);
         }
     }
 
@@ -25,7 +25,7 @@ class AddUser extends Migration
     {
         $c = $this->getContainer();
         $c['pdo.master']->query('set foreign_key_checks = 0');
-        $c['pdo.master']->query('TRUNCATE TABLE user');
+        $c['pdo.master']->query('TRUNCATE TABLE tag_site');
         $c['pdo.master']->query('set foreign_key_checks = 1');
     }
 }

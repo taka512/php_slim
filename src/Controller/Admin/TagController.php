@@ -5,15 +5,24 @@ namespace Taka512\Controller\Admin;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Taka512\Controller\BaseController;
+use Pagerfanta\View\TwitterBootstrap4View;
 
 class TagController extends BaseController
 {
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $tags = $this->get('repository.tag')->findLatestTags();
+        $getParams = $request->getQueryParams();
+        $page = $getParams['page'] ?? 1;
+        $pagenate = $this->get('manager.tag')->getTagPagenate($page);
+        $routeGenerator = function ($page) {
+            return htmlspecialchars(sprintf('/admin/tag?page=%s', $page), ENT_QUOTES);
+        };
+        $view = new TwitterBootstrap4View();
+        $pageHtml = $view->render($pagenate, $routeGenerator, []);
 
         return $this->container->get('view')->render($response, 'admin/tag/index.html.twig', [
-            'tags' => $tags,
+            'tags' => $pagenate->getCurrentPageResults(),
+            'page_html' => $pageHtml,
         ]);
     }
 
