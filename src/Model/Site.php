@@ -2,8 +2,33 @@
 
 namespace Taka512\Model;
 
+/**
+ * @OA\Schema(
+ *     description="Site model",
+ *     type="object",
+ *     title="Site model"
+ * )
+ */
 class Site extends BaseModel
 {
+    /**
+     * @OA\Property(
+     *   property="id",
+     *   type="integer",
+     *   format="int64",
+     *   example=1
+     * )
+     * @OA\Property(
+     *   property="name",
+     *   type="string",
+     *   example="site1"
+     * )
+     * @OA\Property(
+     *   property="url",
+     *   type="string",
+     *   example="http://google.com"
+     * )
+     */
     const FLG_OFF = 0;
     const FLG_ON = 1;
 

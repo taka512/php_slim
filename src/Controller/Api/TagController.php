@@ -15,6 +15,7 @@ class TagController extends BaseController
      *     description="Returns array tag",
      *     operationId="getTagsBySearchConditions",
      *     tags={"tag"},
+     *     @OA\Parameter(ref="#/components/requestBodies/product_in_body"),
      *     @OA\Parameter(
      *         name="name",
      *         in="query",

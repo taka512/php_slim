@@ -15,7 +15,8 @@ servers:
 paths:
   /api/home:
     get:
-      operationId: 'Taka512\Controller\Api\HomeController::index'
+      description: 'find tag by search condition'
+      operationId: /api/home/index
       responses:
         '200':
           description: 'An example resource'
@@ -63,3 +64,42 @@ paths:
           description: 'successful operation'
         '400':
           description: 'Invalid Search Conditions supplied'
+  /api/tag_site:
+    post:
+      tags:
+        - tag
+      summary: 'create for tag site relations'
+      description: 'add data in tag_site table '
+      operationId: tag_site_create
+      responses:
+        '200':
+          description: 'successful operation'
+components:
+  schemas:
+    Site:
+      title: 'site model'
+      description: 'Site model'
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: site1
+        url:
+          type: string
+          example: 'http://google.com'
+      type: object
+    Tag:
+      title: 'Tag model'
+      description: 'Tag model'
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: tag1
+      type: object

@@ -9,7 +9,7 @@ use Taka512\Controller\BaseController;
 /**
  * @OA\Info(
  *   title="php samle api",
- *    version="1.0.0"
+ *   version="1.0.0"
  * )
  */
 
@@ -29,6 +29,8 @@ class HomeController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/home",
+     *     description="find tag by search condition",
+     *     operationId="/api/home/index",
      *     @OA\Response(response="200", description="An example resource")
      * )
      */
