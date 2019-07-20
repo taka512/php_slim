@@ -12,6 +12,7 @@ namespace Taka512\Model;
 class Tag extends BaseModel
 {
     protected $table = 'tag';
+
     /**
      * @OA\Property(
      *   property="id",
@@ -25,7 +26,6 @@ class Tag extends BaseModel
      *   example="tag1"
      * )
      */
-
     public function setFormArray(array $data): void
     {
         $this->name = $data['name'];
