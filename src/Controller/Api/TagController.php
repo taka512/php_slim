@@ -12,7 +12,7 @@ class TagController extends BaseController
      * @OA\Get(
      *     path="/api/tag",
      *     summary="find tag by search condition",
-     *     description="Returns array tag",
+     *     description="find tag by search condition and Returns array tag",
      *     operationId="getTagsBySearchConditions",
      *     tags={"tag"},
      *     @OA\Parameter(ref="#/components/requestBodies/product_in_body"),

@@ -18,9 +18,9 @@ class Env
         }
 
         if (isset($envFile)) {
-            $dotenv = new Dotenv(__DIR__.'/../', $envFile);
+            $dotenv = Dotenv::create(__DIR__.'/../', $envFile);
         } else {
-            $dotenv = new Dotenv(__DIR__.'/../');
+            $dotenv = Dotenv::create(__DIR__.'/../');
         }
         $dotenv->load();
         self::$isLoadDotenv = true;

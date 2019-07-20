@@ -25,7 +25,6 @@ class Tag extends BaseModel
      *   example="tag1"
      * )
      */
-    public $name;
 
     public function setFormArray(array $data): void
     {

@@ -16,7 +16,7 @@ use Taka512\Controller\BaseController;
 /**
  * @OA\Server(
  *      url="{schema}://localhost",
- *      description="OpenApi parameters",
+ *      description="local develop server",
  *      @OA\ServerVariable(
  *          serverVariable="schema",
  *          enum={"https", "http"},
@@ -29,9 +29,9 @@ class HomeController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/home",
-     *     description="find tag by search condition",
+     *     description="sample test api",
      *     operationId="/api/home/index",
-     *     @OA\Response(response="200", description="An example resource")
+     *     @OA\Response(response="200", description="example resource")
      * )
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
