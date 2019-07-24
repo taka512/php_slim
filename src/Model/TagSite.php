@@ -25,7 +25,6 @@ class TagSite extends BaseModel
      *   example=1
      * )
      */
-     */
     protected $table = 'tag_site';
     public $timestamps = false;
 
