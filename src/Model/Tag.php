@@ -2,10 +2,30 @@
 
 namespace Taka512\Model;
 
+/**
+ * @OA\Schema(
+ *     description="",
+ *     type="object",
+ *     title="Tag model"
+ * )
+ */
 class Tag extends BaseModel
 {
     protected $table = 'tag';
 
+    /**
+     * @OA\Property(
+     *   property="id",
+     *   type="integer",
+     *   format="int64",
+     *   example=1
+     * )
+     * @OA\Property(
+     *   property="name",
+     *   type="string",
+     *   example="tag1"
+     * )
+     */
     public function setFormArray(array $data): void
     {
         $this->name = $data['name'];

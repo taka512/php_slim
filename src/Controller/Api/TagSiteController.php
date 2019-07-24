@@ -13,11 +13,41 @@ class TagSiteController extends BaseController
      *     path="/api/tag_site",
      *     summary="create for tag site relations",
      *     description="add data in tag_site table ",
-     *     operationId="tag_site_create",
+     *     operationId="/api/tag_site-post",
      *     tags={"tag"},
+     *     @OA\RequestBody(
+     *         description="List of user object",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 ref="#/components/schemas/TagSite"
+     *             )
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         ref="#/components/responses/BadRequest"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         ref="#/components/responses/Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         ref="#/components/responses/Forbidden"
+     *     ),
+     *     @OA\Response(
+     *         response=405,
+     *         ref="#/components/responses/MethodNotAllowed"
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         ref="#/components/responses/Unexpected"
      *     ),
      * )
      */
