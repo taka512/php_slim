@@ -40,9 +40,4 @@ class Tag extends BaseModel
             'updated_at' => $this->updatedAt->format('Y-m-d H:i:s'),
         ];
     }
-
-    public function toArray(): array
-    {
-        $this->name = $data['name'];
-    }
 }
