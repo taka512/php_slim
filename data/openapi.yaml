@@ -26,58 +26,85 @@ paths:
         - tag
       summary: 'find tag by search condition'
       description: 'find tag by search condition and Returns array tag'
-      operationId: getTagsBySearchConditions
+      operationId: /api/tag-get
       parameters:
-        -
-          $ref: '#/components/requestBodies/product_in_body'
         -
           name: name
           in: query
           description: 'search by tag name'
           required: false
           schema:
-            type: string
+            $ref: '#/components/schemas/Tag/properties/name'
         -
           name: site_id
           in: query
           description: 'search by site id'
           required: false
           schema:
-            type: integer
-            format: int32
+            $ref: '#/components/schemas/Site/properties/id'
         -
-          name: limit
-          in: query
-          description: 'maximum number of results to return'
-          required: false
-          schema:
-            type: integer
-            format: int32
+          $ref: '#/components/parameters/limit'
         -
-          name: offset
-          in: query
-          description: 'offset of results to return'
-          required: false
-          schema:
-            type: integer
-            format: int32
+          $ref: '#/components/parameters/offset'
       responses:
         '200':
           description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
         '400':
-          description: 'Invalid Search Conditions supplied'
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '500':
+          $ref: '#/components/responses/Unexpected'
   /api/tag_site:
     post:
       tags:
         - tag
       summary: 'create for tag site relations'
       description: 'add data in tag_site table '
-      operationId: tag_site_create
+      operationId: /api/tag_site-post
+      requestBody:
+        description: 'List of user object'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagSite'
       responses:
         '200':
           description: 'successful operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '500':
+          $ref: '#/components/responses/Unexpected'
 components:
   schemas:
+    Error:
+      title: 'Error model'
+      description: 'Api Response Error model'
+      properties:
+        code:
+          type: string
+          example: not_found
+        message:
+          type: string
+          example: 'data not found'
+      type: object
     Site:
       title: 'Site model'
       description: 'Site model'
@@ -95,7 +122,7 @@ components:
       type: object
     Tag:
       title: 'Tag model'
-      description: 'Tag model'
+      description: ''
       properties:
         id:
           type: integer
@@ -105,3 +132,62 @@ components:
           type: string
           example: tag1
       type: object
+    TagSite:
+      title: 'TagSite model'
+      description: ''
+      properties:
+        tag_id:
+          type: integer
+          format: int64
+          example: 1
+        site_id:
+          type: integer
+          format: int64
+          example: 1
+      type: object
+  responses:
+    BadRequest:
+      description: '400 Bad Request'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: '401 Unauthorized'
+    Forbidden:
+      description: '403 Forbidden'
+    NotFound:
+      description: '404 Not Found'
+    MethodNotAllowed:
+      description: '405 Method Not Allowed'
+    Unexpected:
+      description: '500 Unexpected error'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+  parameters:
+    limit:
+      name: limit
+      in: query
+      description: 'maximum number of results to return'
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 20
+        maximum: 1000
+        minimum: 1
+    offset:
+      name: offset
+      in: query
+      description: 'offset of results to return'
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0

@@ -13,16 +13,15 @@ class TagController extends BaseController
      *     path="/api/tag",
      *     summary="find tag by search condition",
      *     description="find tag by search condition and Returns array tag",
-     *     operationId="getTagsBySearchConditions",
+     *     operationId="/api/tag-get",
      *     tags={"tag"},
-     *     @OA\Parameter(ref="#/components/requestBodies/product_in_body"),
      *     @OA\Parameter(
      *         name="name",
      *         in="query",
      *         description="search by tag name",
      *         required=false,
      *         @OA\Schema(
-     *           type="string",
+     *             ref="#/components/schemas/Tag/properties/name"
      *         )
      *     ),
      *     @OA\Parameter(
@@ -31,37 +30,45 @@ class TagController extends BaseController
      *         description="search by site id",
      *         required=false,
      *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
+     *             ref="#/components/schemas/Site/properties/id"
      *         )
      *     ),
      *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="maximum number of results to return",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
-     *         )
+     *         ref="#/components/parameters/limit"
      *     ),
      *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         description="offset of results to return",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
-     *         )
+     *         ref="#/components/parameters/offset"
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="successful operation",
+     *         @OA\JsonContent(
+     *             ref="#/components/schemas/Tag"
+     *         ),
      *     ),
      *     @OA\Response(
-     *         response="400",
-     *         description="Invalid Search Conditions supplied"
+     *         response=400,
+     *         ref="#/components/responses/BadRequest"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         ref="#/components/responses/Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         ref="#/components/responses/Forbidden"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         ref="#/components/responses/NotFound"
+     *     ),
+     *     @OA\Response(
+     *         response=405,
+     *         ref="#/components/responses/MethodNotAllowed"
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         ref="#/components/responses/Unexpected"
      *     ),
      * )
      */

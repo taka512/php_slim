@@ -15,13 +15,72 @@ use Taka512\Controller\BaseController;
 
 /**
  * @OA\Server(
- *      url="{schema}://localhost",
- *      description="local develop server",
- *      @OA\ServerVariable(
- *          serverVariable="schema",
- *          enum={"https", "http"},
- *          default="https"
- *      )
+ *     url="{schema}://localhost",
+ *     description="local develop server",
+ *     @OA\ServerVariable(
+ *         serverVariable="schema",
+ *         enum={"https", "http"},
+ *         default="https"
+ *     )
+ * )
+ */
+
+/**
+ * @OA\Parameter(
+ *     name="limit",
+ *     in="query",
+ *     description="maximum number of results to return",
+ *     required=false,
+ *     @OA\Schema(
+ *         type="integer",
+ *         format="int32",
+ *         maximum=1000,
+ *         minimum=1,
+ *         default=20
+ *     )
+ * )
+ * @OA\Parameter(
+ *     name="offset",
+ *     in="query",
+ *     description="offset of results to return",
+ *     required=false,
+ *     @OA\Schema(
+ *         type="integer",
+ *         format="int32",
+ *         minimum=0
+ *     )
+ * )
+ * @OA\Response(
+ *     response="BadRequest",
+ *     description="400 Bad Request",
+ *     @OA\JsonContent(
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/Error")
+ *     )
+ * )
+ * @OA\Response(
+ *     response="Unauthorized",
+ *     description="401 Unauthorized",
+ * )
+ * @OA\Response(
+ *     response="Forbidden",
+ *     description="403 Forbidden",
+ * )
+ * @OA\Response(
+ *     response="NotFound",
+ *     description="404 Not Found",
+ * )
+ * @OA\Response(
+ *     response="MethodNotAllowed",
+ *     description="405 Method Not Allowed",
+ * )
+ * @OA\Response(
+ *     response="Unexpected",
+ *     description="500 Unexpected error",
+ *     @OA\JsonContent(
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/Error")
+ *     )
  * )
  */
 class HomeController extends BaseController

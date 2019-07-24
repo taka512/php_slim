@@ -4,7 +4,7 @@ namespace Taka512\Model;
 
 /**
  * @OA\Schema(
- *     description="Tag model",
+ *     description="",
  *     type="object",
  *     title="Tag model"
  * )
@@ -39,5 +39,10 @@ class Tag extends BaseModel
             'created_at' => $this->createdAt->format('Y-m-d H:i:s'),
             'updated_at' => $this->updatedAt->format('Y-m-d H:i:s'),
         ];
+    }
+
+    public function toArray(): array
+    {
+        $this->name = $data['name'];
     }
 }
