@@ -64,7 +64,7 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "setupTestFrameworkScriptFile": "./src/SetupTest.ts",
+    "setupFilesAfterEnv": ["./src/SetupTest.ts"],
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [
       "ts",
