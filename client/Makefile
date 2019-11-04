@@ -4,6 +4,12 @@ all:
 install:
 	npm install
 
+update:
+	npm update
+
+outdated:
+	npm outdated
+
 build:
 	npm run build
 
