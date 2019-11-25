@@ -2,42 +2,46 @@
 
 namespace Taka512\Middleware;
 
-use Slim\Views\Twig;
-use Slim\Router;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Psr7\Response;
+use Slim\Views\Twig;
 use Zend\Authentication\AuthenticationServiceInterface;
 use Taka512\Repository\UserRepository;
 
-class AuthenticationMiddleware
+class AuthenticationMiddleware implements MiddlewareInterface
 {
-    protected $router;
     protected $auth;
     protected $view;
     protected $userRepository;
 
-    public function __construct(Router $router, AuthenticationServiceInterface $auth, Twig $view, UserRepository $userRepository)
+    public function __construct(AuthenticationServiceInterface $auth, Twig $view, UserRepository $userRepository)
     {
-        $this->router = $router;
         $this->auth = $auth;
         $this->view = $view;
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!$this->auth->hasIdentity()) {
-            return $response->withRedirect($this->router->pathFor('admin_user_signin'));
+            $response = new Response();
+            $url = $request->getAttribute('routeParser')->urlFor('admin_user_signin');
+
+            return $response->withHeader('Location', $url)->withStatus(302);
         }
         $user = $this->userRepository->findOneByLoginId($this->auth->getIdentity());
         if (is_null($user) || $user->isDelete()) {
             $this->auth->clearIdentity();
+            $response = new Response();
+            $url = $request->getAttribute('routeParser')->urlFor('admin_user_signin');
 
-            return $response->withRedirect($this->router->pathFor('admin_user_signin'));
+            return $response->withHeader('Location', $url)->withStatus(302);
         }
         $this->view->offsetSet('user', $user);
-        $response = $next($request, $response);
 
-        return $response;
+        return $handler->handle($request);
     }
 }
