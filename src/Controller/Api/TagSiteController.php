@@ -56,7 +56,7 @@ class TagSiteController extends BaseController
         $form = $this->get('form.api.tag_site.create_form');
         $input = $this->get('form.api.tag_site.create_input');
         $form->bind($input);
-        if (!$request->isPost()) {
+        if ('POST' !== strtoupper($request->getMethod())) {
             return $this->get('form.api.error_renderer')->render405($response);
         }
         $json = $request->getBody();

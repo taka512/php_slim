@@ -23,7 +23,7 @@ class UserController extends BaseController
         $form = $this->get('form.admin.user.signin_form');
         $input = $this->get('form.admin.user.signin_input');
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
                 try {
@@ -59,7 +59,7 @@ class UserController extends BaseController
         $form = $this->get('form.admin.user.create_form');
         $input = $this->get('form.admin.user.create_input');
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
                 $this->get('repository.user')->insert($form->getData()->getArrayCopy());
@@ -83,7 +83,7 @@ class UserController extends BaseController
 
         $input->exchangeArray($user->getFormArray());
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {

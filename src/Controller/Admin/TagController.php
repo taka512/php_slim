@@ -32,7 +32,7 @@ class TagController extends BaseController
         $input = $this->get('form.admin.tag.create_input');
 
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
@@ -63,7 +63,7 @@ class TagController extends BaseController
 
         $input->exchangeArray($tag->getFormArray());
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
@@ -95,7 +95,7 @@ class TagController extends BaseController
 
         $input->exchangeArray($tag->getFormArray());
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
                 $tag->delete();

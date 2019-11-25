@@ -23,7 +23,7 @@ class SiteController extends BaseController
         $input = $this->get('form.admin.site.create_input');
 
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
@@ -54,7 +54,7 @@ class SiteController extends BaseController
 
         $input->exchangeArray($site->getFormArray());
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
