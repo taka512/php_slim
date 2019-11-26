@@ -30,7 +30,7 @@ $container['session'] = function () use ($session) {
 
 $container['auth'] = new Zend\Authentication\AuthenticationService();
 
-$container['view'] = function ($c) use($routeCollector) {
+$container['view'] = function ($c) {
     $settings = $c->get('settings')['view'];
     $twig = Twig::create($settings['template_path'], [
 #        'cache' => $settings['cache_path']
