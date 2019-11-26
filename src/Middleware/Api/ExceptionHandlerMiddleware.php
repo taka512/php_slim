@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Taka512\Form\Api\ErrorRenderer;
+use Slim\Psr7\Response;
 
 class ExceptionHandlerMiddleware implements MiddlewareInterface
 {
@@ -22,7 +23,7 @@ class ExceptionHandlerMiddleware implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (\Exception $e) {
-            return $this->errorRenderer->render500($response, $e->getMessage());
+            return $this->errorRenderer->render500(new Response(), $e->getMessage());
         }
     }
 }

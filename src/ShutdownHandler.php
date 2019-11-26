@@ -11,7 +11,7 @@ use Slim\ResponseEmitter;
 class ShutdownHandler
 {
     /**
-     * @var Request
+     * @var ServerRequestInterface
      */
     private $request;
 
