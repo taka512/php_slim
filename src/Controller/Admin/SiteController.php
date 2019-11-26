@@ -4,6 +4,7 @@ namespace Taka512\Controller\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
 
 class SiteController extends BaseController
@@ -47,7 +48,7 @@ class SiteController extends BaseController
     {
         $site = $this->get('repository.site')->findOneById($args['id']);
         if (is_null($site)) {
-            return $this->get('notFoundHandler')($request, $response);
+            throw new HttpNotFoundException($request);
         }
 
         $form = $this->get('form.admin.site.edit_form');

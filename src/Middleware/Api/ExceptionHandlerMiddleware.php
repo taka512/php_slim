@@ -4,11 +4,11 @@ namespace Taka512\Middleware\Api;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Taka512\Form\Api\ErrorRenderer;
 
-class ExceptionHandlerMiddleware
+class ExceptionHandlerMiddleware implements MiddlewareInterface
 {
     protected $errorRenderer;
 

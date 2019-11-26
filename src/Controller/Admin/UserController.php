@@ -4,6 +4,7 @@ namespace Taka512\Controller\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
 use Taka512\Util\StdUtil;
 
@@ -53,8 +54,9 @@ class UserController extends BaseController
     public function signout(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $this->get('auth')->clearIdentity();
+        $url = $request->getAttribute('routeParser')->urlFor('top');
 
-        return $response->withRedirect($this->get('router')->pathFor('top'));
+        return $response->withHeader('Location', $url)->withStatus(302);
     }
 
     public function create(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
@@ -78,7 +80,7 @@ class UserController extends BaseController
     {
         $user = $this->get('repository.user')->findOneById($args['id']);
         if (is_null($user)) {
-            return $this->get('notFoundHandler')($request, $response);
+            throw new HttpNotFoundException($request);
         }
 
         $form = $this->get('form.admin.user.edit_form');

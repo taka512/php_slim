@@ -25,11 +25,11 @@ class ErrorRenderer
                 $data[$k][] = ['message' => $message, 'code' => $k];
             }
         }
+        $response->getBody()->write(json_encode($data));
 
         return $response
             ->withStatus(400)
-            ->withHeader('Content-type', 'application/json')
-            ->withJson($data);
+            ->withHeader('Content-type', 'application/json');
     }
 
     // Method Not Allow

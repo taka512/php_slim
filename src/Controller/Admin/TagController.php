@@ -4,6 +4,7 @@ namespace Taka512\Controller\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
 use Pagerfanta\View\TwitterBootstrap4View;
 
@@ -56,7 +57,7 @@ class TagController extends BaseController
     {
         $tag = $this->get('repository.tag')->findOneById($args['id']);
         if (is_null($tag)) {
-            return $this->get('notFoundHandler')($request, $response);
+            throw new HttpNotFoundException($request);
         }
 
         $form = $this->get('form.admin.tag.edit_form');
@@ -89,7 +90,7 @@ class TagController extends BaseController
     {
         $tag = $this->get('repository.tag')->findOneById($args['id']);
         if (is_null($tag)) {
-            return $this->get('notFoundHandler')($request, $response);
+            throw new HttpNotFoundException($request);
         }
 
         $form = $this->get('form.admin.tag.delete_form');
