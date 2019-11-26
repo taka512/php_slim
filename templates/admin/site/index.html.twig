@@ -3,7 +3,7 @@
 {% block title %}サイト一覧{% endblock %}
 {% block breadcrumb %}
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path_for('admin_home_index') }}">home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_home_index') }}">home</a></li>
         <li class="breadcrumb-item active">サイト一覧</li>
       </ol>
 {% endblock %}
@@ -23,14 +23,14 @@
           <tbody>
             {% for site in sites %}
             <tr>
-              <td><a href="{{ path_for('admin_site_edit', {'id': site.id}) }}">{{ site.id }}</a></td>
+              <td><a href="{{ url_for('admin_site_edit', {'id': site.id}) }}">{{ site.id }}</a></td>
               <td>{{ site.name }}</td>
               <td>{{ site.url }}</td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
-        <form action="{{ path_for('admin_site_create') }}" class="form-horizontal" method="GET">
+        <form action="{{ url_for('admin_site_create') }}" class="form-horizontal" method="GET">
           <div class="form-group">
             <button type="submit" class="btn btn-primary">新規登録</button>
           </div>

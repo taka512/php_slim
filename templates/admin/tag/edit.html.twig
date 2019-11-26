@@ -3,8 +3,8 @@
 {% block title %}タグ編集{% endblock %}
 {% block breadcrumb %}
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path_for('admin_home_index') }}">home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path_for('admin_tag_index') }}">タグ一覧</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_home_index') }}">home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_tag_index') }}">タグ一覧</a></li>
         <li class="breadcrumb-item active">タグ編集</li>
       </ol>
 {% endblock %}
@@ -12,7 +12,7 @@
     <div class="row">
       <div class="col-lg-12">
         <h2>編集</h2>
-        <form class="form-horizontal" action="{{ path_for('admin_tag_edit', {'id': form.get('id').getValue()}) }}" method="POST">
+        <form class="form-horizontal" action="{{ url_for('admin_tag_edit', {'id': form.get('id').getValue()}) }}" method="POST">
           <input type="hidden" name="id" value="{{ form.get('id').getValue() }}">
           <input type="hidden" name="confirm" value="1">
           <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">

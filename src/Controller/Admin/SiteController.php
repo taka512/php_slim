@@ -32,8 +32,9 @@ class SiteController extends BaseController
                     ]);
                 }
                 $this->get('repository.site')->insert($form->getData()->getArrayCopy());
+                $url = $request->getAttribute('routeParser')->urlFor('admin_site_index');
 
-                return $response->withRedirect($this->container->get('router')->pathFor('admin_site_index'));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 
@@ -68,8 +69,9 @@ class SiteController extends BaseController
                 foreach ($form->getData()->getTagSiteData() as $tag) {
                     $this->get('repository.tag_site')->insert($tag);
                 }
+                $url = $request->getAttribute('routeParser')->urlFor('admin_site_edit', ['id' => $args['id']]);
 
-                return $response->withRedirect($this->get('router')->pathFor('admin_site_edit', ['id' => $args['id']]));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 

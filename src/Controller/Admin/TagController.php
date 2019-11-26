@@ -41,8 +41,9 @@ class TagController extends BaseController
                     ]);
                 }
                 $this->get('repository.tag')->insert($form->getData()->getArrayCopy());
+                $url = $request->getAttribute('routeParser')->urlFor('admin_tag_index');
 
-                return $response->withRedirect($this->container->get('router')->pathFor('admin_tag_index'));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 
@@ -73,8 +74,9 @@ class TagController extends BaseController
                 }
                 $tag->setFormArray($form->getData()->getArrayCopy());
                 $tag->save();
+                $url = $request->getAttribute('routeParser')->urlFor('admin_tag_edit', ['id' => $args['id']]);
 
-                return $response->withRedirect($this->get('router')->pathFor('admin_tag_edit', ['id' => $args['id']]));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 
@@ -99,8 +101,9 @@ class TagController extends BaseController
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
                 $tag->delete();
+                $url = $request->getAttribute('routeParser')->urlFor('admin_tag_index');
 
-                return $response->withRedirect($this->get('router')->pathFor('admin_tag_index'));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 

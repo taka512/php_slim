@@ -3,7 +3,7 @@
 {% block title %}タグ一覧{% endblock %}
 {% block breadcrumb %}
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path_for('admin_home_index') }}">home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_home_index') }}">home</a></li>
         <li class="breadcrumb-item active">タグ一覧</li>
       </ol>
 {% endblock %}
@@ -23,10 +23,10 @@
           <tbody>
             {% for tag in tags %}
             <tr>
-              <td><a href="{{ path_for('admin_tag_edit', {'id': tag.id}) }}">{{ tag.id }}</a></td>
+              <td><a href="{{ url_for('admin_tag_edit', {'id': tag.id}) }}">{{ tag.id }}</a></td>
               <td>{{ tag.name }}</td>
               <td>
-                <form action="{{ path_for('admin_tag_delete', {'id': tag.id}) }}" method="GET">
+                <form action="{{ url_for('admin_tag_delete', {'id': tag.id}) }}" method="GET">
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary">削除</button>
                   </div>
@@ -41,7 +41,7 @@
             {{ page_html | raw }}
           </div>
         </center>
-        <form action="{{ path_for('admin_tag_create') }}" class="form-horizontal" method="GET">
+        <form action="{{ url_for('admin_tag_create') }}" class="form-horizontal" method="GET">
           <div class="form-group">
             <button type="submit" class="btn btn-primary">新規登録</button>
           </div>

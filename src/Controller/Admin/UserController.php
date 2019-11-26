@@ -23,6 +23,7 @@ class UserController extends BaseController
         $form = $this->get('form.admin.user.signin_form');
         $input = $this->get('form.admin.user.signin_input');
         $form->bind($input);
+        $messages = [];
         if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
@@ -33,7 +34,9 @@ class UserController extends BaseController
                         ->setPassword($form->getData()->getPassword());
                     $result = $this->get('auth')->authenticate($authAdapter);
                     if ($result->isValid()) {
-                        return $response->withRedirect($this->get('router')->pathFor('admin_home_index'));
+                        $url = $request->getAttribute('routeParser')->urlFor('admin_home_index');
+
+                        return $response->withHeader('Location', $url)->withStatus(302);
                     }
                     $messages = $result->getMessages();
                 } catch (\Exception $e) {
@@ -93,8 +96,9 @@ class UserController extends BaseController
                 }
                 $user->setEditFormArray($form->getData()->getArrayCopy());
                 $user->save();
+                $url = $request->getAttribute('routeParser')->urlFor('admin_user_edit', ['id' => $args['id']]);
 
-                return $response->withRedirect($this->get('router')->pathFor('admin_user_edit', ['id' => $args['id']]));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 
