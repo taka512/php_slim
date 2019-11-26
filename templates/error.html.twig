@@ -1,0 +1,19 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}エラー{% endblock %}
+{% block content %}
+      <div class="page-header" id="banner">
+        <div class="row my-4">
+          <div class="col-12">
+            <h1 class="display-3">ERROR {{ status }}</h1>
+            <p class="lead">{{ title }}</p>
+            <p>{{ description | nl2br }}</p>
+          </div>
+        </div>
+      </div>
+      <ul>
+      {% for site in sites %}
+      <li>{{ site.name }}</li>
+      {% endfor %}
+      </ul>
+{% endblock %}

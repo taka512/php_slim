@@ -2,7 +2,6 @@
 
 namespace Taka512;
 
-use Slim\Container;
 use Psr\Container\ContainerInterface;
 use Taka512\Util\StdUtil;
 

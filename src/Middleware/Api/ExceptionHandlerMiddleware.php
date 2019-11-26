@@ -2,11 +2,14 @@
 
 namespace Taka512\Middleware\Api;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Taka512\Form\Api\ErrorRenderer;
+use Slim\Psr7\Response;
 
-class ExceptionHandlerMiddleware
+class ExceptionHandlerMiddleware implements MiddlewareInterface
 {
     protected $errorRenderer;
 
@@ -15,12 +18,12 @@ class ExceptionHandlerMiddleware
         $this->errorRenderer = $errorRenderer;
     }
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
-            return $next($request, $response);
+            return $handler->handle($request);
         } catch (\Exception $e) {
-            return $this->errorRenderer->render500($response, $e->getMessage());
+            return $this->errorRenderer->render500(new Response(), $e->getMessage());
         }
     }
 }

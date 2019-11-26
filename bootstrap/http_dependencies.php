@@ -1,27 +1,19 @@
 <?php
 
+use Slim\Views\Twig;
+use Taka512\Env;
 use Taka512\LoggerFactory;
+use Taka512\HttpErrorHandler;
 
 // WEBからアクセスされる事が前提のサービスを定義
 $container = $app->getContainer();
+$callableResolver = $app->getCallableResolver();
+$responseFactory = $app->getResponseFactory();
+
 LoggerFactory::initLoggerByApp(
     $container['settings']['logger']['path'],
     $container['settings']['logger']['level']
 );
-
-$container['view'] = function ($c) {
-    $settings = $c->get('settings')['view'];
-    $view = new \Slim\Views\Twig($settings['template_path'], [
-#        'cache' => $settings['cache_path']
-        'cache' => false
-    ]);
-    
-    // Instantiate and add Slim specific extension
-    $basePath = rtrim(str_ireplace('index.php', '', $c['request']->getUri()->getBasePath()), '/');
-    $view->addExtension(new Slim\Views\TwigExtension($c['router'], $basePath));
-
-    return $view;
-};
 
 // session
 $config = new \Zend\Session\Config\SessionConfig();
@@ -37,3 +29,24 @@ $container['session'] = function () use ($session) {
 };
 
 $container['auth'] = new Zend\Authentication\AuthenticationService();
+
+$container['view'] = function ($c) {
+    $settings = $c->get('settings')['view'];
+    $twig = Twig::create($settings['template_path'], [
+#        'cache' => $settings['cache_path']
+        'cache' => false
+    ]);
+#    if (!Env::isEnvProduction()) {
+#        $twig->offsetSet('is_development', true);
+#    }
+
+    return $twig;
+};
+
+$container['error_handler'] = function ($c) use($callableResolver, $responseFactory) {
+    $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
+    $errorHandler->setLogger($c->get('logger'));
+    $errorHandler->setTwigView($c->get('view'));
+
+    return $errorHandler;
+};

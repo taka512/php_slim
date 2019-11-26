@@ -4,7 +4,7 @@ version: 2.1
 executors:
   backbone-executor:
     machine:
-      docker_layer_caching: true
+      docker_layer_caching: false
     working_directory: ~/php_slim
 jobs:
   lint_test_for_server:

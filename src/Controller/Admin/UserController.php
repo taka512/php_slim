@@ -4,6 +4,7 @@ namespace Taka512\Controller\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
 use Taka512\Util\StdUtil;
 
@@ -23,7 +24,8 @@ class UserController extends BaseController
         $form = $this->get('form.admin.user.signin_form');
         $input = $this->get('form.admin.user.signin_input');
         $form->bind($input);
-        if ($request->isPost()) {
+        $messages = [];
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
                 try {
@@ -33,7 +35,9 @@ class UserController extends BaseController
                         ->setPassword($form->getData()->getPassword());
                     $result = $this->get('auth')->authenticate($authAdapter);
                     if ($result->isValid()) {
-                        return $response->withRedirect($this->get('router')->pathFor('admin_home_index'));
+                        $url = $request->getAttribute('routeParser')->urlFor('admin_home_index');
+
+                        return $response->withHeader('Location', $url)->withStatus(302);
                     }
                     $messages = $result->getMessages();
                 } catch (\Exception $e) {
@@ -50,8 +54,9 @@ class UserController extends BaseController
     public function signout(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $this->get('auth')->clearIdentity();
+        $url = $request->getAttribute('routeParser')->urlFor('top');
 
-        return $response->withRedirect($this->get('router')->pathFor('top'));
+        return $response->withHeader('Location', $url)->withStatus(302);
     }
 
     public function create(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
@@ -59,7 +64,7 @@ class UserController extends BaseController
         $form = $this->get('form.admin.user.create_form');
         $input = $this->get('form.admin.user.create_input');
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
                 $this->get('repository.user')->insert($form->getData()->getArrayCopy());
@@ -75,7 +80,7 @@ class UserController extends BaseController
     {
         $user = $this->get('repository.user')->findOneById($args['id']);
         if (is_null($user)) {
-            return $this->get('notFoundHandler')($request, $response);
+            throw new HttpNotFoundException($request);
         }
 
         $form = $this->get('form.admin.user.edit_form');
@@ -83,7 +88,7 @@ class UserController extends BaseController
 
         $input->exchangeArray($user->getFormArray());
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
@@ -93,8 +98,9 @@ class UserController extends BaseController
                 }
                 $user->setEditFormArray($form->getData()->getArrayCopy());
                 $user->save();
+                $url = $request->getAttribute('routeParser')->urlFor('admin_user_edit', ['id' => $args['id']]);
 
-                return $response->withRedirect($this->get('router')->pathFor('admin_user_edit', ['id' => $args['id']]));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 

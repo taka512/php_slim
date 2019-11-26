@@ -1,19 +1,46 @@
 <?php
 
+use Taka512\HttpErrorHandler;
+use Taka512\ShutdownHandler;
+use Slim\Factory\AppFactory;
+use Slim\Factory\ServerRequestCreatorFactory;
+use Slim\Views\TwigMiddleware;
+use Taka512\ContainerFactory;
+
 require __DIR__ . '/../vendor/autoload.php';
 
-// Instantiate the app
 if (isset($_SERVER['TEST_REQUEST'])) {
-    $app = new \Slim\App(\Taka512\ContainerFactory::getTestContainer());
+    $container = ContainerFactory::getTestContainer();
 } else {
-    $app = new \Slim\App(\Taka512\ContainerFactory::getContainer());
+    $container = ContainerFactory::getContainer();
 }
 
-// Set up dependencies
+// Instantiate the app
+AppFactory::setContainer($container);
+$app = AppFactory::create();
+
+$app->addBodyParsingMiddleware();
+$app->addRoutingMiddleware();// Add Routing Middleware
+
+// Set up http request dependencies
 require __DIR__ . '/../bootstrap/http_dependencies.php';
 
-// Register routes
+/** @var bool $displayErrorDetails */
+$displayErrorDetails = $container->get('settings')['displayErrorDetails'];
+
+$serverRequestCreator = ServerRequestCreatorFactory::create();
+$request = $serverRequestCreator->createServerRequestFromGlobals();
+
+$shutdownHandler = new ShutdownHandler($request, $container->get('error_handler'), $displayErrorDetails);
+register_shutdown_function($shutdownHandler);
+
+// need after dependencies.php because view service
+$app->add(TwigMiddleware::createFromContainer($app));
 require __DIR__ . '/../bootstrap/routes.php';
 
-// Run app
-$app->run();
+// Add Error Middleware
+$errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, false, false);
+$errorMiddleware->setDefaultErrorHandler($container->get('error_handler'));
+
+$app->run($request);
+

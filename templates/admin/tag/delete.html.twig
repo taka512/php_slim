@@ -3,8 +3,8 @@
 {% block title %}タグ削除(削除){% endblock %}
 {% block breadcrumb %}
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path_for('admin_home_index') }}">home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path_for('admin_tag_index') }}">タグ一覧</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_home_index') }}">home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_tag_index') }}">タグ一覧</a></li>
         <li class="breadcrumb-item active">タグ削除（確認）</li>
       </ol>
 {% endblock %}
@@ -27,7 +27,7 @@
           </div>
           <div class="form-group">
             <button class="btn btn-secondary" onclick="javascript:history.back();">キャンセル</button>
-            <form class="form-horizontal" action="{{ path_for('admin_tag_delete', {'id': form.get('id').getValue()}) }}" method="POST">
+            <form class="form-horizontal" action="{{ url_for('admin_tag_delete', {'id': form.get('id').getValue()}) }}" method="POST">
               <input type="hidden" name="csrf" value="{{ form.get('csrf').getValue() }}">
               <button type="submit" class="btn btn-primary">削除</button>
             </form>

@@ -12,10 +12,10 @@ class SearchRenderer
         foreach ($tags as $tag) {
             $data[] = ['id' => $tag->id, 'name' => $tag->name];
         }
+        $response->getBody()->write(json_encode(['tags' => $data]));
 
         return $response
             ->withHeader('Content-type', 'application/json')
-            ->withAddedHeader('Access-Control-Allow-Origin', '*')
-            ->withJson(['tags' => $data]);
+            ->withAddedHeader('Access-Control-Allow-Origin', '*');
     }
 }

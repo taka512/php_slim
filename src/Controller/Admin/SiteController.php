@@ -4,6 +4,7 @@ namespace Taka512\Controller\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
 
 class SiteController extends BaseController
@@ -23,7 +24,7 @@ class SiteController extends BaseController
         $input = $this->get('form.admin.site.create_input');
 
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
@@ -32,8 +33,9 @@ class SiteController extends BaseController
                     ]);
                 }
                 $this->get('repository.site')->insert($form->getData()->getArrayCopy());
+                $url = $request->getAttribute('routeParser')->urlFor('admin_site_index');
 
-                return $response->withRedirect($this->container->get('router')->pathFor('admin_site_index'));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 
@@ -46,7 +48,7 @@ class SiteController extends BaseController
     {
         $site = $this->get('repository.site')->findOneById($args['id']);
         if (is_null($site)) {
-            return $this->get('notFoundHandler')($request, $response);
+            throw new HttpNotFoundException($request);
         }
 
         $form = $this->get('form.admin.site.edit_form');
@@ -54,7 +56,7 @@ class SiteController extends BaseController
 
         $input->exchangeArray($site->getFormArray());
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
@@ -68,8 +70,9 @@ class SiteController extends BaseController
                 foreach ($form->getData()->getTagSiteData() as $tag) {
                     $this->get('repository.tag_site')->insert($tag);
                 }
+                $url = $request->getAttribute('routeParser')->urlFor('admin_site_edit', ['id' => $args['id']]);
 
-                return $response->withRedirect($this->get('router')->pathFor('admin_site_edit', ['id' => $args['id']]));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 

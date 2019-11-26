@@ -4,6 +4,7 @@ namespace Taka512\Controller\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
 use Pagerfanta\View\TwitterBootstrap4View;
 
@@ -32,7 +33,7 @@ class TagController extends BaseController
         $input = $this->get('form.admin.tag.create_input');
 
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
@@ -41,8 +42,9 @@ class TagController extends BaseController
                     ]);
                 }
                 $this->get('repository.tag')->insert($form->getData()->getArrayCopy());
+                $url = $request->getAttribute('routeParser')->urlFor('admin_tag_index');
 
-                return $response->withRedirect($this->container->get('router')->pathFor('admin_tag_index'));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 
@@ -55,7 +57,7 @@ class TagController extends BaseController
     {
         $tag = $this->get('repository.tag')->findOneById($args['id']);
         if (is_null($tag)) {
-            return $this->get('notFoundHandler')($request, $response);
+            throw new HttpNotFoundException($request);
         }
 
         $form = $this->get('form.admin.tag.edit_form');
@@ -63,7 +65,7 @@ class TagController extends BaseController
 
         $input->exchangeArray($tag->getFormArray());
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
@@ -73,8 +75,9 @@ class TagController extends BaseController
                 }
                 $tag->setFormArray($form->getData()->getArrayCopy());
                 $tag->save();
+                $url = $request->getAttribute('routeParser')->urlFor('admin_tag_edit', ['id' => $args['id']]);
 
-                return $response->withRedirect($this->get('router')->pathFor('admin_tag_edit', ['id' => $args['id']]));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 
@@ -87,7 +90,7 @@ class TagController extends BaseController
     {
         $tag = $this->get('repository.tag')->findOneById($args['id']);
         if (is_null($tag)) {
-            return $this->get('notFoundHandler')($request, $response);
+            throw new HttpNotFoundException($request);
         }
 
         $form = $this->get('form.admin.tag.delete_form');
@@ -95,12 +98,13 @@ class TagController extends BaseController
 
         $input->exchangeArray($tag->getFormArray());
         $form->bind($input);
-        if ($request->isPost()) {
+        if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
                 $tag->delete();
+                $url = $request->getAttribute('routeParser')->urlFor('admin_tag_index');
 
-                return $response->withRedirect($this->get('router')->pathFor('admin_tag_index'));
+                return $response->withHeader('Location', $url)->withStatus(302);
             }
         }
 
