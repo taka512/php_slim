@@ -14,11 +14,12 @@ abstract class BaseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        ContainerFactory::initContainerOnBatch($this->getName(), ContainerFactory::getPimpleContainer());
         $this->container = ContainerFactory::getContainer();
         LoggerFactory::initLoggerByBatch(
             $this->getName(),
-            $this->container['settings']['logger']['path'],
-            $this->container['settings']['logger']['level']
+            $this->container->get('settings')['logger']['path'],
+            $this->container->get('settings')['logger']['level']
         );
         try {
             $this->process($input);
@@ -31,6 +32,6 @@ abstract class BaseCommand extends Command
 
     protected function get(string $name)
     {
-        return $this->container[$name];
+        return $this->container->get($name);
     }
 }

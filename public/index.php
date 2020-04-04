@@ -6,14 +6,21 @@ use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use Slim\Views\TwigMiddleware;
 use Taka512\ContainerFactory;
+use Taka512\LoggerFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 if (isset($_SERVER['TEST_REQUEST'])) {
-    $container = ContainerFactory::getTestContainer();
+    ContainerFactory::initContainerOnHttp(ContainerFactory::getTestPimpleContainer());
 } else {
-    $container = ContainerFactory::getContainer();
+    ContainerFactory::initContainerOnHttp(ContainerFactory::getPimpleContainer());
 }
+
+$container = ContainerFactory::getContainer();
+LoggerFactory::initLoggerByApp(
+    $container->get('settings')['logger']['path'],
+    $container->get('settings')['logger']['level']
+);
 
 // Instantiate the app
 AppFactory::setContainer($container);
@@ -22,16 +29,17 @@ $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();// Add Routing Middleware
 
-// Set up http request dependencies
-require __DIR__ . '/../bootstrap/http_dependencies.php';
-
 /** @var bool $displayErrorDetails */
 $displayErrorDetails = $container->get('settings')['displayErrorDetails'];
 
 $serverRequestCreator = ServerRequestCreatorFactory::create();
 $request = $serverRequestCreator->createServerRequestFromGlobals();
 
-$shutdownHandler = new ShutdownHandler($request, $container->get('error_handler'), $displayErrorDetails);
+$errorHandler = new HttpErrorHandler($app->getCallableResolver(), $app->getResponseFactory());
+$errorHandler->setLogger($container->get('logger'));
+$errorHandler->setTwigView($container->get('view'));
+
+$shutdownHandler = new ShutdownHandler($request, $errorHandler, $displayErrorDetails);
 register_shutdown_function($shutdownHandler);
 
 // need after dependencies.php because view service
@@ -40,7 +48,7 @@ require __DIR__ . '/../bootstrap/routes.php';
 
 // Add Error Middleware
 $errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, false, false);
-$errorMiddleware->setDefaultErrorHandler($container->get('error_handler'));
+$errorMiddleware->setDefaultErrorHandler($errorHandler);
 
 $app->run($request);
 

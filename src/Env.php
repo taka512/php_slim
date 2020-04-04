@@ -47,4 +47,9 @@ class Env
 
         return $env;
     }
+
+    public static function isEnvProduction(): bool
+    {
+        return self::PROD === self::getEnvironment();
+    }
 }
