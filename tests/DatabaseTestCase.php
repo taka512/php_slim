@@ -19,6 +19,6 @@ abstract class DatabaseTestCase extends TestCase
 
     protected function get(string $name)
     {
-        return ContainerFactory::getTestContainer()[$name];
+        return ContainerFactory::getContainer()->get($name);
     }
 }

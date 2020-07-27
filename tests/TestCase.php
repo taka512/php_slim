@@ -9,6 +9,6 @@ abstract class TestCase extends BaseTestCase
 {
     protected function get($name)
     {
-        return ContainerFactory::getTestContainer()[$name];
+        return ContainerFactory::getContainer()->get($name);
     }
 }

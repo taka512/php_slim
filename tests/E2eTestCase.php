@@ -21,7 +21,7 @@ abstract class E2eTestCase extends TestCase
 
     protected function get(string $name)
     {
-        return ContainerFactory::getTestContainer()[$name];
+        return ContainerFactory::getContainer()->get($name);
     }
 
     protected function login($client): void
