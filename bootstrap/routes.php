@@ -1,7 +1,8 @@
 <?php
 
 use Slim\Interfaces\RouteCollectorProxyInterface;
-
+use Taka512\Repository\UserRepository;
+use Taka512\Form\Api\ErrorRenderer;
 $c = $app->getContainer();
 
 // Routes
@@ -12,7 +13,7 @@ $app->group('/api', function (RouteCollectorProxyInterface $group) {
     $group->map(['GET'], '/tag', \Taka512\Controller\Api\TagController::class. ':index')->setName('api_tag');
     $group->map(['POST'], '/tag_site', \Taka512\Controller\Api\TagSiteController::class. ':create')->setName('api_tag_site_create');
 })->add(
-    new \Taka512\Middleware\Api\ExceptionHandlerMiddleware($c->get('form.api.error_renderer'))
+    new \Taka512\Middleware\Api\ExceptionHandlerMiddleware($c->get(ErrorRenderer::class))
 );
 
 $app->map(['GET', 'POST'], '/admin/user/signin', \Taka512\Controller\Admin\UserController::class. ':signin')->setName('admin_user_signin');
@@ -33,5 +34,5 @@ $app->group('/admin', function (RouteCollectorProxyInterface $group) {
     $group->map(['GET', 'POST'], '/tag/{id}/edit', \Taka512\Controller\Admin\TagController::class. ':edit')->setName('admin_tag_edit');
     $group->map(['GET', 'POST'], '/tag/{id}/delete', \Taka512\Controller\Admin\TagController::class. ':delete')->setName('admin_tag_delete');
 })->add(
-    new \Taka512\Middleware\AuthenticationMiddleware($c->get('auth'), $c->get('view'), $c->get('repository.user'))
+    new \Taka512\Middleware\AuthenticationMiddleware($c->get('auth'), $c->get('view'), $c->get(UserRepository::class))
 );

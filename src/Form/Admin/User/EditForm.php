@@ -12,7 +12,7 @@ use Taka512\Model\User;
 
 class EditForm extends Form
 {
-    public function __construct(int $csrfTimeout)
+    public function __construct(int $csrfTimeout = 7200)
     {
         parent::__construct('user_edit');
         $this->add([

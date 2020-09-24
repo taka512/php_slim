@@ -5,6 +5,7 @@ namespace Taka512\Test\Functional\Validator\Model\TagSite;
 use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Validator\Model\TagSite\SiteIdValidator;
+use Taka512\Repository\SiteRepository;
 
 class SiteIdValidatorTest extends DatabaseTestCase
 {
@@ -19,7 +20,7 @@ class SiteIdValidatorTest extends DatabaseTestCase
     public function testIsValid($msg, $value, $expected)
     {
         $validator = new SiteIdValidator();
-        $validator->setSiteRepository($this->get('repository.site'));
+        $validator->setSiteRepository($this->get(SiteRepository::class));
         $actual = $validator->isValid($value);
         $this->assertSame($expected, $actual);
     }

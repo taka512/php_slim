@@ -5,6 +5,11 @@ namespace Taka512\Controller\Api;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Taka512\Controller\BaseController;
+use Taka512\Repository\TagRepository;
+use Taka512\Form\Api\Tag\SearchForm;
+use Taka512\Form\Api\Tag\SearchInput;
+use Taka512\Form\Api\Tag\SearchRenderer;
+use Taka512\Form\Api\ErrorRenderer;
 
 class TagController extends BaseController
 {
@@ -74,18 +79,18 @@ class TagController extends BaseController
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $form = $this->get('form.api.tag.search_form');
-        $input = $this->get('form.api.tag.search_input');
+        $form = $this->get(SearchForm::class);
+        $input = $this->get(SearchInput::class);
 
         $form->bind($input);
         $form->setData($request->getQueryParams());
         $tags = [];
         if ($form->isValid()) {
-            $tags = $this->get('repository.tag')->findBySearchConditions($form->getData()->getArrayCopy());
+            $tags = $this->get(TagRepository::class)->findBySearchConditions($form->getData()->getArrayCopy());
 
-            return $this->get('form.api.tag.search_renderer')->render($response, $tags);
+            return $this->get(SearchRenderer::class)->render($response, $tags);
         } else {
-            return $this->get('form.api.error_renderer')->render400($response, $form->getMessages());
+            return $this->get(ErrorRenderer::class)->render400($response, $form->getMessages());
         }
     }
 }

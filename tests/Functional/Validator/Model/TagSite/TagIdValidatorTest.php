@@ -5,6 +5,8 @@ namespace Taka512\Test\Functional\Validator\Model\TagSite;
 use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Validator\Model\TagSite\TagIdValidator;
+use Taka512\Repository\TagRepository;
+use Taka512\Repository\TagSiteRepository;
 
 class TagIdValidatorTest extends DatabaseTestCase
 {
@@ -19,8 +21,8 @@ class TagIdValidatorTest extends DatabaseTestCase
     public function testIsValid($msg, $value, $context, $expected)
     {
         $validator = new TagIdValidator();
-        $validator->setTagRepository($this->get('repository.tag'));
-        $validator->setTagSiteRepository($this->get('repository.tag_site'));
+        $validator->setTagRepository($this->get(TagRepository::class));
+        $validator->setTagSiteRepository($this->get(TagSiteRepository::class));
         $actual = $validator->isValid($value, $context);
         $this->assertSame($expected, $actual);
     }
@@ -41,8 +43,8 @@ class TagIdValidatorTest extends DatabaseTestCase
     public function testIsDuplicated($msg, $tagId, $siteId, $expected)
     {
         $validator = new TagIdValidator();
-        $validator->setTagRepository($this->get('repository.tag'));
-        $validator->setTagSiteRepository($this->get('repository.tag_site'));
+        $validator->setTagRepository($this->get(TagRepository::class));
+        $validator->setTagSiteRepository($this->get(TagSiteRepository::class));
         $actual = $validator->isDuplicated($tagId, $siteId);
         $this->assertSame($expected, $actual);
     }

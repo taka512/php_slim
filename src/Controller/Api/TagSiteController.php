@@ -5,6 +5,11 @@ namespace Taka512\Controller\Api;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Taka512\Controller\BaseController;
+use Taka512\Form\Api\TagSite\CreateInput;
+use Taka512\Form\Api\TagSite\CreateForm;
+use Taka512\Form\Api\TagSite\CreateRenderer;
+use Taka512\Repository\TagSiteRepository;
+use Taka512\Form\Api\ErrorRenderer;
 
 class TagSiteController extends BaseController
 {
@@ -53,22 +58,20 @@ class TagSiteController extends BaseController
      */
     public function create(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $form = $this->get('form.api.tag_site.create_form');
-        $input = $this->get('form.api.tag_site.create_input');
-        $form->bind($input);
+        $form = $this->get(CreateForm::class);
+        $form->bind($this->get(CreateInput::class));
         if ('POST' !== strtoupper($request->getMethod())) {
-            return $this->get('form.api.error_renderer')->render405($response);
+            return $this->get(ErrorRenderer::class)->render405($response);
         }
         $json = $request->getBody();
         $data = json_decode($json, true);
-        $this->get('logger')->info(print_r($data, true));
         $form->setData($data);
         if ($form->isValid()) {
-            $tag = $this->get('repository.tag_site')->insert($form->getData()->getArrayCopy());
+            $tag = $this->get(TagSiteRepository::class)->insert($form->getData()->getArrayCopy());
 
-            return $this->get('form.api.tag_site.create_renderer')->render($response, $tag);
+            return $this->get(CreateRenderer::class)->render($response, $tag);
         } else {
-            return $this->get('form.api.error_renderer')->render400($response, $form->getMessages());
+            return $this->get(ErrorRenderer::class)->render400($response, $form->getMessages());
         }
 
         return $response;

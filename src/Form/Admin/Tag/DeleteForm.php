@@ -10,7 +10,7 @@ use Zend\Form\Element\Csrf;
 
 class DeleteForm extends Form
 {
-    public function __construct(int $csrfTimeout)
+    public function __construct(int $csrfTimeout = 7200)
     {
         parent::__construct('tag_delete');
         $this->add([

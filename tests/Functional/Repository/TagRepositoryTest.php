@@ -5,6 +5,7 @@ namespace Taka512\Test\Functional\Repository;
 use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Model\Tag;
+use Taka512\Repository\TagRepository;
 
 class TagRepositoryTest extends DatabaseTestCase
 {
@@ -18,7 +19,7 @@ class TagRepositoryTest extends DatabaseTestCase
      */
     public function testInsert($msg, $data, $expected)
     {
-        $actual = $this->get('repository.tag')->insert($data);
+        $actual = $this->get(TagRepository::class)->insert($data);
         $this->assertSame($expected, $actual);
     }
 
@@ -40,7 +41,7 @@ class TagRepositoryTest extends DatabaseTestCase
      */
     public function testFindOneById($msg, $id, $expected)
     {
-        $actual = $this->get('repository.tag')->findOneById($id);
+        $actual = $this->get(TagRepository::class)->findOneById($id);
         $this->assertSame($expected, ($actual instanceof Tag));
     }
 
@@ -57,7 +58,7 @@ class TagRepositoryTest extends DatabaseTestCase
      */
     public function testFindBySearchConditions($msg, $conditions, $expected)
     {
-        $actual = $this->get('repository.tag')->findBySearchConditions($conditions);
+        $actual = $this->get(TagRepository::class)->findBySearchConditions($conditions);
         $this->assertCount($expected, $actual);
     }
 
@@ -78,7 +79,7 @@ class TagRepositoryTest extends DatabaseTestCase
      */
     public function testFindLatestTags($msg, $offset, $limit, $expected)
     {
-        $actual = $this->get('repository.tag')->findLatestTags($offset, $limit);
+        $actual = $this->get(TagRepository::class)->findLatestTags($offset, $limit);
         $this->assertCount($expected, $actual);
     }
 
@@ -97,7 +98,7 @@ class TagRepositoryTest extends DatabaseTestCase
      */
     public function testCount($msg, $expected)
     {
-        $actual = $this->get('repository.tag')->count();
+        $actual = $this->get(TagRepository::class)->count();
         $this->assertSame($expected, $actual);
     }
 

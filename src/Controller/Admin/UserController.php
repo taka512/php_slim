@@ -7,22 +7,29 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
 use Taka512\Util\StdUtil;
+use Taka512\Form\Admin\User\SigninForm;
+use Taka512\Form\Admin\User\SigninInput;
+use Taka512\Form\Admin\User\CreateForm;
+use Taka512\Form\Admin\User\CreateInput;
+use Taka512\Form\Admin\User\EditForm;
+use Taka512\Form\Admin\User\EditInput;
+use Taka512\Repository\UserRepository;
 
 class UserController extends BaseController
 {
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $users = $this->get('repository.user')->findLatestUsers();
+        $users = $this->get(UserRepository::class)->findLatestUsers();
 
-        return $this->container->get('view')->render($response, 'admin/user/index.html.twig', [
+        return $this->get('view')->render($response, 'admin/user/index.html.twig', [
             'users' => $users,
         ]);
     }
 
     public function signin(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $form = $this->get('form.admin.user.signin_form');
-        $input = $this->get('form.admin.user.signin_input');
+        $form = $this->get(SigninForm::class);
+        $input = $this->get(SigninInput::class);
         $form->bind($input);
         $messages = [];
         if ('POST' === strtoupper($request->getMethod())) {
@@ -61,13 +68,13 @@ class UserController extends BaseController
 
     public function create(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $form = $this->get('form.admin.user.create_form');
-        $input = $this->get('form.admin.user.create_input');
+        $form = $this->get(CreateForm::class);
+        $input = $this->get(CreateInput::class);
         $form->bind($input);
         if ('POST' === strtoupper($request->getMethod())) {
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
-                $this->get('repository.user')->insert($form->getData()->getArrayCopy());
+                $this->get(UserRepository::class)->insert($form->getData()->getArrayCopy());
             }
         }
 
@@ -78,13 +85,13 @@ class UserController extends BaseController
 
     public function edit(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $user = $this->get('repository.user')->findOneById($args['id']);
+        $user = $this->get(UserRepository::class)->findOneById($args['id']);
         if (is_null($user)) {
             throw new HttpNotFoundException($request);
         }
 
-        $form = $this->get('form.admin.user.edit_form');
-        $input = $this->get('form.admin.user.edit_input');
+        $form = $this->get(EditForm::class);
+        $input = $this->get(EditInput::class);
 
         $input->exchangeArray($user->getFormArray());
         $form->bind($input);
@@ -92,7 +99,7 @@ class UserController extends BaseController
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
-                    return $this->container->get('view')->render($response, 'admin/user/edit_confirm.html.twig', [
+                    return $this->get('view')->render($response, 'admin/user/edit_confirm.html.twig', [
                          'form' => $form,
                     ]);
                 }

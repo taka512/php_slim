@@ -54,6 +54,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: mypass
+      TZ: "Asia/Tokyo"
     volumes:
       - ./docker/mysql/conf/my55.cnf:/etc/mysql/my.cnf:cached
       - ./docker/mysql/init:/docker-entrypoint-initdb.d:cached

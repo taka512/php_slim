@@ -2,6 +2,7 @@
 
 namespace Taka512\Test\Functional\Manager;
 
+use Taka512\Manager\TagManager;
 use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 
@@ -17,7 +18,7 @@ class TagManagerTest extends DatabaseTestCase
      */
     public function testGetTagPagenate($msg, $page, $limit, $expected)
     {
-        $actual = $this->get('manager.tag')->getTagPagenate($page, $limit);
+        $actual = $this->get(TagManager::class)->getTagPagenate($page, $limit);
         $this->assertCount($expected, $actual->getCurrentPageResults());
     }
 
