@@ -4,7 +4,6 @@ namespace Taka512\Test\Unit\Form\Api\TagSite;
 
 use Taka512\Test\TestCase;
 use Taka512\Repository\TagRepository;
-use Taka512\Repository\SiteRepository;
 use Taka512\Repository\TagSiteRepository;
 use Taka512\Form\Api\TagSite\CreateInput;
 
@@ -17,7 +16,6 @@ class CreateInputTest extends TestCase
     {
         $input = new CreateInput(
             $this->createMock(TagRepository::class),
-            $this->createMock(SiteRepository::class),
             $this->createMock(TagSiteRepository::class)
         );
         $input->exchangeArray($data);

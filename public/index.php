@@ -23,8 +23,7 @@ LoggerFactory::initLoggerByApp(
 );
 
 // Instantiate the app
-AppFactory::setContainer($container);
-$app = AppFactory::create();
+$app = AppFactory::createFromContainer($container);
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();// Add Routing Middleware

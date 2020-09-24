@@ -5,6 +5,7 @@ namespace Taka512\Test\Functional\Repository;
 use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Model\TagSite;
+use Taka512\Repository\TagSiteRepository;
 
 class TagSiteRepositoryTest extends DatabaseTestCase
 {
@@ -18,7 +19,7 @@ class TagSiteRepositoryTest extends DatabaseTestCase
      */
     public function testInsert($msg, $data, $expected)
     {
-        $actual = $this->get('repository.tag_site')->insert($data);
+        $actual = $this->get(TagSiteRepository::class)->insert($data);
         $this->assertSame($expected, ($actual instanceof TagSite));
     }
 
@@ -41,7 +42,7 @@ class TagSiteRepositoryTest extends DatabaseTestCase
      */
     public function testFindOneByTagSite($msg, $tagId, $siteId, $expected)
     {
-        $actual = $this->get('repository.tag_site')->findOneByTagSite($tagId, $siteId);
+        $actual = $this->get(TagSiteRepository::class)->findOneByTagSite($tagId, $siteId);
         $this->assertSame($expected, ($actual instanceof TagSite));
     }
 
@@ -58,7 +59,7 @@ class TagSiteRepositoryTest extends DatabaseTestCase
      */
     public function testDeleteBySiteId($msg, $siteId, $expected)
     {
-        $actual = $this->get('repository.tag_site')->deleteBySiteId($siteId);
+        $actual = $this->get(TagSiteRepository::class)->deleteBySiteId($siteId);
         $this->assertSame($expected, $actual);
     }
 

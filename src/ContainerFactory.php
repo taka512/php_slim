@@ -114,13 +114,11 @@ class ContainerFactory
     public static function buildContainer(ContainerBuilder $builder, ContainerInterface $pimpleContainer): CompositeContainer
     {
         $builder->useAutowiring(false);
-        $builder->useAnnotations(false);
+        $builder->useAnnotations(true);
         $phpdiContainer = $builder->build();
 
         $acclimator = new ContainerAcclimator();
-        if (is_null($pimpleContainer)) {
-            $pimpleContainer = $acclimator->acclimate(self::$pimpleContainer);
-        }
+        $pimpleContainer = $acclimator->acclimate($pimpleContainer);
         $phpdiContainer = $acclimator->acclimate($phpdiContainer);
 
         return new CompositeContainer([$pimpleContainer, $phpdiContainer]);
@@ -190,8 +188,6 @@ class ContainerFactory
     public static function loadService(): void
     {
         self::loadAuthService();
-        self::loadFormService();
-        self::loadManagerService();
         self::loadRepositoryService();
     }
 
@@ -200,137 +196,6 @@ class ContainerFactory
         self::$pimpleContainer['auth.authentication_adapter'] = function ($c) {
             return new \Taka512\Auth\AuthenticationAdapter(
                 $c['repository.user']
-            );
-        };
-    }
-
-    public static function loadFormService(): void
-    {
-        self::$pimpleContainer['form.admin.user.signin_form'] = function ($c) {
-            return new \Taka512\Form\Admin\User\SigninForm(
-                $c['settings']['form']['csrf_timeout']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.user.signin_input'] = function ($c) {
-            return new \Taka512\Form\Admin\User\SigninInput();
-        };
-
-        self::$pimpleContainer['form.admin.user.create_form'] = function ($c) {
-            return new \Taka512\Form\Admin\User\CreateForm(
-                $c['settings']['form']['csrf_timeout']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.user.create_input'] = function ($c) {
-            return new \Taka512\Form\Admin\User\CreateInput(
-                $c['repository.user']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.user.edit_form'] = function ($c) {
-            return new \Taka512\Form\Admin\User\EditForm(
-                $c['settings']['form']['csrf_timeout']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.user.edit_input'] = function ($c) {
-            return new \Taka512\Form\Admin\User\EditInput(
-                $c['repository.user']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.tag.create_form'] = function ($c) {
-            return new \Taka512\Form\Admin\Tag\CreateForm(
-                $c['settings']['form']['csrf_timeout']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.tag.create_input'] = function ($c) {
-            return new \Taka512\Form\Admin\Tag\CreateInput();
-        };
-
-        self::$pimpleContainer['form.admin.tag.edit_form'] = function ($c) {
-            return new \Taka512\Form\Admin\Tag\EditForm(
-                $c['settings']['form']['csrf_timeout']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.tag.edit_input'] = function ($c) {
-            return new \Taka512\Form\Admin\Tag\EditInput();
-        };
-
-        self::$pimpleContainer['form.admin.tag.delete_form'] = function ($c) {
-            return new \Taka512\Form\Admin\Tag\DeleteForm(
-                $c['settings']['form']['csrf_timeout']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.tag.delete_input'] = function ($c) {
-            return new \Taka512\Form\Admin\Tag\DeleteInput();
-        };
-
-        self::$pimpleContainer['form.admin.site.create_form'] = function ($c) {
-            return new \Taka512\Form\Admin\Site\CreateForm(
-                $c['settings']['form']['csrf_timeout']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.site.create_input'] = function ($c) {
-            return new \Taka512\Form\Admin\Site\CreateInput();
-        };
-
-        self::$pimpleContainer['form.admin.site.edit_form'] = function ($c) {
-            return new \Taka512\Form\Admin\Site\EditForm(
-                $c['repository.tag'],
-                $c['settings']['form']['csrf_timeout']
-            );
-        };
-
-        self::$pimpleContainer['form.admin.site.edit_input'] = function ($c) {
-            return new \Taka512\Form\Admin\Site\EditInput();
-        };
-
-        self::$pimpleContainer['form.api.error_renderer'] = function ($c) {
-            return new \Taka512\Form\Api\ErrorRenderer(
-                $c['logger']
-            );
-        };
-
-        self::$pimpleContainer['form.api.tag.search_form'] = function ($c) {
-            return new \Taka512\Form\Api\Tag\SearchForm();
-        };
-
-        self::$pimpleContainer['form.api.tag.search_input'] = function ($c) {
-            return new \Taka512\Form\Api\Tag\SearchInput();
-        };
-
-        self::$pimpleContainer['form.api.tag.search_renderer'] = function ($c) {
-            return new \Taka512\Form\Api\Tag\SearchRenderer();
-        };
-
-        self::$pimpleContainer['form.api.tag_site.create_form'] = function ($c) {
-            return new \Taka512\Form\Api\TagSite\CreateForm();
-        };
-
-        self::$pimpleContainer['form.api.tag_site.create_input'] = function ($c) {
-            return new \Taka512\Form\Api\TagSite\CreateInput(
-                $c['repository.tag'],
-                $c['repository.site'],
-                $c['repository.tag_site']
-            );
-        };
-
-        self::$pimpleContainer['form.api.tag_site.create_renderer'] = function ($c) {
-            return new \Taka512\Form\Api\TagSite\CreateRenderer();
-        };
-    }
-
-    public static function loadManagerService(): void
-    {
-        self::$pimpleContainer['manager.tag'] = function ($c) {
-            return new \Taka512\Manager\TagManager(
-                $c['repository.tag']
             );
         };
     }

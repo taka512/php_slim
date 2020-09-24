@@ -14,7 +14,7 @@ use Taka512\Repository\TagRepository;
 
 class EditForm extends Form
 {
-    public function __construct(TagRepository $tagRepository, int $csrfTimeout)
+    public function __construct(TagRepository $tagRepository, int $csrfTimeout = 7200)
     {
         $tagValues = [];
         $tags = $tagRepository->findLatestTags();

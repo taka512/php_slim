@@ -9,7 +9,7 @@ use Zend\Form\Element\Csrf;
 
 class CreateForm extends Form
 {
-    public function __construct(int $csrfTimeout)
+    public function __construct(int $csrfTimeout = 7200)
     {
         parent::__construct('site_create');
         $this->add([

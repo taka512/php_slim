@@ -7,6 +7,14 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
 use Pagerfanta\View\TwitterBootstrap4View;
+use Taka512\Form\Admin\Tag\CreateForm;
+use Taka512\Form\Admin\Tag\CreateInput;
+use Taka512\Form\Admin\Tag\EditForm;
+use Taka512\Form\Admin\Tag\EditInput;
+use Taka512\Form\Admin\Tag\DeleteForm;
+use Taka512\Form\Admin\Tag\DeleteInput;
+use Taka512\Repository\TagRepository;
+use Taka512\Manager\TagManager;
 
 class TagController extends BaseController
 {
@@ -14,7 +22,7 @@ class TagController extends BaseController
     {
         $getParams = $request->getQueryParams();
         $page = $getParams['page'] ?? 1;
-        $pagenate = $this->get('manager.tag')->getTagPagenate($page);
+        $pagenate = $this->get(TagManager::class)->getTagPagenate($page);
         $routeGenerator = function ($page) {
             return htmlspecialchars(sprintf('/admin/tag?page=%s', $page), ENT_QUOTES);
         };
@@ -29,8 +37,8 @@ class TagController extends BaseController
 
     public function create(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $form = $this->get('form.admin.tag.create_form');
-        $input = $this->get('form.admin.tag.create_input');
+        $form = $this->get(CreateForm::class);
+        $input = $this->get(CreateInput::class);
 
         $form->bind($input);
         if ('POST' === strtoupper($request->getMethod())) {
@@ -41,7 +49,7 @@ class TagController extends BaseController
                          'form' => $form,
                     ]);
                 }
-                $this->get('repository.tag')->insert($form->getData()->getArrayCopy());
+                $this->get(TagRepository::class)->insert($form->getData()->getArrayCopy());
                 $url = $request->getAttribute('routeParser')->urlFor('admin_tag_index');
 
                 return $response->withHeader('Location', $url)->withStatus(302);
@@ -55,13 +63,13 @@ class TagController extends BaseController
 
     public function edit(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $tag = $this->get('repository.tag')->findOneById($args['id']);
+        $tag = $this->get(TagRepository::class)->findOneById($args['id']);
         if (is_null($tag)) {
             throw new HttpNotFoundException($request);
         }
 
-        $form = $this->get('form.admin.tag.edit_form');
-        $input = $this->get('form.admin.tag.edit_input');
+        $form = $this->get(EditForm::class);
+        $input = $this->get(EditInput::class);
 
         $input->exchangeArray($tag->getFormArray());
         $form->bind($input);
@@ -88,13 +96,13 @@ class TagController extends BaseController
 
     public function delete(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $tag = $this->get('repository.tag')->findOneById($args['id']);
+        $tag = $this->get(TagRepository::class)->findOneById($args['id']);
         if (is_null($tag)) {
             throw new HttpNotFoundException($request);
         }
 
-        $form = $this->get('form.admin.tag.delete_form');
-        $input = $this->get('form.admin.tag.delete_input');
+        $form = $this->get(DeleteForm::class);
+        $input = $this->get(DeleteInput::class);
 
         $input->exchangeArray($tag->getFormArray());
         $form->bind($input);

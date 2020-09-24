@@ -5,6 +5,7 @@ namespace Taka512\Test\Functional\Repository;
 use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Model\Site;
+use Taka512\Repository\SiteRepository;
 
 class SiteRepositoryTest extends DatabaseTestCase
 {
@@ -18,7 +19,7 @@ class SiteRepositoryTest extends DatabaseTestCase
      */
     public function testInsert($msg, $data, $expected)
     {
-        $actual = $this->get('repository.site')->insert($data);
+        $actual = $this->get(SiteRepository::class)->insert($data);
         $this->assertSame($expected, $actual->id);
     }
 
@@ -41,7 +42,7 @@ class SiteRepositoryTest extends DatabaseTestCase
      */
     public function testFindOneById($msg, $id, $expected)
     {
-        $actual = $this->get('repository.site')->findOneById($id);
+        $actual = $this->get(SiteRepository::class)->findOneById($id);
         $this->assertSame($expected, ($actual instanceof Site));
     }
 
@@ -58,7 +59,7 @@ class SiteRepositoryTest extends DatabaseTestCase
      */
     public function testFindLatestSites($msg, $limit, $expected)
     {
-        $actual = $this->get('repository.site')->findLatestSites($limit);
+        $actual = $this->get(SiteRepository::class)->findLatestSites($limit);
         $this->assertCount($expected, $actual);
     }
 

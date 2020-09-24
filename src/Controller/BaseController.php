@@ -3,6 +3,7 @@
 namespace Taka512\Controller;
 
 use Psr\Container\ContainerInterface;
+use Taka512\ContainerFactory;
 
 abstract class BaseController
 {
@@ -10,7 +11,7 @@ abstract class BaseController
 
     public function __construct(ContainerInterface $container)
     {
-        $this->container = $container;
+        $this->container = ContainerFactory::getContainer();
     }
 
     public function get(string $name)
