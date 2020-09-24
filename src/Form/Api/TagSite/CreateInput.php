@@ -9,33 +9,28 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Taka512\Validator\Model\TagSite\TagIdValidator;
 use Taka512\Validator\Model\TagSite\SiteIdValidator;
+use Taka512\Repository\TagRepository;
+use Taka512\Repository\TagSiteRepository;
+use Taka512\Repository\SiteRepository;
 
 class CreateInput implements InputFilterAwareInterface
 {
     protected $tagId;
     protected $siteId;
-
-    /**
-     * @Inject
-     *
-     * @var Taka512\Repository\TagRepository
-     */
     protected $tagRepository;
-
-    /**
-     * @Inject
-     *
-     * @var Taka512\Repository\TagSiteRepository
-     */
     protected $tagSiteRepository;
-
-    /**
-     * @Inject
-     *
-     * @var Taka512\Repository\SiteRepository
-     */
     protected $siteRepository;
     protected $inputFilter;
+
+    public function __construct(
+        TagRepository $tagRepository,
+        TagSiteRepository $tagSiteRepository,
+        SiteRepository $siteRepository)
+    {
+        $this->tagRepository = $tagRepository;
+        $this->tagSiteRepository = $tagSiteRepository;
+        $this->siteRepository = $siteRepository;
+    }
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
     {

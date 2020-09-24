@@ -4,17 +4,18 @@ namespace Taka512\Manager;
 
 use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
+use Taka512\Repository\TagRepository;
 
 class TagManager
 {
     const LIMIT = 10;
 
-    /**
-     * @Inject
-     *
-     * @var Taka512\Repository\TagRepository
-     */
-    protected $repository;
+    private $repository;
+
+    public function __construct(TagRepository $tagRepository)
+    {
+        $this->repository = $tagRepository;
+    }
 
     public function getTagPagenate(int $page, int $limit = self::LIMIT)
     {

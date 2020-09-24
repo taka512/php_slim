@@ -19,7 +19,7 @@ class SiteController extends BaseController
     {
         $sites = $this->get(SiteRepository::class)->findLatestSites();
 
-        return $this->container->get('view')->render($response, 'admin/site/index.html.twig', [
+        return $this->get('view')->render($response, 'admin/site/index.html.twig', [
             'sites' => $sites,
         ]);
     }
@@ -34,7 +34,7 @@ class SiteController extends BaseController
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
-                    return $this->container->get('view')->render($response, 'admin/site/create_confirm.html.twig', [
+                    return $this->get('view')->render($response, 'admin/site/create_confirm.html.twig', [
                          'form' => $form,
                     ]);
                 }
@@ -66,7 +66,7 @@ class SiteController extends BaseController
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
-                    return $this->container->get('view')->render($response, 'admin/site/edit_confirm.html.twig', [
+                    return $this->get('view')->render($response, 'admin/site/edit_confirm.html.twig', [
                          'form' => $form,
                     ]);
                 }

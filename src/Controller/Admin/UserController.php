@@ -21,7 +21,7 @@ class UserController extends BaseController
     {
         $users = $this->get(UserRepository::class)->findLatestUsers();
 
-        return $this->container->get('view')->render($response, 'admin/user/index.html.twig', [
+        return $this->get('view')->render($response, 'admin/user/index.html.twig', [
             'users' => $users,
         ]);
     }
@@ -99,7 +99,7 @@ class UserController extends BaseController
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
-                    return $this->container->get('view')->render($response, 'admin/user/edit_confirm.html.twig', [
+                    return $this->get('view')->render($response, 'admin/user/edit_confirm.html.twig', [
                          'form' => $form,
                     ]);
                 }

@@ -29,7 +29,7 @@ class TagController extends BaseController
         $view = new TwitterBootstrap4View();
         $pageHtml = $view->render($pagenate, $routeGenerator, []);
 
-        return $this->container->get('view')->render($response, 'admin/tag/index.html.twig', [
+        return $this->get('view')->render($response, 'admin/tag/index.html.twig', [
             'tags' => $pagenate->getCurrentPageResults(),
             'page_html' => $pageHtml,
         ]);
@@ -45,7 +45,7 @@ class TagController extends BaseController
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
-                    return $this->container->get('view')->render($response, 'admin/tag/create_confirm.html.twig', [
+                    return $this->get('view')->render($response, 'admin/tag/create_confirm.html.twig', [
                          'form' => $form,
                     ]);
                 }
@@ -77,7 +77,7 @@ class TagController extends BaseController
             $form->setData($request->getParsedBody());
             if ($form->isValid() && !$form->getData()->isBack()) {
                 if ($form->getData()->isConfirm()) {
-                    return $this->container->get('view')->render($response, 'admin/tag/edit_confirm.html.twig', [
+                    return $this->get('view')->render($response, 'admin/tag/edit_confirm.html.twig', [
                          'form' => $form,
                     ]);
                 }
