@@ -14,10 +14,7 @@ class CreateInputTest extends TestCase
      */
     public function testGetArrayCopy($msg, $data, $expected)
     {
-        $input = new CreateInput(
-            $this->createMock(TagRepository::class),
-            $this->createMock(TagSiteRepository::class)
-        );
+        $input = new CreateInput();
         $input->exchangeArray($data);
         $actual = $input->getArrayCopy();
         $this->assertSame($expected, $actual);
