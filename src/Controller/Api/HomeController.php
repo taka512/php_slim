@@ -2,8 +2,8 @@
 
 namespace Taka512\Controller\Api;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Taka512\Controller\BaseController;
 
 /**

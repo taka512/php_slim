@@ -2,11 +2,11 @@
 
 namespace Taka512\Test\Functional\Validator\Model\TagSite;
 
-use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
-use Taka512\Validator\Model\TagSite\TagIdValidator;
 use Taka512\Repository\TagRepository;
 use Taka512\Repository\TagSiteRepository;
+use Taka512\Test\DatabaseTestCase;
+use Taka512\Validator\Model\TagSite\TagIdValidator;
 
 class TagIdValidatorTest extends DatabaseTestCase
 {

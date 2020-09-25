@@ -2,10 +2,10 @@
 
 namespace Taka512;
 
-use Psr\Log\LoggerInterface;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
-use Monolog\Handler\StreamHandler;
+use Psr\Log\LoggerInterface;
 
 class LoggerFactory
 {

@@ -2,8 +2,8 @@
 
 namespace Taka512\Test\Unit\Form\Api\TagSite;
 
-use Taka512\Test\TestCase;
 use Taka512\Form\Api\TagSite\CreateInput;
+use Taka512\Test\TestCase;
 
 class CreateInputTest extends TestCase
 {

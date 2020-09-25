@@ -2,9 +2,9 @@
 
 namespace Taka512\Test\Functional\Repository;
 
-use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Model\User;
+use Taka512\Test\DatabaseTestCase;
 
 class UserRepositoryTest extends DatabaseTestCase
 {

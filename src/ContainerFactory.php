@@ -5,13 +5,13 @@ namespace Taka512;
 use Acclimate\Container\CompositeContainer;
 use Acclimate\Container\ContainerAcclimator;
 use DI\ContainerBuilder;
-use Psr\Container\ContainerInterface;
-use Taka512\Util\StdUtil;
-use Slim\Views\Twig;
-use Monolog\Logger;
-use Psr\Log\LoggerInterface;
-use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Monolog\Processor\IntrospectionProcessor;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+use Slim\Views\Twig;
+use Taka512\Util\StdUtil;
 
 class ContainerFactory
 {

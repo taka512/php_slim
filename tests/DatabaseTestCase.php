@@ -2,8 +2,8 @@
 
 namespace Taka512\Test;
 
-use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
+use PHPUnit\Framework\TestCase;
 use Taka512\ContainerFactory;
 
 abstract class DatabaseTestCase extends TestCase

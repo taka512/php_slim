@@ -2,8 +2,8 @@
 
 namespace Taka512\Command\Crawler;
 
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Taka512\Command\BaseCommand;
 use Taka512\Http\ClientFactory;
 

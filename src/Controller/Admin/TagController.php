@@ -2,19 +2,19 @@
 
 namespace Taka512\Controller\Admin;
 
-use Psr\Http\Message\ServerRequestInterface;
+use Pagerfanta\View\TwitterBootstrap4View;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
-use Pagerfanta\View\TwitterBootstrap4View;
 use Taka512\Form\Admin\Tag\CreateForm;
 use Taka512\Form\Admin\Tag\CreateInput;
-use Taka512\Form\Admin\Tag\EditForm;
-use Taka512\Form\Admin\Tag\EditInput;
 use Taka512\Form\Admin\Tag\DeleteForm;
 use Taka512\Form\Admin\Tag\DeleteInput;
-use Taka512\Repository\TagRepository;
+use Taka512\Form\Admin\Tag\EditForm;
+use Taka512\Form\Admin\Tag\EditInput;
 use Taka512\Manager\TagManager;
+use Taka512\Repository\TagRepository;
 
 class TagController extends BaseController
 {

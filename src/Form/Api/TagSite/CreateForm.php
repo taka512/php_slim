@@ -2,8 +2,8 @@
 
 namespace Taka512\Form\Api\TagSite;
 
-use Zend\Form\Form;
 use Zend\Form\Element\Text;
+use Zend\Form\Form;
 
 class CreateForm extends Form
 {

@@ -2,8 +2,8 @@
 
 namespace Taka512\Form\Api\Tag;
 
-use Zend\Form\Form;
 use Zend\Form\Element\Text;
+use Zend\Form\Form;
 
 class SearchForm extends Form
 {

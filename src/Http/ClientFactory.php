@@ -2,10 +2,10 @@
 
 namespace Taka512\Http;
 
-use Symfony\Component\Panther\Client;
 use Goutte\Client as GoutteClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\RequestOptions;
+use Symfony\Component\Panther\Client;
 
 class ClientFactory
 {
