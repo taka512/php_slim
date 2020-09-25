@@ -2,5 +2,6 @@ site:
   -
     id: 1
     name: 'site1'
+    url: 'https://test.jp'
     created_at: '2018/11/10'
     updated_at: '2018/11/10'
