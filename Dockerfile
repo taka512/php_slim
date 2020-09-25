@@ -1,7 +1,7 @@
-FROM php:7.2-fpm-alpine
+FROM php:7.4-fpm-alpine
 
 RUN apk upgrade --update \
-    && apk add \
+    && apk add --no-cache \
         alpine-sdk \
         chromium \
         chromium-chromedriver \
@@ -11,12 +11,12 @@ RUN apk upgrade --update \
         mysql-client \
         net-tools \
         libressl-dev \
+        libzip-dev \
+        oniguruma-dev \
         tzdata \
-        zlib-dev \
     && docker-php-ext-install \
         curl \
         dom \
-        mbstring \
         pdo \
         pdo_mysql \
         zip \
