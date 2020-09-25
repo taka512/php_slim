@@ -10,7 +10,7 @@ else
 COMPOSER_OPT=
 endif
 
-COMPOSER_VERSION = 1.9.1
+COMPOSER_VERSION = 1.10.13
 
 all:
 	@more Makefile
