@@ -49,16 +49,16 @@ services:
         ipv4_address: 192.168.1.50
   db:
     container_name: db.local
-    image: mysql:5.5
+    image: mysql:8.0
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: mypass
       TZ: "Asia/Tokyo"
     volumes:
-      - ./docker/mysql/conf/my55.cnf:/etc/mysql/my.cnf:cached
+      - db-data:/var/lib/mysql:delegated
+      - ./docker/mysql/conf/my80.cnf:/etc/mysql/my.cnf:cached
       - ./docker/mysql/init:/docker-entrypoint-initdb.d:cached
-      - db-data:/var/lib/mysql/data:delegated
     logging:
       driver: "json-file"
       options:
