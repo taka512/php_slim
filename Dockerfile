@@ -11,7 +11,7 @@ RUN apk upgrade --update \
         mysql-client \
         net-tools \
         libressl-dev \
-       	libzip-dev \
+        libzip-dev \
         oniguruma-dev \
         tzdata \
     && docker-php-ext-install \
