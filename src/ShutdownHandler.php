@@ -28,9 +28,7 @@ class ShutdownHandler
     /**
      * ShutdownHandler constructor.
      *
-     * @param Request          $request
-     * @param HttpErrorHandler $errorHandler
-     * @param bool             $displayErrorDetails
+     * @param Request $request
      */
     public function __construct(ServerRequestInterface $request, HttpErrorHandler $errorHandler, bool $displayErrorDetails)
     {

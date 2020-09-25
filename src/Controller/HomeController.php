@@ -2,8 +2,8 @@
 
 namespace Taka512\Controller;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Taka512\Repository\SiteRepository;
 
 class HomeController extends BaseController

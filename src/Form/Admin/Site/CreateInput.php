@@ -2,13 +2,13 @@
 
 namespace Taka512\Form\Admin\Site;
 
+use Taka512\Validator\Model\Site\NameValidator;
+use Taka512\Validator\Model\Site\UrlValidator;
 use Zend\Filter\StringTrim;
-use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
-use Taka512\Validator\Model\Site\NameValidator;
-use Taka512\Validator\Model\Site\UrlValidator;
+use Zend\Validator\NotEmpty;
 
 class CreateInput implements InputFilterAwareInterface
 {
@@ -20,10 +20,7 @@ class CreateInput implements InputFilterAwareInterface
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
     {
-        throw new \DomainException(sprintf(
-            '%s does not allow injection of an alternate input filter',
-            __CLASS__
-        ));
+        throw new \DomainException(sprintf('%s does not allow injection of an alternate input filter', __CLASS__));
     }
 
     public function getInputFilter(): InputFilterInterface

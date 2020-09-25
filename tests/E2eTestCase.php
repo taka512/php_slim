@@ -2,8 +2,8 @@
 
 namespace Taka512\Test;
 
-use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Panther\PantherTestCaseTrait;
 use Taka512\ContainerFactory;
 

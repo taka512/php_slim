@@ -2,12 +2,12 @@
 
 namespace Taka512\Form\Admin\Tag;
 
+use Taka512\Validator\Model\Tag\NameValidator;
 use Zend\Filter\StringTrim;
-use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
-use Taka512\Validator\Model\Tag\NameValidator;
+use Zend\Validator\NotEmpty;
 
 class EditInput implements InputFilterAwareInterface
 {
@@ -21,10 +21,7 @@ class EditInput implements InputFilterAwareInterface
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
     {
-        throw new \DomainException(sprintf(
-            '%s does not allow injection of an alternate input filter',
-            __CLASS__
-        ));
+        throw new \DomainException(sprintf('%s does not allow injection of an alternate input filter', __CLASS__));
     }
 
     public function getInputFilter(): InputFilterInterface

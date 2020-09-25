@@ -2,16 +2,16 @@
 
 namespace Taka512\Form\Api\TagSite;
 
+use Taka512\Repository\SiteRepository;
+use Taka512\Repository\TagRepository;
+use Taka512\Repository\TagSiteRepository;
+use Taka512\Validator\Model\TagSite\SiteIdValidator;
+use Taka512\Validator\Model\TagSite\TagIdValidator;
 use Zend\Filter\StringTrim;
-use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
-use Taka512\Validator\Model\TagSite\TagIdValidator;
-use Taka512\Validator\Model\TagSite\SiteIdValidator;
-use Taka512\Repository\TagRepository;
-use Taka512\Repository\TagSiteRepository;
-use Taka512\Repository\SiteRepository;
+use Zend\Validator\NotEmpty;
 
 class CreateInput implements InputFilterAwareInterface
 {
@@ -34,10 +34,7 @@ class CreateInput implements InputFilterAwareInterface
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
     {
-        throw new \DomainException(sprintf(
-            '%s does not allow injection of an alternate input filter',
-            __CLASS__
-        ));
+        throw new \DomainException(sprintf('%s does not allow injection of an alternate input filter', __CLASS__));
     }
 
     public function getInputFilter(): InputFilterInterface

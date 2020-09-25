@@ -2,9 +2,9 @@
 
 namespace Taka512\Test\Functional\Manager;
 
+use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Manager\TagManager;
 use Taka512\Test\DatabaseTestCase;
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
 
 class TagManagerTest extends DatabaseTestCase
 {

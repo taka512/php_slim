@@ -16,10 +16,7 @@ class DeleteInput implements InputFilterAwareInterface
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
     {
-        throw new \DomainException(sprintf(
-            '%s does not allow injection of an alternate input filter',
-            __CLASS__
-        ));
+        throw new \DomainException(sprintf('%s does not allow injection of an alternate input filter', __CLASS__));
     }
 
     public function getInputFilter(): InputFilterInterface

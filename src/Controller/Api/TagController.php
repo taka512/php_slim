@@ -2,14 +2,14 @@
 
 namespace Taka512\Controller\Api;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Taka512\Controller\BaseController;
-use Taka512\Repository\TagRepository;
+use Taka512\Form\Api\ErrorRenderer;
 use Taka512\Form\Api\Tag\SearchForm;
 use Taka512\Form\Api\Tag\SearchInput;
 use Taka512\Form\Api\Tag\SearchRenderer;
-use Taka512\Form\Api\ErrorRenderer;
+use Taka512\Repository\TagRepository;
 
 class TagController extends BaseController
 {

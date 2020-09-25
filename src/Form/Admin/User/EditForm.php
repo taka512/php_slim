@@ -2,13 +2,13 @@
 
 namespace Taka512\Form\Admin\User;
 
-use Zend\Form\Form;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Element\Text;
-use Zend\Form\Element\Checkbox;
-use Zend\Form\Element\Submit;
-use Zend\Form\Element\Csrf;
 use Taka512\Model\User;
+use Zend\Form\Element\Checkbox;
+use Zend\Form\Element\Csrf;
+use Zend\Form\Element\Hidden;
+use Zend\Form\Element\Submit;
+use Zend\Form\Element\Text;
+use Zend\Form\Form;
 
 class EditForm extends Form
 {

@@ -2,18 +2,18 @@
 
 namespace Taka512\Controller\Admin;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Taka512\Controller\BaseController;
-use Taka512\Util\StdUtil;
-use Taka512\Form\Admin\User\SigninForm;
-use Taka512\Form\Admin\User\SigninInput;
 use Taka512\Form\Admin\User\CreateForm;
 use Taka512\Form\Admin\User\CreateInput;
 use Taka512\Form\Admin\User\EditForm;
 use Taka512\Form\Admin\User\EditInput;
+use Taka512\Form\Admin\User\SigninForm;
+use Taka512\Form\Admin\User\SigninInput;
 use Taka512\Repository\UserRepository;
+use Taka512\Util\StdUtil;
 
 class UserController extends BaseController
 {

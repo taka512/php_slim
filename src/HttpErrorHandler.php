@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Taka512;
 
-use Psr\Log\LoggerInterface;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
 use Slim\Exception\HttpForbiddenException;
@@ -15,7 +16,6 @@ use Slim\Exception\HttpNotImplementedException;
 use Slim\Exception\HttpUnauthorizedException;
 use Slim\Handlers\ErrorHandler;
 use Slim\Views\Twig;
-use Exception;
 use Throwable;
 
 class HttpErrorHandler extends ErrorHandler

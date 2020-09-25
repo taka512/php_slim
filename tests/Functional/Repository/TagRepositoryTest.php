@@ -2,10 +2,10 @@
 
 namespace Taka512\Test\Functional\Repository;
 
-use Taka512\Test\DatabaseTestCase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use Taka512\Model\Tag;
 use Taka512\Repository\TagRepository;
+use Taka512\Test\DatabaseTestCase;
 
 class TagRepositoryTest extends DatabaseTestCase
 {

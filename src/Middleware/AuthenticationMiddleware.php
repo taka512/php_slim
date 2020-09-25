@@ -8,8 +8,8 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Response;
 use Slim\Views\Twig;
-use Zend\Authentication\AuthenticationServiceInterface;
 use Taka512\Repository\UserRepository;
+use Zend\Authentication\AuthenticationServiceInterface;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {

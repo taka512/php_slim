@@ -2,8 +2,8 @@
 
 namespace Taka512;
 
-use Psr\Container\ContainerInterface;
 use Pimple\Container as PimpleContainer;
+use Psr\Container\ContainerInterface;
 
 class Container extends PimpleContainer implements ContainerInterface
 {

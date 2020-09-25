@@ -2,8 +2,8 @@
 
 namespace Taka512\Test\Unit\Model;
 
-use Taka512\Test\TestCase;
 use Taka512\Model\TagSite;
+use Taka512\Test\TestCase;
 
 class TagSiteTest extends TestCase
 {
