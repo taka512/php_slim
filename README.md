@@ -1,48 +1,63 @@
-# 概要
+# overview
 
-slimフレームワークを使用したサンプルアプリケーション
+sample application of slim framework
 
-# DB操作
+ file | contents
+ --- | --- 
+ batch/ | batch file
+ bootstrap/ | web access
+ [client/](./client) | client code
+ config/ | setting files
+ data/ | open api data..etc
+ docker/ | docker env files
+ migrations/ | DDL migration files
+ public/ | document root dir from web access
+ seeds/ | DML migration files
+ src/ | server side code
+ templates/ | twig template files
+ tests/ | test files
+ vendor/ | composer lib dir
 
-直でSQLを発行する場合
+# how to develop
+
+run docker
 
 ```
-# insert
-$container['db']->getConnection()->insert('INSERT INTO user (name, created_at, updated_at) VALUES(:name, now(), now())',['name' => 'test1']);
-
-# update
-$container['db']->getConnection()->update('UPDATE user SET name = :name, updated_at = now() WHERE id = 3',['name' => 'test10']);
-
-# delete
-$container['db']->getConnection()->delete('DELETE FROM user WHERE name = :name',['name' => 'test4']);
-
-# select
-$container['db']->getConnection()->select('SELECT * FROM user WHERE id > :id', ['id' => 3]);
-
-# 戻り値が返ってこないようなデータベース操作のSQL
-$container['db']->getConnection()->statement('DROP TABLE user');
-
-# トランザクション
-$container['db']->getConnection()->beginTransaction();
-try {
-    $container['db']->getConnection()->insert('INSERT INTO user (name, created_at, updated_at) VALUES(:name, now(), now())',['name' => 'test']);
-    $container['db']->getConnection()->commit();
-} catch (\Exception $e) {
-    $this->container['db']->getConnection()->rollback();
-}
+make docker/up
 ```
 
-ELOQUENTのマニュアル
+create .env
 
-https://laravel.com/docs/5.5/eloquent
+```
+cp env.sample .env
+```
 
-# query builder
+install composer lib
 
-https://www.ritolab.com/entry/93
+```
+make docker/composer/install
+```
 
-# デザイン
+create database and table data
 
-Honoka v4.1.3を使用
-http://honokak.osaka/
+```
+make docker/db/migrate
+make docker/db/test/migrate
+make docker/db/seed/migrate
+```
+
+access local develop site
+
+https://localhost
+
+command list
+
+```
+make help
+```
+
+# see also
+
+https://github.com/taka512/php_slim/wiki
 
 [@MITLicense](https://twitter.com/MITLicense)

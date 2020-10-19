@@ -1,4 +1,4 @@
-.PHONY: composer/* db/* test/* docker/*
+.PHONY: help composer/* db/* test/* docker/*
 
 CONTAINER?=app.local
 
@@ -12,10 +12,10 @@ endif
 
 COMPOSER_VERSION = 1.10.13
 
-all:
-	@more Makefile
+help:
+	@grep -E '^[a-zA-Z\/_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-api/yaml/build:
+api/yaml/build: ## update open api document
 	vendor/bin/openapi --output data/openapi.yaml src
 
 ###############
@@ -82,48 +82,48 @@ docker/build:
 	docker-compose build
 docker/pull:
 	docker-compose pull
-docker/up:
+docker/up: ## run containers
 	docker-compose up -d
-docker/logs:
+docker/logs: ## display docker log
 	docker-compose logs -f
-docker/stop:
+docker/stop: ## stop containers
 	docker-compose stop
 docker/rm:
 	docker-compose rm
-docker/ssh:
+docker/ssh: ## connect in container
 	docker exec -it -e COLUMNS=$(shell tput cols) -e LINES=$(shell tput lines) $(CONTAINER) ash
 docker/prune:
 	docker system prune 
 docker/db/status:
 	docker exec $(CONTAINER) make db/status
-docker/db/migrate:
+docker/db/migrate: ## apply DDL for db
 	docker exec $(CONTAINER) make db/migrate
 docker/db/test/status:
 	docker exec $(CONTAINER) make db/test/status
-docker/db/test/migrate:
+docker/db/test/migrate: ## apply DDL for test db
 	docker exec $(CONTAINER) make db/test/migrate
 docker/db/seed/status:
 	docker exec $(CONTAINER) make db/seed/status
-docker/db/seed/migrate:
+docker/db/seed/migrate: ## apply DML for db
 	docker exec $(CONTAINER) make db/seed/migrate
-docker/db/seed/down/all:
+docker/db/seed/down/all: ## drop data for db
 	docker exec $(CONTAINER) make db/seed/down/all
-docker/composer/install:
+docker/composer/install: ## install for server side lib
 	docker exec $(CONTAINER) make composer/install ENV=$(ENV)
-docker/composer/update:
+docker/composer/update: ## update to composer.lock by composer.json
 	docker exec $(CONTAINER) make composer/update ENV=$(ENV)
-docker/test:
+docker/test: ## test for server side code
 	docker exec $(CONTAINER) make test
-docker/lint:
+docker/lint: ## lint for server side code
 	docker exec $(CONTAINER) make lint
 
-docker/client/install:
+docker/client/install: ## install for client lib
 	docker run -w /home/php_slim/client -v `pwd`:/home/php_slim -it node:10.15-alpine npm install
-docker/client/lint:
+docker/client/lint: ## lint for client code
 	docker run -w /home/php_slim/client -v `pwd`:/home/php_slim -it node:10.15-alpine npm run lint
-docker/client/build:
+docker/client/build: ## build for client code
 	docker run -w /home/php_slim/client -v `pwd`:/home/php_slim -it node:10.15-alpine npm run build
-docker/client/test:
+docker/client/test: ## test for client code
 	docker run -w /home/php_slim/client -v `pwd`:/home/php_slim -it node:10.15-alpine npm run test
 
 #########
