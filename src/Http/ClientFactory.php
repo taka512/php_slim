@@ -3,21 +3,18 @@
 namespace Taka512\Http;
 
 use Goutte\Client as GoutteClient;
-use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\RequestOptions;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Panther\Client;
 
 class ClientFactory
 {
     public static function createGoutte(array $option = []): GoutteClient
     {
-        $goutte = new GoutteClient();
-        $goutte->setHeader('user-agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0');
-        $goutte->setClient(new GuzzleClient([
-            'base_uri' => $option['base_uri'] ?? null,
-            RequestOptions::VERIFY => false,
-            RequestOptions::COOKIES => true,
-            RequestOptions::DEBUG => $option['debug'] ?? false,
+        $goutte = new GoutteClient(HttpClient::create([
+            'headers' => [
+                'User-Agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0',
+            ],
+            'timeout' => 30,
         ]));
 
         return $goutte;

@@ -18,9 +18,9 @@ class TagSiteControllerTest extends E2eTestCase
      */
     public function testCreate($msg, $json, $expectedStatus, $expectedContent)
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
-        $crawler = $client->request('POST', '/api/tag_site', [], [], ['HTTP_CONTENT_TYPE' => 'application/json'], json_encode($json));
-        $this->assertSame($expectedStatus, $client->getResponse()->getStatus(), 'ステータスコードの比較');
+        $client = ClientFactory::createGoutte();
+        $crawler = $client->request('POST', $this->getUrl('/api/tag_site'), [], [], ['HTTP_CONTENT_TYPE' => 'application/json'], json_encode($json));
+        $this->assertSame($expectedStatus, $client->getResponse()->getStatusCode(), 'ステータスコードの比較');
         $this->assertSame($expectedContent, json_decode($client->getResponse()->getContent(), true), 'コンテンツの比較');
     }
 

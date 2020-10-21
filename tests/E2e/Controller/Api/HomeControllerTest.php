@@ -15,9 +15,9 @@ class HomeControllerTest extends E2eTestCase
 
     public function testIndex()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
-        $crawler = $client->request('GET', '/api');
-        $this->assertSame(200, $client->getResponse()->getStatus(), 'ステータスコードが200');
+        $client = ClientFactory::createGoutte();
+        $crawler = $client->request('GET', $this->getUrl('/api'));
+        $this->assertSame(200, $client->getResponse()->getStatusCode(), 'ステータスコードが200');
         $this->assertSame(['hoge' => 'test'], json_decode($client->getResponse()->getContent(), true), 'コンテンツ');
     }
 }

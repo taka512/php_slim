@@ -15,9 +15,9 @@ class HomeControllerTest extends E2eTestCase
 
     public function testIndex()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
+        $client = ClientFactory::createGoutte();
         $this->login($client);
-        $crawler = $client->request('GET', '/admin');
+        $crawler = $client->request('GET', $this->getUrl('/admin'));
         $this->assertRegExp('/管理画面TOP/', $crawler->html());
     }
 }

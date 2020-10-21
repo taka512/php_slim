@@ -36,10 +36,7 @@ return [
         ],
         // test
         'test' => [
-            'client' => [
-                'base_uri' => 'http://web.local',
-                'debug' => false,
-            ],
+            'base_host' => 'http://web.local',
             'user' => [
                 'login_id' => 'admin',
                 'password' => '12345678',

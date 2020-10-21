@@ -15,17 +15,17 @@ class SiteControllerTest extends E2eTestCase
 
     public function testIndex()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
+        $client = ClientFactory::createGoutte();
         $this->login($client);
-        $crawler = $client->request('GET', '/admin/site');
+        $crawler = $client->request('GET', $this->getUrl('/admin/site'));
         $this->assertRegExp('/test yahoo1 site name/', $crawler->html());
     }
 
     public function testCreate()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
+        $client = ClientFactory::createGoutte();
         $this->login($client);
-        $crawler = $client->request('GET', '/admin/site/create');
+        $crawler = $client->request('GET', $this->getUrl('/admin/site/create'));
         $form = $crawler->selectButton('確認')->form();
         $crawler = $client->submit($form, ['name' => 'test google', 'url' => 'https://google.com']);
         $form = $crawler->selectButton('保存')->form();
@@ -35,9 +35,9 @@ class SiteControllerTest extends E2eTestCase
 
     public function testEdit()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
+        $client = ClientFactory::createGoutte();
         $this->login($client);
-        $crawler = $client->request('GET', '/admin/site/1/edit');
+        $crawler = $client->request('GET', $this->getUrl('/admin/site/1/edit'));
         $form = $crawler->selectButton('確認')->form();
         $crawler = $client->submit($form, ['name' => 'test google', 'url' => 'https://google.com']);
         $form = $crawler->selectButton('保存')->form();

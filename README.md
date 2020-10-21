@@ -35,7 +35,7 @@ cp env.sample .env
 install composer lib
 
 ```
-make docker/composer/install
+make docker/composer/install ENV=dev
 ```
 
 create database and table data
