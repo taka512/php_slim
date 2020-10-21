@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Response;
+use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 use Taka512\Repository\UserRepository;
 use Zend\Authentication\AuthenticationServiceInterface;
@@ -28,7 +29,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
     {
         if (!$this->auth->hasIdentity()) {
             $response = new Response();
-            $url = $request->getAttribute('routeParser')->urlFor('admin_user_signin');
+            $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin_user_signin');
 
             return $response->withHeader('Location', $url)->withStatus(302);
         }
@@ -36,7 +37,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
         if (is_null($user) || $user->isDelete()) {
             $this->auth->clearIdentity();
             $response = new Response();
-            $url = $request->getAttribute('routeParser')->urlFor('admin_user_signin');
+            $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin_user_signin');
 
             return $response->withHeader('Location', $url)->withStatus(302);
         }
