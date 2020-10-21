@@ -14,8 +14,8 @@
     "require": {
         "acclimate/container": "2.0.0",
         "davedevelopment/phpmig": "v1.7.0",
-        "fabpot/goutte": "v3.2.3",
-        "facebook/webdriver": "1.7.1",
+        "fabpot/goutte": "v4.0.1",
+        "php-webdriver/webdriver": "1.8.3",
         "illuminate/database": "v5.8.24",
         "monolog/monolog": "2.1.1",
         "pagerfanta/pagerfanta": "v2.4.1",
@@ -26,6 +26,7 @@
         "slim/twig-view": "3.1.0",
         "slim/psr7": "1.2.0",
         "symfony/console": "v4.4.13",
+        "symfony/http-client": "v4.4.13",
         "symfony/panther": "v0.7.1",
         "symfony/yaml": "v4.4.13",
         "twig/twig": "v3.0.5",

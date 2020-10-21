@@ -24,9 +24,14 @@ abstract class E2eTestCase extends TestCase
         return ContainerFactory::getContainer()->get($name);
     }
 
+    protected function getUrl($path)
+    {
+        return $this->get('settings')['test']['base_host'].$path;
+    }
+
     protected function login($client): void
     {
-        $crawler = $client->request('GET', '/admin/user/signin');
+        $crawler = $client->request('GET', $this->getUrl('/admin/user/signin'));
         $form = $crawler->selectButton('ログイン')->form();
         $crawler = $client->submit($form, $this->get('settings')['test']['user']);
     }

@@ -18,8 +18,8 @@ class HomeControllerTest extends E2eTestCase
      */
     public function testIndex($msg, $expected)
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
-        $crawler = $client->request('GET', '/');
+        $client = ClientFactory::createGoutte();
+        $crawler = $client->request('GET', $this->getUrl('/'));
         $this->assertRegExp($expected, $crawler->html());
     }
 

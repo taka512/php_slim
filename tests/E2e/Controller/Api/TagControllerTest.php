@@ -18,9 +18,9 @@ class TagControllerTest extends E2eTestCase
      */
     public function testIndex($msg, $query, $expected)
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
-        $crawler = $client->request('GET', '/api/tag'.$query);
-        $this->assertSame(200, $client->getResponse()->getStatus(), 'ステータスコードが200');
+        $client = ClientFactory::createGoutte();
+        $crawler = $client->request('GET', $this->getUrl('/api/tag'.$query));
+        $this->assertSame(200, $client->getResponse()->getStatusCode(), 'ステータスコードが200');
         $this->assertSame($expected, json_decode($client->getResponse()->getContent(), true), 'コンテンツ');
     }
 

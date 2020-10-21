@@ -15,17 +15,17 @@ class TagControllerTest extends E2eTestCase
 
     public function testIndex()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
+        $client = ClientFactory::createGoutte();
         $this->login($client);
-        $crawler = $client->request('GET', '/admin/tag');
+        $crawler = $client->request('GET', $this->getUrl('/admin/tag'));
         $this->assertRegExp('/test tag/', $crawler->html());
     }
 
     public function testCreate()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
+        $client = ClientFactory::createGoutte();
         $this->login($client);
-        $crawler = $client->request('GET', '/admin/tag/create');
+        $crawler = $client->request('GET', $this->getUrl('/admin/tag/create'));
         $form = $crawler->selectButton('確認')->form();
         $crawler = $client->submit($form, ['name' => 'hoge']);
         $form = $crawler->selectButton('保存')->form();
@@ -35,9 +35,9 @@ class TagControllerTest extends E2eTestCase
 
     public function testEdit()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
+        $client = ClientFactory::createGoutte();
         $this->login($client);
-        $crawler = $client->request('GET', '/admin/tag/1/edit');
+        $crawler = $client->request('GET', $this->getUrl('/admin/tag/1/edit'));
         $form = $crawler->selectButton('確認')->form();
         $crawler = $client->submit($form, ['name' => 'hoge']);
         $form = $crawler->selectButton('保存')->form();
@@ -47,12 +47,12 @@ class TagControllerTest extends E2eTestCase
 
     public function testDelete()
     {
-        $client = ClientFactory::createGoutte($this->get('settings')['test']['client']);
+        $client = ClientFactory::createGoutte();
         $this->login($client);
-        $crawler = $client->request('GET', '/admin/tag/1/delete');
+        $crawler = $client->request('GET', $this->getUrl('/admin/tag/1/delete'));
         $form = $crawler->selectButton('削除')->form();
         $crawler = $client->submit($form);
-        $crawler = $client->request('GET', '/admin/tag/1/delete');
-        $this->assertSame($client->getResponse()->getStatus(), 404);
+        $crawler = $client->request('GET', $this->getUrl('/admin/tag/1/delete'));
+        $this->assertSame($client->getResponse()->getStatusCode(), 404);
     }
 }
