@@ -5,6 +5,7 @@ namespace Taka512\Controller\Admin;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Routing\RouteContext;
 use Taka512\Controller\BaseController;
 use Taka512\Form\Admin\Site\CreateForm;
 use Taka512\Form\Admin\Site\CreateInput;
@@ -39,7 +40,7 @@ class SiteController extends BaseController
                     ]);
                 }
                 $this->get(SiteRepository::class)->insert($form->getData()->getArrayCopy());
-                $url = $request->getAttribute('routeParser')->urlFor('admin_site_index');
+                $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin_site_index');
 
                 return $response->withHeader('Location', $url)->withStatus(302);
             }
@@ -76,7 +77,7 @@ class SiteController extends BaseController
                 foreach ($form->getData()->getTagSiteData() as $tag) {
                     $this->get(TagSiteRepository::class)->insert($tag);
                 }
-                $url = $request->getAttribute('routeParser')->urlFor('admin_site_edit', ['id' => $args['id']]);
+                $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin_site_edit', ['id' => $args['id']]);
 
                 return $response->withHeader('Location', $url)->withStatus(302);
             }

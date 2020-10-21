@@ -5,6 +5,7 @@ namespace Taka512\Controller\Admin;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Routing\RouteContext;
 use Taka512\Controller\BaseController;
 use Taka512\Form\Admin\User\CreateForm;
 use Taka512\Form\Admin\User\CreateInput;
@@ -42,7 +43,7 @@ class UserController extends BaseController
                         ->setPassword($form->getData()->getPassword());
                     $result = $this->get('auth')->authenticate($authAdapter);
                     if ($result->isValid()) {
-                        $url = $request->getAttribute('routeParser')->urlFor('admin_home_index');
+                        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin_home_index');
 
                         return $response->withHeader('Location', $url)->withStatus(302);
                     }
@@ -61,7 +62,7 @@ class UserController extends BaseController
     public function signout(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $this->get('auth')->clearIdentity();
-        $url = $request->getAttribute('routeParser')->urlFor('top');
+        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('top');
 
         return $response->withHeader('Location', $url)->withStatus(302);
     }
@@ -105,7 +106,7 @@ class UserController extends BaseController
                 }
                 $user->setEditFormArray($form->getData()->getArrayCopy());
                 $user->save();
-                $url = $request->getAttribute('routeParser')->urlFor('admin_user_edit', ['id' => $args['id']]);
+                $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin_user_edit', ['id' => $args['id']]);
 
                 return $response->withHeader('Location', $url)->withStatus(302);
             }

@@ -6,6 +6,7 @@ use Pagerfanta\View\TwitterBootstrap4View;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Routing\RouteContext;
 use Taka512\Controller\BaseController;
 use Taka512\Form\Admin\Tag\CreateForm;
 use Taka512\Form\Admin\Tag\CreateInput;
@@ -50,7 +51,7 @@ class TagController extends BaseController
                     ]);
                 }
                 $this->get(TagRepository::class)->insert($form->getData()->getArrayCopy());
-                $url = $request->getAttribute('routeParser')->urlFor('admin_tag_index');
+                $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin_tag_index');
 
                 return $response->withHeader('Location', $url)->withStatus(302);
             }
@@ -83,7 +84,7 @@ class TagController extends BaseController
                 }
                 $tag->setFormArray($form->getData()->getArrayCopy());
                 $tag->save();
-                $url = $request->getAttribute('routeParser')->urlFor('admin_tag_edit', ['id' => $args['id']]);
+                $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin_tag_edit', ['id' => $args['id']]);
 
                 return $response->withHeader('Location', $url)->withStatus(302);
             }
@@ -110,7 +111,7 @@ class TagController extends BaseController
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
                 $tag->delete();
-                $url = $request->getAttribute('routeParser')->urlFor('admin_tag_index');
+                $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin_tag_index');
 
                 return $response->withHeader('Location', $url)->withStatus(302);
             }
