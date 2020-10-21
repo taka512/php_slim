@@ -7,8 +7,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Response;
-use Slim\Views\Twig;
 use Slim\Routing\RouteContext;
+use Slim\Views\Twig;
 use Taka512\Repository\UserRepository;
 use Zend\Authentication\AuthenticationServiceInterface;
 
