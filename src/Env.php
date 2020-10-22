@@ -55,6 +55,6 @@ class Env
 
     public static function getenv(string $key)
     {
-        return $_ENV['APP_ENV'] ?? null;
+        return $_ENV[$key] ?? null;
     }
 }
