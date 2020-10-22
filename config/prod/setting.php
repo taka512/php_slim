@@ -21,7 +21,7 @@ return [
             'host' => 'db.local',
             'database' => 'sample_slim',
             'username' => 'slim_user',
-            'password' => getenv('DB_PASS'),
+            'password' => $_ENV['DB_PASS'],
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

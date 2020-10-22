@@ -18,9 +18,9 @@ class Env
         }
 
         if (isset($envFile)) {
-            $dotenv = Dotenv::create(__DIR__.'/../', $envFile);
+            $dotenv = Dotenv::createImmutable(__DIR__.'/../', $envFile);
         } else {
-            $dotenv = Dotenv::create(__DIR__.'/../');
+            $dotenv = Dotenv::createImmutable(__DIR__.'/../');
         }
         $dotenv->load();
         self::$isLoadDotenv = true;
@@ -40,7 +40,7 @@ class Env
 
     public static function getEnvironment(): string
     {
-        $env = getenv('APP_ENV');
+        $env = $_ENV['APP_ENV'] ?? null;
         if (self::LOCAL !== $env && self::PROD !== $env) {
             throw new \RuntimeException('APP_ENV is invalid value:'.$env);
         }

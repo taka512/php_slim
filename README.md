@@ -50,6 +50,11 @@ access local develop site
 
 https://localhost
 
+admin login by admin / 12345678
+
+https://localhost/admin
+
+
 command list
 
 ```
