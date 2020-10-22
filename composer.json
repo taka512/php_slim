@@ -30,7 +30,7 @@
         "symfony/panther": "v0.7.1",
         "symfony/yaml": "v4.4.13",
         "twig/twig": "v3.1.0",
-        "vlucas/phpdotenv": "v3.4.0",
+        "vlucas/phpdotenv": "v5.2.0",
         "zendframework/zend-authentication": "2.7.0",
         "zendframework/zend-form": "2.14.1",
         "zendframework/zend-math": "3.2.0",
