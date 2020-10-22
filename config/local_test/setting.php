@@ -1,4 +1,7 @@
 <?php
+
+use Taka512\Env;
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
@@ -21,7 +24,7 @@ return [
             'host' => 'db.local',
             'database' => 'sample_slim_test',
             'username' => 'slim_user',
-            'password' => $_ENV['DB_PASS'],
+            'password' => ENV::getenv('DB_PASS'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

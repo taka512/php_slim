@@ -40,7 +40,7 @@ class Env
 
     public static function getEnvironment(): string
     {
-        $env = $_ENV['APP_ENV'] ?? null;
+        $env = self::getenv('APP_ENV');
         if (self::LOCAL !== $env && self::PROD !== $env) {
             throw new \RuntimeException('APP_ENV is invalid value:'.$env);
         }
@@ -51,5 +51,10 @@ class Env
     public static function isEnvProduction(): bool
     {
         return self::PROD === self::getEnvironment();
+    }
+
+    public static function getenv(string $key)
+    {
+        return $_ENV['APP_ENV'] ?? null;
     }
 }
