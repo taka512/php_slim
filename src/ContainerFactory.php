@@ -44,7 +44,7 @@ class ContainerFactory
     {
         $builder->addDefinitions([
             'auth' => function (ContainerInterface $c) {
-                return new \Zend\Authentication\AuthenticationService();
+                return new \Laminas\Authentication\AuthenticationService();
             },
             'view' => function (ContainerInterface $c) {
                 $settings = $c->get('settings')['view'];
@@ -57,19 +57,6 @@ class ContainerFactory
                 }
 
                 return $twig;
-            },
-            'session' => function (ContainerInterface $c) {
-                $settings = $c->get('settings');
-
-                $config = new \Zend\Session\Config\SessionConfig();
-                $config->setOptions([
-                    'name' => $settings['session']['cookie_name'],
-                ]);
-
-                return new \Zend\Session\Container(
-                    'storage_key',
-                    new \Zend\Session\SessionManager($config)
-                );
             },
             LoggerInterface::class => function (ContainerInterface $c) {
                 $path = $c->get('settings')['logger']['path'];

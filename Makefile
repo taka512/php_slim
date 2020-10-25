@@ -108,9 +108,9 @@ docker/db/seed/migrate: ## apply DML for db
 	docker exec $(CONTAINER) make db/seed/migrate
 docker/db/seed/down/all: ## drop data for db
 	docker exec $(CONTAINER) make db/seed/down/all
-docker/composer/install: ## install for server side lib
+docker/composer/install: ## install composer library
 	docker exec $(CONTAINER) make composer/install ENV=$(ENV)
-docker/composer/update: ## update to composer.lock by composer.json
+docker/composer/update: ## update composer.lock and install composer library
 	docker exec $(CONTAINER) make composer/update ENV=$(ENV)
 docker/test: ## test for server side code
 	docker exec $(CONTAINER) make test

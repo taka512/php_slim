@@ -29,10 +29,6 @@ return [
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
         ],
-        // session
-        'session' => [
-            'cookie_name' => 'taka',
-        ],
         // form
         'form' => [
             'csrf_timeout' => 7200,

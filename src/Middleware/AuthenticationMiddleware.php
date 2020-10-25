@@ -2,6 +2,7 @@
 
 namespace Taka512\Middleware;
 
+use Laminas\Authentication\AuthenticationServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -10,13 +11,12 @@ use Slim\Psr7\Response;
 use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 use Taka512\Repository\UserRepository;
-use Zend\Authentication\AuthenticationServiceInterface;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
-    protected $auth;
-    protected $view;
-    protected $userRepository;
+    private $auth;
+    private $view;
+    private $userRepository;
 
     public function __construct(AuthenticationServiceInterface $auth, Twig $view, UserRepository $userRepository)
     {
