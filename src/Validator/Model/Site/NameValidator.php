@@ -2,7 +2,7 @@
 
 namespace Taka512\Validator\Model\Site;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class NameValidator extends AbstractValidator
 {

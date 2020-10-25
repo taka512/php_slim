@@ -2,7 +2,7 @@
 
 namespace Taka512\Validator\Model\User;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class PasswordValidator extends AbstractValidator
 {

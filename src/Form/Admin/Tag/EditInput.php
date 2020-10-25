@@ -2,22 +2,22 @@
 
 namespace Taka512\Form\Admin\Tag;
 
+use Laminas\Filter\StringTrim;
+use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterAwareInterface;
+use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Validator\NotEmpty;
 use Taka512\Validator\Model\Tag\NameValidator;
-use Zend\Filter\StringTrim;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
-use Zend\Validator\NotEmpty;
 
 class EditInput implements InputFilterAwareInterface
 {
-    protected $id;
-    protected $name;
-    protected $createdAt;
-    protected $updatedAt;
-    protected $confirm = false;
-    protected $back = false;
-    protected $inputFilter;
+    private $id;
+    private $name;
+    private $createdAt;
+    private $updatedAt;
+    private $confirm = false;
+    private $back = false;
+    private $inputFilter;
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
     {

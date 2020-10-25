@@ -2,26 +2,26 @@
 
 namespace Taka512\Form\Admin\User;
 
+use Laminas\Filter\StringTrim;
+use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterAwareInterface;
+use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Validator\NotEmpty;
 use Taka512\Model\User;
 use Taka512\Repository\UserRepository;
 use Taka512\Validator\Model\User\LoginIdEditValidator;
-use Zend\Filter\StringTrim;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
-use Zend\Validator\NotEmpty;
 
 class EditInput implements InputFilterAwareInterface
 {
-    protected $id;
-    protected $loginId;
-    protected $delFlg;
-    protected $createdAt;
-    protected $updatedAt;
-    protected $confirm = false;
-    protected $back = false;
-    protected $userRepository;
-    protected $inputFilter;
+    private $id;
+    private $loginId;
+    private $delFlg;
+    private $createdAt;
+    private $updatedAt;
+    private $confirm = false;
+    private $back = false;
+    private $userRepository;
+    private $inputFilter;
 
     public function __construct(UserRepository $userRepository)
     {

@@ -2,12 +2,12 @@
 
 namespace Taka512\Form\Api\Tag;
 
+use Laminas\Filter\StringTrim;
+use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterAwareInterface;
+use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Validator\NotEmpty;
 use Taka512\Validator\Model\Tag\NameValidator;
-use Zend\Filter\StringTrim;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
-use Zend\Validator\NotEmpty;
 
 class SearchInput implements InputFilterAwareInterface
 {

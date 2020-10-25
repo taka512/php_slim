@@ -2,8 +2,8 @@
 
 namespace Taka512\Validator\Model\User;
 
+use Laminas\Validator\AbstractValidator;
 use Taka512\Repository\UserRepository;
-use Zend\Validator\AbstractValidator;
 
 class LoginIdEditValidator extends AbstractValidator
 {

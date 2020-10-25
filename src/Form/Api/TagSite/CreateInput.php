@@ -2,25 +2,25 @@
 
 namespace Taka512\Form\Api\TagSite;
 
+use Laminas\Filter\StringTrim;
+use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterAwareInterface;
+use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Validator\NotEmpty;
 use Taka512\Repository\SiteRepository;
 use Taka512\Repository\TagRepository;
 use Taka512\Repository\TagSiteRepository;
 use Taka512\Validator\Model\TagSite\SiteIdValidator;
 use Taka512\Validator\Model\TagSite\TagIdValidator;
-use Zend\Filter\StringTrim;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
-use Zend\Validator\NotEmpty;
 
 class CreateInput implements InputFilterAwareInterface
 {
-    protected $tagId;
-    protected $siteId;
-    protected $tagRepository;
-    protected $tagSiteRepository;
-    protected $siteRepository;
-    protected $inputFilter;
+    private $tagId;
+    private $siteId;
+    private $tagRepository;
+    private $tagSiteRepository;
+    private $siteRepository;
+    private $inputFilter;
 
     public function __construct(
         TagRepository $tagRepository,
