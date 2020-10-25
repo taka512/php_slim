@@ -10,13 +10,13 @@ use Slim\Psr7\Response;
 use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 use Taka512\Repository\UserRepository;
-use Zend\Authentication\AuthenticationServiceInterface;
+use Laminas\Authentication\AuthenticationServiceInterface;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
-    protected $auth;
-    protected $view;
-    protected $userRepository;
+    private $auth;
+    private $view;
+    private $userRepository;
 
     public function __construct(AuthenticationServiceInterface $auth, Twig $view, UserRepository $userRepository)
     {

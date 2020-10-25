@@ -5,8 +5,8 @@ namespace Taka512\Auth;
 use Taka512\Repository\UserRepository;
 use Taka512\Validator\Model\User\LoginIdValidator;
 use Taka512\Validator\Model\User\PasswordValidator;
-use Zend\Authentication\Adapter\AdapterInterface;
-use Zend\Authentication\Result;
+use Laminas\Authentication\Adapter\AdapterInterface;
+use Laminas\Authentication\Result;
 
 class AuthenticationAdapter implements AdapterInterface
 {
