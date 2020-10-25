@@ -2,7 +2,7 @@
 
 namespace Taka512\Validator\Model\Tag;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class NameValidator extends AbstractValidator
 {

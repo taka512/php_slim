@@ -2,9 +2,9 @@
 
 namespace Taka512\Validator\Model\TagSite;
 
+use Laminas\Validator\AbstractValidator;
 use Taka512\Repository\TagRepository;
 use Taka512\Repository\TagSiteRepository;
-use Zend\Validator\AbstractValidator;
 
 class TagIdValidator extends AbstractValidator
 {

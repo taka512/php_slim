@@ -2,17 +2,17 @@
 
 namespace Taka512\Form\Admin\Tag;
 
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
+use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterAwareInterface;
+use Laminas\InputFilter\InputFilterInterface;
 
 class DeleteInput implements InputFilterAwareInterface
 {
-    protected $id;
-    protected $name;
-    protected $createdAt;
-    protected $updatedAt;
-    protected $inputFilter;
+    private $id;
+    private $name;
+    private $createdAt;
+    private $updatedAt;
+    private $inputFilter;
 
     public function setInputFilter(InputFilterInterface $inputFilter): void
     {
