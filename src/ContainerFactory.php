@@ -58,19 +58,6 @@ class ContainerFactory
 
                 return $twig;
             },
-            'session' => function (ContainerInterface $c) {
-                $settings = $c->get('settings');
-
-                $config = new \Laminas\Session\Config\SessionConfig();
-                $config->setOptions([
-                    'name' => $settings['session']['cookie_name'],
-                ]);
-
-                return new \Laminas\Session\Container(
-                    'storage_key',
-                    new \Laminas\Session\SessionManager($config)
-                );
-            },
             LoggerInterface::class => function (ContainerInterface $c) {
                 $path = $c->get('settings')['logger']['path'];
                 $level = $c->get('settings')['logger']['level'];
