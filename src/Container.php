@@ -3,7 +3,7 @@
 namespace Taka512;
 
 use Pimple\Container as PimpleContainer;
-use Psr\Container\ContainerInterface;
+use Interop\Container\ContainerInterface;
 
 class Container extends PimpleContainer implements ContainerInterface
 {

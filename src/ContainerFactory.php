@@ -18,7 +18,7 @@ class ContainerFactory
     private static $pimpleContainer;
     private static $container;
 
-    public static function initContainerOnHttp(ContainerInterface $pimpleContainer): ContainerInterface
+    public static function initContainerOnHttp(ContainerInterface $pimpleContainer)
     {
         Env::loadDotenv();
         $builder = new ContainerBuilder();
@@ -29,7 +29,7 @@ class ContainerFactory
         return self::$container;
     }
 
-    public static function initContainerOnBatch(string $batchName, ContainerInterface $pimpleContainer): ContainerInterface
+    public static function initContainerOnBatch(string $batchName, ContainerInterface $pimpleContainer)
     {
         Env::loadDotenv();
         $builder = new ContainerBuilder();
@@ -111,12 +111,12 @@ class ContainerFactory
         return new CompositeContainer([$pimpleContainer, $phpdiContainer]);
     }
 
-    public static function getContainer(): ContainerInterface
+    public static function getContainer()
     {
         return self::$container;
     }
 
-    public static function getPimpleContainer(): ContainerInterface
+    public static function getPimpleContainer()
     {
         if (isset(self::$pimpleContainer)) {
             return self::$pimpleContainer;
@@ -129,7 +129,7 @@ class ContainerFactory
         return self::$pimpleContainer;
     }
 
-    public static function getTestPimpleContainer(): ContainerInterface
+    public static function getTestPimpleContainer()
     {
         if (isset(self::$pimpleContainer)) {
             return self::$pimpleContainer;
