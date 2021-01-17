@@ -2,7 +2,8 @@
 
 namespace Taka512\Test\Functional\Validator\Model\TagSite;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
+use Taka512\Manager\EntityManager;
 use Taka512\Repository\TagRepository;
 use Taka512\Repository\TagSiteRepository;
 use Taka512\Test\DatabaseTestCase;
@@ -10,9 +11,12 @@ use Taka512\Validator\Model\TagSite\TagIdValidator;
 
 class TagIdValidatorTest extends DatabaseTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/TagIdValidator.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/TagIdValidator.yml');
+        $this->get(EntityManager::class)->truncateTables(['tag_site', 'tag', 'site']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
     /**

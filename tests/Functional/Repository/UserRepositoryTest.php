@@ -2,87 +2,52 @@
 
 namespace Taka512\Test\Functional\Repository;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
+use Taka512\Manager\EntityManager;
 use Taka512\Model\User;
 use Taka512\Test\DatabaseTestCase;
 
 class UserRepositoryTest extends DatabaseTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/UserRepository.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/UserRepository.yml');
+        $this->get(EntityManager::class)->truncateTables(['user']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
-    /**
-     * @dataProvider providerInsert
-     */
-    public function testInsert($msg, $data, $expected)
+    public function testInsert()
     {
+        $data = [
+            'login_id' => 'login_id2',
+            'password' => 'password',
+        ];
         $actual = $this->get('repository.user')->insert($data);
-        $this->assertSame($expected, $actual);
+        $this->assertSame(2, $actual, 'case:insert success and return id');
     }
 
-    public function providerInsert()
+    public function testFindOneById()
     {
-        return [
-            [
-                'insert success and return id:2',
-                [
-                    'login_id' => 'login_id2',
-                    'password' => 'password',
-                ],
-                2,
-            ],
-        ];
+        $actual = $this->get('repository.user')->findOneById(1);
+        $this->assertInstanceOf(User::class, $actual, 'case:id is found');
+
+        $actual = $this->get('repository.user')->findOneById(99);
+        $this->assertNull($actual, 'case:id is not found');
     }
 
-    /**
-     * @dataProvider providerFindOneById
-     */
-    public function testFindOneById($msg, $id, $expected)
+    public function testFindOneByLoginId()
     {
-        $actual = $this->get('repository.user')->findOneById($id);
-        $this->assertSame($expected, ($actual instanceof User));
+        $actual = $this->get('repository.user')->findOneByLoginId('test_user');
+        $this->assertInstanceOf(User::class, $actual, 'case:login_id is found');
+
+        $actual = $this->get('repository.user')->findOneByLoginId('hogehoge');
+        $this->assertNull($actual, 'case:login_id is not found');
     }
 
-    public function providerFindOneById()
+    public function testFindLatestUsers()
     {
-        return [
-            ['case id:1 is found', 1, true],
-            ['case id:2 is not found(not User)', 2, false],
-        ];
-    }
-
-    /**
-     * @dataProvider providerFindOneByLoginId
-     */
-    public function testFindOneByLoginId($msg, $loginId, $expected)
-    {
-        $actual = $this->get('repository.user')->findOneByLoginId($loginId);
-        $this->assertSame($expected, ($actual instanceof User));
-    }
-
-    public function providerFindOneByLoginId()
-    {
-        return [
-            ['case login_id:test_user is found', 'test_user', true],
-            ['case login_id:hoge is not found(not User)', 'hoge', false],
-        ];
-    }
-
-    /**
-     * @dataProvider providerFindLatestUsers
-     */
-    public function testFindLatestUsers($msg, $limit, $expected)
-    {
-        $actual = $this->get('repository.user')->findLatestUsers($limit);
-        $this->assertCount($expected, $actual);
-    }
-
-    public function providerFindLatestUsers()
-    {
-        return [
-            ['user count is 1', 10, 1],
-        ];
+        $actual = $this->get('repository.user')->findLatestUsers(10);
+        $this->assertCount(1, $actual, 'case: search user');
     }
 }

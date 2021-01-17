@@ -2,15 +2,19 @@
 
 namespace Taka512\Test\E2e\Controller\Admin;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
 use Taka512\Http\ClientFactory;
+use Taka512\Manager\EntityManager;
 use Taka512\Test\E2eTestCase;
 
 class UserControllerTest extends E2eTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/UserController.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/UserController.yml');
+        $this->get(EntityManager::class)->truncateTables(['user']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
     public function testIndex()
@@ -18,7 +22,7 @@ class UserControllerTest extends E2eTestCase
         $client = ClientFactory::createGoutte();
         $this->login($client);
         $crawler = $client->request('GET', $this->getUrl('/admin/user'));
-        $this->assertRegExp('/admin/', $crawler->html());
+        $this->assertMatchesRegularExpression('/admin/', $crawler->html());
     }
 
     public function testCreate()
@@ -28,7 +32,7 @@ class UserControllerTest extends E2eTestCase
         $crawler = $client->request('GET', $this->getUrl('/admin/user/create'));
         $form = $crawler->selectButton('登録')->form();
         $crawler = $client->submit($form, ['login_id' => 'hoge', 'password' => 'testtest']);
-        $this->assertRegExp('/hoge/', $crawler->html());
+        $this->assertMatchesRegularExpression('/hoge/', $crawler->html());
     }
 
     public function testEdit()
@@ -43,6 +47,6 @@ class UserControllerTest extends E2eTestCase
         $form = $crawler->selectButton('ログイン')->form();
         $crawler = $client->submit($form, ['login_id' => 'hoge', 'password' => '12345678']);
         $crawler = $client->request('GET', $this->getUrl('/admin/user'));
-        $this->assertRegExp('/hoge/', $crawler->html());
+        $this->assertMatchesRegularExpression('/hoge/', $crawler->html());
     }
 }

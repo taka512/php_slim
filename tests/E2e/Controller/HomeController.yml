@@ -1,5 +1,5 @@
-site:
-  -
+Taka512\Model\Site:
+  site1:
     id: 1
     name: 'test yahoo site name'
     url: 'https://yahoo.co.jp'

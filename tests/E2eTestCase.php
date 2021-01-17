@@ -2,22 +2,13 @@
 
 namespace Taka512\Test;
 
-use PHPUnit\DbUnit\TestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Panther\PantherTestCaseTrait;
 use Taka512\ContainerFactory;
 
 abstract class E2eTestCase extends TestCase
 {
-    use TestCaseTrait;
     use PantherTestCaseTrait;
-
-    abstract protected function getDataSet();
-
-    protected function getConnection()
-    {
-        return $this->createDefaultDBConnection($this->get('pdo.master'));
-    }
 
     protected function get(string $name)
     {

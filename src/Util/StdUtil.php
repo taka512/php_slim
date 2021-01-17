@@ -11,8 +11,9 @@ class StdUtil
 
     public static function snakeCase($string)
     {
-	$string = preg_replace('/([A-Z])/', '_$1', $string);
-	$string = strtolower($string);
-	return ltrim($string, '_');
+        $string = preg_replace('/([A-Z])/', '_$1', $string);
+        $string = strtolower($string);
+
+        return ltrim($string, '_');
     }
 }
