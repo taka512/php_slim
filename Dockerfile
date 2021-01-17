@@ -6,6 +6,7 @@ RUN apk upgrade --update \
         chromium \
         chromium-chromedriver \
         curl-dev \
+        icu-dev  \
         iputils \
         libxml2-dev \
         mysql-client \
@@ -17,6 +18,8 @@ RUN apk upgrade --update \
     && docker-php-ext-install \
         curl \
         dom \
+        intl \
+        pcntl \
         pdo \
         pdo_mysql \
         zip \

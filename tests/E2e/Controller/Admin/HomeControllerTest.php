@@ -2,15 +2,19 @@
 
 namespace Taka512\Test\E2e\Controller\Admin;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
 use Taka512\Http\ClientFactory;
+use Taka512\Manager\EntityManager;
 use Taka512\Test\E2eTestCase;
 
 class HomeControllerTest extends E2eTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/HomeController.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/HomeController.yml');
+        $this->get(EntityManager::class)->truncateTables(['user']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
     public function testIndex()
@@ -18,6 +22,6 @@ class HomeControllerTest extends E2eTestCase
         $client = ClientFactory::createGoutte();
         $this->login($client);
         $crawler = $client->request('GET', $this->getUrl('/admin'));
-        $this->assertRegExp('/管理画面TOP/', $crawler->html());
+        $this->assertMatchesRegularExpression('/管理画面TOP/', $crawler->html());
     }
 }

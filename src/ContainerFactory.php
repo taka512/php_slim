@@ -5,6 +5,9 @@ namespace Taka512;
 use Acclimate\Container\CompositeContainer;
 use Acclimate\Container\ContainerAcclimator;
 use DI\ContainerBuilder;
+use Illuminate\Container\Container as IlluminateContainer;
+use Illuminate\Database\Connection;
+use Illuminate\Database\Connectors\ConnectionFactory;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
@@ -20,10 +23,29 @@ class ContainerFactory
 
     public static function initContainerOnHttp(ContainerInterface $pimpleContainer): ContainerInterface
     {
+        if (isset(self::$container)) {
+            return self::$container;
+        }
         Env::loadDotenv();
         $builder = new ContainerBuilder();
         $builder->addDefinitions(Env::getSetting());
         self::addHttpDefinitions($builder);
+        self::addCommonDefinitions($builder);
+        self::$container = self::buildContainer($builder, $pimpleContainer);
+
+        return self::$container;
+    }
+
+    public static function initTestContainer(ContainerInterface $pimpleContainer): ContainerInterface
+    {
+        if (isset(self::$container)) {
+            return self::$container;
+        }
+        Env::loadDotenv();
+        $builder = new ContainerBuilder();
+        $builder->addDefinitions(Env::getTestSetting());
+        self::addHttpDefinitions($builder);
+        self::addCommonDefinitions($builder);
         self::$container = self::buildContainer($builder, $pimpleContainer);
 
         return self::$container;
@@ -31,10 +53,14 @@ class ContainerFactory
 
     public static function initContainerOnBatch(string $batchName, ContainerInterface $pimpleContainer): ContainerInterface
     {
+        if (isset(self::$container)) {
+            return self::$container;
+        }
         Env::loadDotenv();
         $builder = new ContainerBuilder();
         $builder->addDefinitions(Env::getSetting());
         self::addBatchDefinitions($batchName, $builder);
+        self::addCommonDefinitions($batchName, $builder);
         self::$container = self::buildContainer($builder, $pimpleContainer);
 
         return self::$container;
@@ -94,6 +120,22 @@ class ContainerFactory
                 }
 
                 return $logger;
+            },
+        ]);
+    }
+
+    public static function addCommonDefinitions(ContainerBuilder $builder): void
+    {
+        $builder->addDefinitions([
+            Connection::class => function (ContainerInterface $container) {
+                $factory = new ConnectionFactory(new IlluminateContainer());
+                $connection = $factory->make($container->get('settings')['db']);
+                $connection->disableQueryLog();
+
+                return $connection;
+            },
+            \PDO::class => function (ContainerInterface $container) {
+                return $container->get(Connection::class)->getPdo();
             },
         ]);
     }

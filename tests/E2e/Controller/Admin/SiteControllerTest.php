@@ -2,15 +2,19 @@
 
 namespace Taka512\Test\E2e\Controller\Admin;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
 use Taka512\Http\ClientFactory;
+use Taka512\Manager\EntityManager;
 use Taka512\Test\E2eTestCase;
 
 class SiteControllerTest extends E2eTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/SiteController.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/SiteController.yml');
+        $this->get(EntityManager::class)->truncateTables(['user', 'site']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
     public function testIndex()
@@ -18,7 +22,7 @@ class SiteControllerTest extends E2eTestCase
         $client = ClientFactory::createGoutte();
         $this->login($client);
         $crawler = $client->request('GET', $this->getUrl('/admin/site'));
-        $this->assertRegExp('/test yahoo1 site name/', $crawler->html());
+        $this->assertMatchesRegularExpression('/test yahoo1 site name/', $crawler->html());
     }
 
     public function testCreate()
@@ -30,7 +34,7 @@ class SiteControllerTest extends E2eTestCase
         $crawler = $client->submit($form, ['name' => 'test google', 'url' => 'https://google.com']);
         $form = $crawler->selectButton('保存')->form();
         $crawler = $client->submit($form);
-        $this->assertRegExp('/test google/', $crawler->html());
+        $this->assertMatchesRegularExpression('/test google/', $crawler->html());
     }
 
     public function testEdit()
@@ -42,6 +46,6 @@ class SiteControllerTest extends E2eTestCase
         $crawler = $client->submit($form, ['name' => 'test google', 'url' => 'https://google.com']);
         $form = $crawler->selectButton('保存')->form();
         $crawler = $client->submit($form);
-        $this->assertRegExp('/test google/', $crawler->html());
+        $this->assertMatchesRegularExpression('/test google/', $crawler->html());
     }
 }

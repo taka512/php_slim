@@ -2,110 +2,84 @@
 
 namespace Taka512\Test\Functional\Repository;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
+use Taka512\Manager\EntityManager;
 use Taka512\Model\Tag;
 use Taka512\Repository\TagRepository;
 use Taka512\Test\DatabaseTestCase;
 
 class TagRepositoryTest extends DatabaseTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/TagRepository.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/TagRepository.yml');
+        $this->get(EntityManager::class)->truncateTables(['tag', 'site', 'tag_site']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
-    /**
-     * @dataProvider providerInsert
-     */
-    public function testInsert($msg, $data, $expected)
+    public function testInsert()
     {
+        $data = [
+           'name' => 'test name5',
+        ];
         $actual = $this->get(TagRepository::class)->insert($data);
-        $this->assertSame($expected, $actual);
+        $this->assertSame(5, $actual, 'case:insert success and return id');
     }
 
-    public function providerInsert()
+    public function testFindOneById()
     {
-        return [
-            [
-                'insert success and return id:5',
-                [
-                    'name' => 'test name5',
-                ],
-                5,
-            ],
-        ];
+        $actual = $this->get(TagRepository::class)->findOneById(1);
+        $this->assertInstanceOf(Tag::class, $actual, 'case:id is exists and return instance');
+        $actual = $this->get(TagRepository::class)->findOneById(99);
+        $this->assertNull($actual, 'case:id is not found');
     }
 
-    /**
-     * @dataProvider providerFindOneById
-     */
-    public function testFindOneById($msg, $id, $expected)
+    public function testFindBySearchConditions()
     {
-        $actual = $this->get(TagRepository::class)->findOneById($id);
-        $this->assertSame($expected, ($actual instanceof Tag));
-    }
-
-    public function providerFindOneById()
-    {
-        return [
-            ['case id:1 is found', 1, true],
-            ['case id:99 is not found(not Tag)', 99, false],
-        ];
-    }
-
-    /**
-     * @dataProvider providerFindBySearchConditions
-     */
-    public function testFindBySearchConditions($msg, $conditions, $expected)
-    {
+        $conditions = ['name' => 'tag', 'offset' => 0, 'limit' => 30];
         $actual = $this->get(TagRepository::class)->findBySearchConditions($conditions);
-        $this->assertCount($expected, $actual);
+        $this->assertCount(3, $actual, 'case:search name');
+
+        $conditions = ['site_id' => '1', 'offset' => 0, 'limit' => 30];
+        $actual = $this->get(TagRepository::class)->findBySearchConditions($conditions);
+        $this->assertCount(2, $actual, 'case:search site_id');
+
+        $conditions = ['name' => 'tag1', 'site_id' => '1', 'offset' => 0, 'limit' => 30];
+        $actual = $this->get(TagRepository::class)->findBySearchConditions($conditions);
+        $this->assertCount(1, $actual, 'case:search site_id, name');
+
+        $conditions = ['offset' => 0, 'limit' => 30];
+        $actual = $this->get(TagRepository::class)->findBySearchConditions($conditions);
+        $this->assertCount(4, $actual, 'case:search all');
+
+        $conditions = ['offset' => 0, 'limit' => 1];
+        $actual = $this->get(TagRepository::class)->findBySearchConditions($conditions);
+        $this->assertCount(1, $actual, 'case:search limit 1');
+
+        $conditions = ['offset' => 1, 'limit' => 30];
+        $actual = $this->get(TagRepository::class)->findBySearchConditions($conditions);
+        $this->assertCount(3, $actual, 'case:search offset 1');
     }
 
-    public function providerFindBySearchConditions()
+    public function testFindLatestTags()
     {
-        return [
-            ['tag count is 3(search name:tag)', ['name' => 'tag', 'offset' => 0, 'limit' => 30], 3],
-            ['tag count is 2(search site_id:1)', ['site_id' => '1', 'offset' => 0, 'limit' => 30], 2],
-            ['tag count is 1(search site_id:1, name:tag1)', ['name' => 'tag1', 'site_id' => '1', 'offset' => 0, 'limit' => 30], 1],
-            ['tag count is 4(search all)', ['offset' => 0, 'limit' => 30], 4],
-            ['tag count is 1(search limit 1)', ['offset' => 0, 'limit' => 1], 1],
-            ['tag count is 3(search offset 1)', ['offset' => 1, 'limit' => 30], 3],
-        ];
+        $actual = $this->get(TagRepository::class)->findLatestTags(0, 2);
+        $this->assertCount(2, $actual, 'case:count limit 2');
+
+        $actual = $this->get(TagRepository::class)->findLatestTags(0, null);
+        $this->assertCount(4, $actual, 'case:count limit is null');
+
+        $actual = $this->get(TagRepository::class)->findLatestTags(null, null);
+        $this->assertCount(4, $actual, 'case:count offset,limit is null');
+
+        $actual = $this->get(TagRepository::class)->findLatestTags(3, 10);
+        $this->assertCount(1, $actual, 'case:offset is 3,limit is 10');
     }
 
-    /**
-     * @dataProvider providerFindLatestTags
-     */
-    public function testFindLatestTags($msg, $offset, $limit, $expected)
-    {
-        $actual = $this->get(TagRepository::class)->findLatestTags($offset, $limit);
-        $this->assertCount($expected, $actual);
-    }
-
-    public function providerFindLatestTags()
-    {
-        return [
-            ['tag get count is 2(limit 2)', 0, 2, 2],
-            ['tag get count is 4(limit is null)', 0, null, 4],
-            ['tag get count is 4(offset,limit is null)', null, null, 4],
-            ['tag get count is 1(offset is 3,limit is 10)', 3, 10, 1],
-        ];
-    }
-
-    /**
-     * @dataProvider providerCount
-     */
-    public function testCount($msg, $expected)
+    public function testCount()
     {
         $actual = $this->get(TagRepository::class)->count();
-        $this->assertSame($expected, $actual);
-    }
-
-    public function providerCount()
-    {
-        return [
-            ['all tag count is 4', 4],
-        ];
+        $this->assertSame(4, $actual, 'count all tag');
     }
 }

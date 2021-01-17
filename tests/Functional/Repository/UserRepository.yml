@@ -1,5 +1,5 @@
-user:
-  -
+Taka512\Model\User:
+  user1:
     id: 1
     login_id: 'test_user'
     password: 'pass'

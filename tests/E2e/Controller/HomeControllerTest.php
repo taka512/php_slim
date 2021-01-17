@@ -2,15 +2,19 @@
 
 namespace Taka512\Test\E2e\Controller;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
 use Taka512\Http\ClientFactory;
+use Taka512\Manager\EntityManager;
 use Taka512\Test\E2eTestCase;
 
 class HomeControllerTest extends E2eTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/HomeController.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/HomeController.yml');
+        $this->get(EntityManager::class)->truncateTables(['site']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
     /**
@@ -20,7 +24,7 @@ class HomeControllerTest extends E2eTestCase
     {
         $client = ClientFactory::createGoutte();
         $crawler = $client->request('GET', $this->getUrl('/'));
-        $this->assertRegExp($expected, $crawler->html());
+        $this->assertMatchesRegularExpression($expected, $crawler->html());
     }
 
     public function providerIndex()

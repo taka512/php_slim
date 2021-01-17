@@ -2,15 +2,19 @@
 
 namespace Taka512\Test\E2e\Controller\Api;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
 use Taka512\Http\ClientFactory;
+use Taka512\Manager\EntityManager;
 use Taka512\Test\E2eTestCase;
 
 class TagControllerTest extends E2eTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/TagController.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/TagController.yml');
+        $this->get(EntityManager::class)->truncateTables(['tag', 'site', 'tag_site']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
     /**

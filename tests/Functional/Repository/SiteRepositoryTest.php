@@ -2,71 +2,44 @@
 
 namespace Taka512\Test\Functional\Repository;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
+use Taka512\Manager\EntityManager;
 use Taka512\Model\Site;
 use Taka512\Repository\SiteRepository;
 use Taka512\Test\DatabaseTestCase;
 
 class SiteRepositoryTest extends DatabaseTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/SiteRepository.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/SiteRepository.yml');
+        $this->get(EntityManager::class)->truncateTables(['site']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
-    /**
-     * @dataProvider providerInsert
-     */
-    public function testInsert($msg, $data, $expected)
+    public function testInsert()
     {
+        $data = [
+            'name' => 'test name2',
+            'url' => 'test url2',
+        ];
         $actual = $this->get(SiteRepository::class)->insert($data);
-        $this->assertSame($expected, $actual->id);
+        $this->assertInstanceOf(Site::class, $actual);
     }
 
-    public function providerInsert()
+    public function testFindOneById()
     {
-        return [
-            [
-                'insert success and return id:2',
-                [
-                    'name' => 'test name2',
-                    'url' => 'test url2',
-                ],
-                2,
-            ],
-        ];
+        $actual = $this->get(SiteRepository::class)->findOneById(1);
+        $this->assertInstanceOf(Site::class, $actual, 'case:id is found');
+
+        $actual = $this->get(SiteRepository::class)->findOneById(99);
+        $this->assertNull($actual, 'case:id is not found');
     }
 
-    /**
-     * @dataProvider providerFindOneById
-     */
-    public function testFindOneById($msg, $id, $expected)
+    public function testFindLatestSites()
     {
-        $actual = $this->get(SiteRepository::class)->findOneById($id);
-        $this->assertSame($expected, ($actual instanceof Site));
-    }
-
-    public function providerFindOneById()
-    {
-        return [
-            ['case id:1 is found', 1, true],
-            ['case id:2 is not found(not Site)', 2, false],
-        ];
-    }
-
-    /**
-     * @dataProvider providerFindLatestSites
-     */
-    public function testFindLatestSites($msg, $limit, $expected)
-    {
-        $actual = $this->get(SiteRepository::class)->findLatestSites($limit);
-        $this->assertCount($expected, $actual);
-    }
-
-    public function providerFindLatestSites()
-    {
-        return [
-            ['site count is 1', 10, 1],
-        ];
+        $actual = $this->get(SiteRepository::class)->findLatestSites(10);
+        $this->assertCount(1, $actual, 'case: search site');
     }
 }

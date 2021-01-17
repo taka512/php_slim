@@ -2,31 +2,27 @@
 
 namespace Taka512\Test\Functional\Manager;
 
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Nelmio\Alice\Loader\NativeLoader;
+use Taka512\Manager\EntityManager;
 use Taka512\Manager\TagManager;
 use Taka512\Test\DatabaseTestCase;
 
 class TagManagerTest extends DatabaseTestCase
 {
-    protected function getDataSet()
+    protected function setUp(): void
     {
-        return new YamlDataSet(__DIR__.'/TagManager.yml');
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/TagManager.yml');
+        $this->get(EntityManager::class)->truncateTables(['tag']);
+        $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
-    /**
-     * @dataProvider providerGetTagPagenate
-     */
-    public function testGetTagPagenate($msg, $page, $limit, $expected)
+    public function testGetTagPagenate()
     {
-        $actual = $this->get(TagManager::class)->getTagPagenate($page, $limit);
-        $this->assertCount($expected, $actual->getCurrentPageResults());
-    }
+        $actual = $this->get(TagManager::class)->getTagPagenate(1, 10);
+        $this->assertCount(4, $actual->getCurrentPageResults(), 'get pagenate limit:10');
 
-    public function providerGetTagPagenate()
-    {
-        return [
-            ['get pagenate (page:1 limit:10)', 1, 10, 4],
-            ['get pagenate (page:1 limit:2)', 1, 2, 2],
-        ];
+        $actual = $this->get(TagManager::class)->getTagPagenate(1, 2);
+        $this->assertCount(2, $actual->getCurrentPageResults(), 'get pagenate limit:2');
     }
 }

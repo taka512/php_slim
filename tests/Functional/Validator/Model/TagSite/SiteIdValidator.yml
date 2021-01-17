@@ -1,5 +1,5 @@
-site:
-  -
+Taka512\Model\Site:
+  site1:
     id: 1
     name: 'site1'
     url: 'https://test.jp'

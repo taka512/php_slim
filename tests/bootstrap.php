@@ -5,6 +5,6 @@ require __DIR__.'/../vendor/autoload.php';
 
 use Taka512\ContainerFactory;
 
-ContainerFactory::initContainerOnHttp(ContainerFactory::getTestPimpleContainer());
+ContainerFactory::initTestContainer(ContainerFactory::getTestPimpleContainer());
 // use Doctrine/Common/Annotations/AnnotationRegistory;
 // AnnotationRegistory::registerLoader([$loader, 'loadClass']);
