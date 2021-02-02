@@ -16,7 +16,7 @@
         "davedevelopment/phpmig": "v1.7.0",
         "doctrine/annotations": "1.11.1",
         "fabpot/goutte": "v4.0.1",
-        "illuminate/database": "v8.16.1",
+        "illuminate/database": "v8.24.0",
         "laminas/laminas-authentication": "2.7.0",
         "laminas/laminas-form": "2.15.0",
         "laminas/laminas-math": "3.2.0",
