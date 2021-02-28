@@ -2,6 +2,7 @@
 
 namespace Taka512\Command;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,7 +15,7 @@ abstract class BaseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        ContainerFactory::initContainerOnBatch($this->getName(), ContainerFactory::getPimpleContainer());
+        ContainerFactory::initContainerOnBatch($this->getName());
         $this->container = ContainerFactory::getContainer();
         LoggerFactory::initLoggerByBatch(
             $this->getName(),
@@ -22,9 +23,9 @@ abstract class BaseCommand extends Command
             $this->container->get('settings')['logger']['level']
         );
         try {
-            $this->process($input);
+            return $this->process($input);
         } catch (\Exception $e) {
-            $this->get('logger')->error(sprintf('message:%s file:%s line:%s', $e->getMessage(), $e->getFile(), $e->getLine()));
+            $this->get(LoggerInterface::class)->error(sprintf('message:%s file:%s line:%s', $e->getMessage(), $e->getFile(), $e->getLine()));
         }
     }
 
