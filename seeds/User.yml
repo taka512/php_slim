@@ -1,0 +1,4 @@
+Taka512\Model\User:
+  user1:
+    login_id: 'admin'
+    password: '\$2y\$10\$EG0a/uEuLTuDNdzsOYb8uuNfUK206STmMWkWS4W0sCzxymVZNdZYC'

@@ -1,6 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
+use Nelmio\Alice\Loader\NativeLoader;
 use Phpmig\Migration\Migration;
+use Taka512\ContainerFactory;
+use Taka512\Manager\EntityManager;
+use Taka512\Model\User;
 
 class AddUser extends Migration
 {
@@ -9,13 +15,9 @@ class AddUser extends Migration
      */
     public function up()
     {
-        $c = $this->getContainer();
-        $data = [
-            ['login_id' => 'admin', 'password' => '12345678'],
-        ];
-        foreach ($data as $user) {
-            $c['repository.user']->insert($user);
-        }
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/User.yml');
+        ContainerFactory::getContainer()->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
     /**
@@ -23,9 +25,6 @@ class AddUser extends Migration
      */
     public function down()
     {
-        $c = $this->getContainer();
-        $c['pdo.master']->query('set foreign_key_checks = 0');
-        $c['pdo.master']->query('TRUNCATE TABLE user');
-        $c['pdo.master']->query('set foreign_key_checks = 1');
+        ContainerFactory::getContainer()->get(EntityManager::class)->truncateTables(['user']);
     }
 }

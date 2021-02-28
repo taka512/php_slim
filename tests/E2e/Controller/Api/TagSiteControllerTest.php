@@ -11,8 +11,7 @@ class TagSiteControllerTest extends E2eTestCase
 {
     protected function setUp(): void
     {
-        $loader = new NativeLoader();
-        $objectSet = $loader->loadFile(__DIR__.'/TagSiteController.yml');
+        $objectSet = $this->get(NativeLoader::class)->loadFile(__DIR__.'/TagSiteController.yml');
         $this->get(EntityManager::class)->truncateTables(['tag_site', 'tag', 'site']);
         $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }

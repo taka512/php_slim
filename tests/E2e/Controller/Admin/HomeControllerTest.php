@@ -11,8 +11,7 @@ class HomeControllerTest extends E2eTestCase
 {
     protected function setUp(): void
     {
-        $loader = new NativeLoader();
-        $objectSet = $loader->loadFile(__DIR__.'/HomeController.yml');
+        $objectSet = $this->get(NativeLoader::class)->loadFile(__DIR__.'/HomeController.yml');
         $this->get(EntityManager::class)->truncateTables(['user']);
         $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }

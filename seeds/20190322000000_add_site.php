@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+use Nelmio\Alice\Loader\NativeLoader;
 use Phpmig\Migration\Migration;
+use Taka512\ContainerFactory;
+use Taka512\Manager\EntityManager;
 
 class AddSite extends Migration
 {
@@ -9,13 +14,9 @@ class AddSite extends Migration
      */
     public function up()
     {
-        $c = $this->getContainer();
-        $data = [
-            ['name' => 'テストサイト', 'url' => 'https://google.com'],
-        ];
-        foreach ($data as $site) {
-            $c['repository.site']->insert($site);
-        }
+        $loader = new NativeLoader();
+        $objectSet = $loader->loadFile(__DIR__.'/Site.yml');
+        ContainerFactory::getContainer()->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
     /**
@@ -23,9 +24,6 @@ class AddSite extends Migration
      */
     public function down()
     {
-        $c = $this->getContainer();
-        $c['pdo.master']->query('set foreign_key_checks = 0');
-        $c['pdo.master']->query('TRUNCATE TABLE site');
-        $c['pdo.master']->query('set foreign_key_checks = 1');
+        ContainerFactory::getContainer()->get(EntityManager::class)->truncateTables(['site']);
     }
 }

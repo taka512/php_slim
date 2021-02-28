@@ -3,5 +3,3 @@ Taka512\Model\Site:
     id: 1
     name: 'test yahoo site name'
     url: 'https://yahoo.co.jp'
-    created_at: '2018/11/10'
-    updated_at: '2018/11/10'

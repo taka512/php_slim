@@ -11,8 +11,7 @@ class TagManagerTest extends DatabaseTestCase
 {
     protected function setUp(): void
     {
-        $loader = new NativeLoader();
-        $objectSet = $loader->loadFile(__DIR__.'/TagManager.yml');
+        $objectSet = $this->get(NativeLoader::class)->loadFile(__DIR__.'/TagManager.yml');
         $this->get(EntityManager::class)->truncateTables(['tag']);
         $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }

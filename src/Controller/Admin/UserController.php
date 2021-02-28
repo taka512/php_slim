@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteContext;
+use Taka512\Auth\AuthenticationAdapter;
 use Taka512\Controller\BaseController;
 use Taka512\Form\Admin\User\CreateForm;
 use Taka512\Form\Admin\User\CreateInput;
@@ -37,7 +38,7 @@ class UserController extends BaseController
             $form->setData($request->getParsedBody());
             if ($form->isValid()) {
                 try {
-                    $authAdapter = $this->get('auth.authentication_adapter');
+                    $authAdapter = $this->get(AuthenticationAdapter::class);
                     $authAdapter
                         ->setLoginId($form->getData()->getLoginId())
                         ->setPassword($form->getData()->getPassword());

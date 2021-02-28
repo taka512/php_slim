@@ -12,8 +12,7 @@ class SiteIdValidatorTest extends DatabaseTestCase
 {
     protected function setUp(): void
     {
-        $loader = new NativeLoader();
-        $objectSet = $loader->loadFile(__DIR__.'/SiteIdValidator.yml');
+        $objectSet = $this->get(NativeLoader::class)->loadFile(__DIR__.'/SiteIdValidator.yml');
         $this->get(EntityManager::class)->truncateTables(['site']);
         $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }

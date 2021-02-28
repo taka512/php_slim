@@ -3,5 +3,3 @@ Taka512\Model\User:
     id: 1
     login_id: 'test_user'
     password: 'pass'
-    created_at: '2018/11/10'
-    updated_at: '2018/11/10'
