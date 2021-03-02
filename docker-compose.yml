@@ -6,6 +6,7 @@ services:
     ports:
       - "443:443"
     volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:cached
       - ./docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:cached
       - ./docker/nginx/tls:/etc/nginx/tls:cached
       - ./public:/home/php_slim/public:cached
@@ -21,13 +22,13 @@ services:
     container_name: app.local
     build: .
     volumes:
-      - ./docker/php/php7.ini:/usr/local/etc/php/php.ini:cached
+      - ./docker/php/php8.ini-development:/usr/local/etc/php/php.ini:cached
       - ./docker/mysql/conf/my.client.cnf:/etc/mysql/my.cnf:cached
       - .:/home/php_slim:cached
     depends_on:
       - web
-      - db
-      - cache
+      - mysql
+      - redis
     logging:
       driver: "json-file"
       options:
@@ -36,9 +37,9 @@ services:
     networks:
       webnet:
         ipv4_address: 192.168.1.40
-  cache:
-    container_name: cache.local
-    image: memcached:alpine
+  redis:
+    container_name: redis.local
+    image: redis:6-alpine
     logging:
       driver: "json-file"
       options:
@@ -47,8 +48,8 @@ services:
     networks:
       webnet:
         ipv4_address: 192.168.1.50
-  db:
-    container_name: db.local
+  mysql:
+    container_name: mysql.local
     image: mysql:8.0
     ports:
       - "3306:3306"
