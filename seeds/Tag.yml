@@ -1,0 +1,3 @@
+Taka512\Model\Tag:
+  tag{1..21}:
+    name: '<username()>'

@@ -2,25 +2,21 @@
 
 use Taka512\HttpErrorHandler;
 use Taka512\ShutdownHandler;
+use Psr\Log\LoggerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use Slim\Views\TwigMiddleware;
 use Taka512\ContainerFactory;
-use Taka512\LoggerFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 if (isset($_SERVER['TEST_REQUEST'])) {
-    ContainerFactory::initContainerOnHttp(ContainerFactory::getTestPimpleContainer());
+    ContainerFactory::initTestContainer();
 } else {
-    ContainerFactory::initContainerOnHttp(ContainerFactory::getPimpleContainer());
+    ContainerFactory::initContainerOnHttp();
 }
 
 $container = ContainerFactory::getContainer();
-LoggerFactory::initLoggerByApp(
-    $container->get('settings')['logger']['path'],
-    $container->get('settings')['logger']['level']
-);
 
 // Instantiate the app
 $app = AppFactory::createFromContainer($container);
@@ -35,7 +31,7 @@ $serverRequestCreator = ServerRequestCreatorFactory::create();
 $request = $serverRequestCreator->createServerRequestFromGlobals();
 
 $errorHandler = new HttpErrorHandler($app->getCallableResolver(), $app->getResponseFactory());
-$errorHandler->setLogger($container->get('logger'));
+$errorHandler->setLogger($container->get(LoggerInterface::class));
 $errorHandler->setTwigView($container->get('view'));
 
 $shutdownHandler = new ShutdownHandler($request, $errorHandler, $displayErrorDetails);

@@ -11,8 +11,7 @@ class TagControllerTest extends E2eTestCase
 {
     protected function setUp(): void
     {
-        $loader = new NativeLoader();
-        $objectSet = $loader->loadFile(__DIR__.'/TagController.yml');
+        $objectSet = $this->get(NativeLoader::class)->loadFile(__DIR__.'/TagController.yml');
         $this->get(EntityManager::class)->truncateTables(['user', 'tag']);
         $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }

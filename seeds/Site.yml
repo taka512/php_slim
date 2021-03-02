@@ -1,0 +1,4 @@
+Taka512\Model\Site:
+  site1:
+    name: 'テストサイト'
+    url: 'https://google.com'

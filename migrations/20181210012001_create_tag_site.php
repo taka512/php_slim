@@ -1,6 +1,6 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Taka512\Migration;
 
 class CreateTagSite extends Migration
 {
@@ -13,14 +13,13 @@ class CreateTagSite extends Migration
 CREATE TABLE IF NOT EXISTS `tag_site` (
   `tag_id` int NOT NULL COMMENT 'タグID',
   `site_id` int NOT NULL COMMENT 'サイトID',
-  `created_at` datetime NOT NULL COMMENT '登録日',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日',
   foreign key(tag_id) references tag(id) on delete cascade,
   foreign key(site_id) references site(id) on delete cascade,
   PRIMARY KEY (`tag_id`, `site_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'タグとサイトの交差テーブル'
 EOL;
-        $container = $this->getContainer();
-        $container['pdo.master']->query($sql);
+        $this->getInstance(\PDO::class)->query($sql);
     }
 
     /**

@@ -39,7 +39,6 @@ class AuthenticationAdapter implements AdapterInterface
         if (is_null($user) || $user->isDelete()) {
             return new Result(Result::FAILURE_IDENTITY_NOT_FOUND, $this->loginId, [LoginIdValidator::MSG_NOT_FOUND]);
         }
-
         if (password_verify($this->password, $user->password)) {
             return new Result(Result::SUCCESS, $this->loginId);
         }

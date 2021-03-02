@@ -12,8 +12,7 @@ class SiteRepositoryTest extends DatabaseTestCase
 {
     protected function setUp(): void
     {
-        $loader = new NativeLoader();
-        $objectSet = $loader->loadFile(__DIR__.'/SiteRepository.yml');
+        $objectSet = $this->get(NativeLoader::class)->loadFile(__DIR__.'/SiteRepository.yml');
         $this->get(EntityManager::class)->truncateTables(['site']);
         $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }

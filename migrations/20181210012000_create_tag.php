@@ -1,6 +1,8 @@
 <?php
 
-use Phpmig\Migration\Migration;
+declare(strict_types=1);
+
+use Taka512\Migration;
 
 class CreateTag extends Migration
 {
@@ -13,14 +15,13 @@ class CreateTag extends Migration
 CREATE TABLE IF NOT EXISTS `tag` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'タグID',
   `name` varchar(64) NOT NULL COMMENT 'タグ名',
-  `created_at` datetime NOT NULL COMMENT '登録日',
-  `updated_at` datetime NOT NULL COMMENT '更新日',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日',
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
   PRIMARY KEY (`id`),
   UNIQUE KEY uniq_name (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'タグマスター'
 EOL;
-        $container = $this->getContainer();
-        $container['pdo.master']->query($sql);
+        $this->getInstance(\PDO::class)->query($sql);
     }
 
     /**

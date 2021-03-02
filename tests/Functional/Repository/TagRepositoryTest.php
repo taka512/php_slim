@@ -12,8 +12,7 @@ class TagRepositoryTest extends DatabaseTestCase
 {
     protected function setUp(): void
     {
-        $loader = new NativeLoader();
-        $objectSet = $loader->loadFile(__DIR__.'/TagRepository.yml');
+        $objectSet = $this->get(NativeLoader::class)->loadFile(__DIR__.'/TagRepository.yml');
         $this->get(EntityManager::class)->truncateTables(['tag', 'site', 'tag_site']);
         $this->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }

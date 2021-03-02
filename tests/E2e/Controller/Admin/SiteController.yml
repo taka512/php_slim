@@ -3,12 +3,8 @@ Taka512\Model\User:
     id: 1
     login_id: admin
     password: '\$2y\$10\$Lvh2drXQIoRhUv9qZpsid.82QJC3F5cvzRbJsSeQT4s6VolDObvQi'
-    created_at: '2018/11/10'
-    updated_at: '2018/11/10'
 Taka512\Model\Site:
   site1:
     id: 1
     name: 'test yahoo1 site name'
     url: 'https://yahoo.co.jp'
-    created_at: '2018/11/10'
-    updated_at: '2018/11/10'
