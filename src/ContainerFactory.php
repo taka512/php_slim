@@ -14,6 +14,7 @@ use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Slim\Views\Twig;
 
 class ContainerFactory
@@ -25,10 +26,7 @@ class ContainerFactory
         if (isset(self::$container)) {
             return self::$container;
         }
-        Env::loadDotenv();
-        $builder = new ContainerBuilder();
-        $builder->addDefinitions(Env::getSetting());
-        self::addHttpDefinitions($builder);
+        $builder = self::createHttpContainerBuilder();
         self::addCommonDefinitions($builder);
         self::$container = self::buildContainer($builder);
         self::initConnection();
@@ -41,10 +39,7 @@ class ContainerFactory
         if (isset(self::$container)) {
             return self::$container;
         }
-        Env::loadDotenv('env.sample');
-        $builder = new ContainerBuilder();
-        $builder->addDefinitions(Env::getTestSetting());
-        self::addHttpDefinitions($builder);
+        $builder = self::createTestContainerBuilder();
         self::addCommonDefinitions($builder);
         self::$container = self::buildContainer($builder);
         self::initConnection();
@@ -57,10 +52,7 @@ class ContainerFactory
         if (isset(self::$container)) {
             return self::$container;
         }
-        Env::loadDotenv();
-        $builder = new ContainerBuilder();
-        $builder->addDefinitions(Env::getSetting());
-        self::addBatchDefinitions($batchName, $builder);
+        $builder = self::createBatchContainerBuilder($batchName);
         self::addCommonDefinitions($builder);
         self::$container = self::buildContainer($builder);
         self::initConnection();
@@ -76,8 +68,11 @@ class ContainerFactory
         Model::setConnectionResolver($resolver);
     }
 
-    public static function addHttpDefinitions(ContainerBuilder $builder): void
+    public static function createHttpContainerBuilder(): ContainerBuilder
     {
+        $builder = new ContainerBuilder();
+        Env::loadDotenv();
+        $builder->addDefinitions(Env::getSetting());
         $builder->addDefinitions([
             'auth' => function (ContainerInterface $c) {
                 return new \Laminas\Authentication\AuthenticationService();
@@ -110,10 +105,44 @@ class ContainerFactory
                 return $logger;
             },
         ]);
+
+        return $builder;
     }
 
-    public static function addBatchDefinitions(string $batchName, ContainerBuilder $builder): void
+    public static function createTestContainerBuilder(): ContainerBuilder
     {
+        $builder = new ContainerBuilder();
+        Env::loadDotenv('env.sample');
+        $builder->addDefinitions(Env::getTestSetting());
+        $builder->addDefinitions([
+            'auth' => function (ContainerInterface $c) {
+                return new \Laminas\Authentication\AuthenticationService();
+            },
+            'view' => function (ContainerInterface $c) {
+                $settings = $c->get('settings')['view'];
+                $twig = Twig::create($settings['template_path'], [
+                    //'cache' => $settings['cache_path']
+                    'cache' => false,
+                ]);
+                if (!Env::isEnvProduction()) {
+                    //$twig->offsetSet('is_development', true);
+                }
+
+                return $twig;
+            },
+            LoggerInterface::class => function (ContainerInterface $c) {
+                return new NullLogger();
+            },
+        ]);
+
+        return $builder;
+    }
+
+    public static function createBatchContainerBuilder(string $batchName): ContainerBuilder
+    {
+        $builder = new ContainerBuilder();
+        Env::loadDotenv();
+        $builder->addDefinitions(Env::getSetting());
         $builder->addDefinitions([
             LoggerInterface::class => function (ContainerInterface $c) use ($batchName) {
                 $path = $c->get('settings')['logger']['path'];
@@ -132,6 +161,7 @@ class ContainerFactory
                 return $logger;
             },
         ]);
+        return $builder;
     }
 
     public static function addCommonDefinitions(ContainerBuilder $builder): void

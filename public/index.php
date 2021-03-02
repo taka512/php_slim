@@ -7,7 +7,6 @@ use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use Slim\Views\TwigMiddleware;
 use Taka512\ContainerFactory;
-use Taka512\LoggerFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -18,10 +17,6 @@ if (isset($_SERVER['TEST_REQUEST'])) {
 }
 
 $container = ContainerFactory::getContainer();
-LoggerFactory::initLoggerByApp(
-    $container->get('settings')['logger']['path'],
-    $container->get('settings')['logger']['level']
-);
 
 // Instantiate the app
 $app = AppFactory::createFromContainer($container);
