@@ -41,7 +41,7 @@ class ContainerFactory
         if (isset(self::$container)) {
             return self::$container;
         }
-        Env::loadDotenv();
+        Env::loadDotenv('env.sample');
         $builder = new ContainerBuilder();
         $builder->addDefinitions(Env::getTestSetting());
         self::addHttpDefinitions($builder);

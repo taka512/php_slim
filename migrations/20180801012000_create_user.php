@@ -1,6 +1,6 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Taka512\Migration;
 
 class CreateUser extends Migration
 {
@@ -21,8 +21,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY uniq_login (`login_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'ユーザマスター'
 EOL;
-        $container = $this->getContainer();
-        $container['db']->query($sql);
+        $this->getInstance(\PDO::class)->query($sql);
     }
 
     /**

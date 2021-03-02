@@ -1,6 +1,6 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Taka512\Migration;
 
 class CreateTagSite extends Migration
 {
@@ -19,8 +19,7 @@ CREATE TABLE IF NOT EXISTS `tag_site` (
   PRIMARY KEY (`tag_id`, `site_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'タグとサイトの交差テーブル'
 EOL;
-        $container = $this->getContainer();
-        $container['db']->query($sql);
+        $this->getInstance(\PDO::class)->query($sql);
     }
 
     /**

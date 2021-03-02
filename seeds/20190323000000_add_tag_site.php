@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Nelmio\Alice\Loader\NativeLoader;
-use Phpmig\Migration\Migration;
+use Taka512\Migration;
 use Taka512\ContainerFactory;
 use Taka512\Manager\EntityManager;
 
@@ -14,9 +14,8 @@ class AddTagSite extends Migration
      */
     public function up()
     {
-        $loader = new NativeLoader();
-        $objectSet = $loader->loadFile(__DIR__.'/TagSite.yml');
-        ContainerFactory::getContainer()->get(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
+        $objectSet = $this->getInstance(NativeLoader::class)->loadFile(__DIR__.'/TagSite.yml');
+        $this->getInstance(EntityManager::class)->bulkInsertObjects($objectSet->getObjects());
     }
 
     /**
@@ -24,6 +23,6 @@ class AddTagSite extends Migration
      */
     public function down()
     {
-        ContainerFactory::getContainer()->get(EntityManager::class)->truncateTables(['tag_site']);
+        $this->getInstance(EntityManager::class)->truncateTables(['tag_site']);
     }
 }

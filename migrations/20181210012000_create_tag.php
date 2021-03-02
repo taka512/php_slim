@@ -1,6 +1,8 @@
 <?php
 
-use Phpmig\Migration\Migration;
+declare(strict_types=1);
+
+use Taka512\Migration;
 
 class CreateTag extends Migration
 {
@@ -19,8 +21,7 @@ CREATE TABLE IF NOT EXISTS `tag` (
   UNIQUE KEY uniq_name (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'タグマスター'
 EOL;
-        $container = $this->getContainer();
-        $container['db']->query($sql);
+        $this->getInstance(\PDO::class)->query($sql);
     }
 
     /**

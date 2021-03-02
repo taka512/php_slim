@@ -1,6 +1,6 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Taka512\Migration;
 
 class CreateSite extends Migration
 {
@@ -20,8 +20,7 @@ CREATE TABLE IF NOT EXISTS `site` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'サイトマスター'
 EOL;
-        $container = $this->getContainer();
-        $container['db']->query($sql);
+        $this->getInstance(\PDO::class)->query($sql);
     }
 
     /**
