@@ -161,6 +161,7 @@ class ContainerFactory
                 return $logger;
             },
         ]);
+
         return $builder;
     }
 
