@@ -29,5 +29,9 @@ RUN apk upgrade --update \
 
 WORKDIR /home/php_slim
 
+RUN apk add --no-cache msmtp
+RUN rm -rf /usr/sbin/sendmail && ln -sf /usr/bin/msmtp /usr/sbin/sendmail
+ADD docker/mail/msmtprc /etc/msmtprc
+
 ENV PANTHER_NO_SANDBOX 1
 ENV PANTHER_CHROME_DRIVER_BINARY /usr/lib/chromium/chromedriver

@@ -68,6 +68,14 @@ services:
     networks:
       webnet:
         ipv4_address: 192.168.1.60
+  mail:
+    container_name: mail.local
+    image: kanemu/maildev-with-iconv
+    ports:
+      - 8081:80
+    networks:
+      webnet:
+        ipv4_address: 192.168.1.70
   swagger:
     container_name: swagger.local
     image: swaggerapi/swagger-ui
@@ -84,7 +92,8 @@ services:
         max-file: "3"
     networks:
       webnet:
-        ipv4_address: 192.168.1.70
+        ipv4_address: 192.168.1.80
+
 
 networks:
   webnet:
