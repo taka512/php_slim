@@ -21,7 +21,7 @@ return [
         // database
         'db' => [
             'driver' => 'mysql',
-            'host' => 'db.local',
+            'host' => 'mysql.local',
             'database' => 'sample_slim_test',
             'username' => 'slim_user',
             'password' => ENV::getenv('DB_PASS'),
