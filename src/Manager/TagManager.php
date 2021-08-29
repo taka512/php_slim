@@ -8,7 +8,7 @@ use Taka512\Repository\TagRepository;
 
 class TagManager
 {
-    const LIMIT = 10;
+    public const LIMIT = 10;
 
     private $repository;
 

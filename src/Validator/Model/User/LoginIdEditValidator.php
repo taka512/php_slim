@@ -7,17 +7,17 @@ use Taka512\Repository\UserRepository;
 
 class LoginIdEditValidator extends AbstractValidator
 {
-    const MAX_STR = 32;
+    public const MAX_STR = 32;
 
-    const INVALID_FORMAT = 'LoginIdInvalidFormat';
-    const GREATER_THAN_MAX_STR = 'LoginIdGreaterThanMaxStr';
-    const DUPLICATE_STR = 'LoginIdDuplicateStr';
+    public const INVALID_FORMAT = 'LoginIdInvalidFormat';
+    public const GREATER_THAN_MAX_STR = 'LoginIdGreaterThanMaxStr';
+    public const DUPLICATE_STR = 'LoginIdDuplicateStr';
 
-    const MSG_EMPTY = 'ログインIDは必須です';
-    const MSG_NOT_FOUND = 'ログインIDが存在しません';
-    const MSG_INVALID_FMT = 'ログインIDは半角英数字を登録してください';
-    const MSG_GREATER_THAN_MAX_STR = 'ログインIDが長すぎます。'.self::MAX_STR.'文字以下で指定してください';
-    const MSG_DUPLICATE_STR = 'ログインIDは既に登録されています';
+    public const MSG_EMPTY = 'ログインIDは必須です';
+    public const MSG_NOT_FOUND = 'ログインIDが存在しません';
+    public const MSG_INVALID_FMT = 'ログインIDは半角英数字を登録してください';
+    public const MSG_GREATER_THAN_MAX_STR = 'ログインIDが長すぎます。'.self::MAX_STR.'文字以下で指定してください';
+    public const MSG_DUPLICATE_STR = 'ログインIDは既に登録されています';
 
     protected $userRepository;
     protected $messageTemplates = [

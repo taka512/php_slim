@@ -41,8 +41,8 @@ class EditForm extends Form
             'name' => 'del_flg',
             'type' => Checkbox::class,
             'options' => [
-                'checked_value' => Site::FLG_ON,
-                'unchecked_value' => Site::FLG_OFF,
+                'checked_value' => (string) Site::FLG_ON,
+                'unchecked_value' => (string) Site::FLG_OFF,
             ],
         ])->add([
             'name' => 'confirm',

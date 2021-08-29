@@ -6,8 +6,8 @@ use Dotenv\Dotenv;
 
 class Env
 {
-    const LOCAL = 'local';
-    const PROD = 'prod';
+    public const LOCAL = 'local';
+    public const PROD = 'prod';
 
     protected static $isLoadDotenv = false;
 

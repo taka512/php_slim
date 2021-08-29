@@ -6,18 +6,18 @@ use Laminas\Validator\AbstractValidator;
 
 class PasswordValidator extends AbstractValidator
 {
-    const MIN_STR = 8;
-    const MAX_STR = 32;
+    public const MIN_STR = 8;
+    public const MAX_STR = 32;
 
-    const INVALID_FORMAT = 'PasswordInvalidFormat';
-    const LESS_THAN_MIN_STR = 'PasswordLessThanMinStr';
-    const GREATER_THAN_MAX_STR = 'PasswordGreaterThanMaxStr';
+    public const INVALID_FORMAT = 'PasswordInvalidFormat';
+    public const LESS_THAN_MIN_STR = 'PasswordLessThanMinStr';
+    public const GREATER_THAN_MAX_STR = 'PasswordGreaterThanMaxStr';
 
-    const MSG_EMPTY = 'パスワードは必須です';
-    const MSG_WRONG = 'パスワードが間違っています';
-    const MSG_INVALID_FMT = 'パスワードは半角英数字を指定してください';
-    const MSG_LESS_THAN_MIN_STR = 'パスワードが短すぎます。'.self::MIN_STR.'文字以上を指定してください';
-    const MSG_GREATER_THAN_MAX_STR = 'パスワードが長すぎます。'.self::MAX_STR.'文字以下で指定してください';
+    public const MSG_EMPTY = 'パスワードは必須です';
+    public const MSG_WRONG = 'パスワードが間違っています';
+    public const MSG_INVALID_FMT = 'パスワードは半角英数字を指定してください';
+    public const MSG_LESS_THAN_MIN_STR = 'パスワードが短すぎます。'.self::MIN_STR.'文字以上を指定してください';
+    public const MSG_GREATER_THAN_MAX_STR = 'パスワードが長すぎます。'.self::MAX_STR.'文字以下で指定してください';
 
     protected $messageTemplates = [
         self::INVALID_FORMAT => self::MSG_INVALID_FMT,

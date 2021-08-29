@@ -11,10 +11,10 @@ use Taka512\Validator\Model\Tag\NameValidator;
 
 class SearchInput implements InputFilterAwareInterface
 {
-    const DEFAULT_NAME = '';
-    const DEFAULT_SITE_ID = null;
-    const DEFAULT_LIMIT = '30';
-    const DEFAULT_OFFSET = '0';
+    public const DEFAULT_NAME = '';
+    public const DEFAULT_SITE_ID = null;
+    public const DEFAULT_LIMIT = '30';
+    public const DEFAULT_OFFSET = '0';
 
     protected $name = self::DEFAULT_NAME;
     protected $siteId = self::DEFAULT_SITE_ID;

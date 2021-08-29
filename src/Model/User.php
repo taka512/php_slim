@@ -4,8 +4,8 @@ namespace Taka512\Model;
 
 class User extends BaseModel
 {
-    const FLG_OFF = 0;
-    const FLG_ON = 1;
+    public const FLG_OFF = 0;
+    public const FLG_ON = 1;
 
     protected $table = 'user';
 

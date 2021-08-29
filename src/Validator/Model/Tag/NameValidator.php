@@ -6,14 +6,14 @@ use Laminas\Validator\AbstractValidator;
 
 class NameValidator extends AbstractValidator
 {
-    const MAX_STR = 32;
+    public const MAX_STR = 32;
 
-    const INVALID_FORMAT = 'NameInvalidFormat';
-    const GREATER_THAN_MAX_STR = 'NameGreaterThanMaxStr';
+    public const INVALID_FORMAT = 'NameInvalidFormat';
+    public const GREATER_THAN_MAX_STR = 'NameGreaterThanMaxStr';
 
-    const MSG_EMPTY = 'タグは必須です';
-    const MSG_INVALID_FMT = 'タグ名の書式が正しくありません';
-    const MSG_GREATER_THAN_MAX_STR = 'タグ名が長すぎます';
+    public const MSG_EMPTY = 'タグは必須です';
+    public const MSG_INVALID_FMT = 'タグ名の書式が正しくありません';
+    public const MSG_GREATER_THAN_MAX_STR = 'タグ名が長すぎます';
 
     protected $messageTemplates = [
         self::INVALID_FORMAT => self::MSG_INVALID_FMT,

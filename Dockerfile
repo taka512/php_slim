@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.0-fpm-alpine
 
 RUN apk upgrade --update \
     && apk add --no-cache \
@@ -28,6 +28,10 @@ RUN apk upgrade --update \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /home/php_slim
+
+RUN apk add --no-cache msmtp
+RUN rm -rf /usr/sbin/sendmail && ln -sf /usr/bin/msmtp /usr/sbin/sendmail
+ADD docker/mail/msmtprc /etc/msmtprc
 
 ENV PANTHER_NO_SANDBOX 1
 ENV PANTHER_CHROME_DRIVER_BINARY /usr/lib/chromium/chromedriver
