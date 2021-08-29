@@ -29,8 +29,8 @@ class Site extends BaseModel
      *   example="http://google.com"
      * )
      */
-    const FLG_OFF = 0;
-    const FLG_ON = 1;
+    public const FLG_OFF = 0;
+    public const FLG_ON = 1;
 
     protected $table = 'site';
 

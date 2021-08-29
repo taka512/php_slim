@@ -8,14 +8,14 @@ use Taka512\Repository\TagSiteRepository;
 
 class TagIdValidator extends AbstractValidator
 {
-    const INVALID_FMT = 'InvalidFmt';
-    const NOT_FOUND_ID = 'NotFoundId';
-    const DUPLICATE_ID = 'DuplicateId';
+    public const INVALID_FMT = 'InvalidFmt';
+    public const NOT_FOUND_ID = 'NotFoundId';
+    public const DUPLICATE_ID = 'DuplicateId';
 
-    const MSG_REQUIRE = 'タグidの入力は必須です';
-    const MSG_INVALID_FMT = 'タグIDの書式が正しくありません';
-    const MSG_NOT_FOUND_ID = '指定idのタグは存在しません';
-    const MSG_DUPLICATE_ID = 'タグは既に登録済みです';
+    public const MSG_REQUIRE = 'タグidの入力は必須です';
+    public const MSG_INVALID_FMT = 'タグIDの書式が正しくありません';
+    public const MSG_NOT_FOUND_ID = '指定idのタグは存在しません';
+    public const MSG_DUPLICATE_ID = 'タグは既に登録済みです';
 
     protected $tagRepository;
     protected $tagSiteRepository;

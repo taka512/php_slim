@@ -6,14 +6,14 @@ use Laminas\Validator\AbstractValidator;
 
 class UrlValidator extends AbstractValidator
 {
-    const MAX_STR = 128;
+    public const MAX_STR = 128;
 
-    const INVALID_FORMAT = 'UrlInvalidFormat';
-    const GREATER_THAN_MAX_STR = 'UrlGreaterThanMaxStr';
+    public const INVALID_FORMAT = 'UrlInvalidFormat';
+    public const GREATER_THAN_MAX_STR = 'UrlGreaterThanMaxStr';
 
-    const MSG_EMPTY = 'URLは必須です';
-    const MSG_INVALID_FMT = 'URLの書式が正しくありません';
-    const MSG_GREATER_THAN_MAX_STR = 'URLが長すぎます';
+    public const MSG_EMPTY = 'URLは必須です';
+    public const MSG_INVALID_FMT = 'URLの書式が正しくありません';
+    public const MSG_GREATER_THAN_MAX_STR = 'URLが長すぎます';
 
     protected $messageTemplates = [
         self::INVALID_FORMAT => self::MSG_INVALID_FMT,
