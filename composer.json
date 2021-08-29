@@ -16,18 +16,18 @@
         "doctrine/annotations": "1.*",
         "fabpot/goutte": "v4.*",
         "illuminate/database": "v8.*",
-        "laminas/laminas-authentication": "2.8.x-dev",
-        "laminas/laminas-form": "2.16.x-dev",
-        "laminas/laminas-math": "3.*",
-        "laminas/laminas-session": "2.*",
-        "laminas/laminas-servicemanager": "3.6.*",
+        "laminas/laminas-authentication": "2.8.*",
+        "laminas/laminas-form": "3.0.*",
+        "laminas/laminas-math": "3.3.*",
+        "laminas/laminas-session": "2.11.*",
+        "laminas/laminas-servicemanager": "3.*",
         "laminas/laminas-validator": "2.*",
         "monolog/monolog": "2.*",
-        "pagerfanta/pagerfanta": "v2.*",
+        "pagerfanta/pagerfanta": "v3.*",
         "php-di/php-di": "6.*",
         "php-di/slim-bridge": "3.*",
         "php-webdriver/webdriver": "1.*",
-        "slim/slim": "4.7.*",
+        "slim/slim": "4.8.*",
         "slim/twig-view": "3.*",
         "slim/psr7": "1.*",
         "symfony/console": "v5.*",
@@ -40,10 +40,10 @@
         "zircote/swagger-php": "3.*"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "v2.18.2",
+        "friendsofphp/php-cs-fixer": "v3.1.0",
         "nelmio/alice": "v3.8.2",
-        "phpstan/phpstan": "0.12.80",
-        "phpunit/phpunit": "9.5.2"
+        "phpstan/phpstan": "0.12.96",
+        "phpunit/phpunit": "9.5.8"
     },
     "autoload": {
         "psr-4": {
