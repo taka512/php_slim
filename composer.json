@@ -27,6 +27,7 @@
         "php-di/php-di": "6.*",
         "php-di/slim-bridge": "3.*",
         "php-webdriver/webdriver": "1.*",
+        "pimple/pimple": "^3.0",
         "slim/slim": "4.8.*",
         "slim/twig-view": "3.*",
         "slim/psr7": "1.*",
