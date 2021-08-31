@@ -17,7 +17,7 @@ CREATE TABLE `migration` (
 
 | Name | Type | Default | Nullable | Children | Parents | Comment |
 | ---- | ---- | ------- | -------- | -------- | ------- | ------- |
-| version | varchar(255) |  | false |  |  |  |
+| version | varchar(255) |  | false |  |  | 履歴ID |
 
 ## Relations
 
