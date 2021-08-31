@@ -1,0 +1,8 @@
+dsn: mysql://root:mypass@mysql:3306/sample_slim
+docPath: /home/php_slim/data/schema
+comments:
+  -
+    table: migration
+    comment: マイグレーション
+    columnComments:
+      version: 履歴ID

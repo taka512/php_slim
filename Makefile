@@ -126,6 +126,12 @@ docker/client/build: ## build for client code
 docker/client/test: ## test for client code
 	docker run -w /home/php_slim/client -v `pwd`:/home/php_slim -it node:10.15-alpine npm run test
 
+docker/tbls/doc: ## build database document by tbls
+	docker run --network php_slim_default -v `pwd`:/home/php_slim -it k1low/tbls:latest -c /home/php_slim/docker/tbls/tbls.yml doc
+docker/tbls/diff: ## diff database and document by tbls
+	docker run --network php_slim_default -v `pwd`:/home/php_slim -it k1low/tbls:latest -c /home/php_slim/docker/tbls/tbls.yml diff
+
+
 #########
 # test
 #########
