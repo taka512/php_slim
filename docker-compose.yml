@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.9"
 services:
   web:
     container_name: web.local
@@ -11,13 +11,9 @@ services:
       - ./docker/nginx/tls:/etc/nginx/tls:cached
       - ./public:/home/php_slim/public:cached
     logging:
-      driver: "json-file"
+      driver: "local"
       options:
         max-size: "10m"
-        max-file: "3"
-    networks:
-      webnet:
-        ipv4_address: 192.168.1.30
   app:
     container_name: app.local
     build: .
@@ -30,24 +26,16 @@ services:
       - mysql
       - redis
     logging:
-      driver: "json-file"
+      driver: "local"
       options:
         max-size: "10m"
-        max-file: "3"
-    networks:
-      webnet:
-        ipv4_address: 192.168.1.40
   redis:
     container_name: redis.local
     image: redis:6-alpine
     logging:
-      driver: "json-file"
+      driver: "local"
       options:
         max-size: "10m"
-        max-file: "3"
-    networks:
-      webnet:
-        ipv4_address: 192.168.1.50
   mysql:
     container_name: mysql.local
     image: mysql:8.0
@@ -61,21 +49,18 @@ services:
       - ./docker/mysql/conf/my80.cnf:/etc/mysql/my.cnf:cached
       - ./docker/mysql/init:/docker-entrypoint-initdb.d:cached
     logging:
-      driver: "json-file"
+      driver: "local"
       options:
         max-size: "10m"
-        max-file: "3"
-    networks:
-      webnet:
-        ipv4_address: 192.168.1.60
   mail:
     container_name: mail.local
     image: kanemu/maildev-with-iconv
     ports:
       - 8081:80
-    networks:
-      webnet:
-        ipv4_address: 192.168.1.70
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
   swagger:
     container_name: swagger.local
     image: swaggerapi/swagger-ui
@@ -86,22 +71,9 @@ services:
     environment:
       API_URL: openapi.yaml
     logging:
-      driver: "json-file"
+      driver: "local"
       options:
         max-size: "10m"
-        max-file: "3"
-    networks:
-      webnet:
-        ipv4_address: 192.168.1.80
-
-
-networks:
-  webnet:
-    driver: bridge
-    ipam:
-     driver: default
-     config:
-       - subnet: 192.168.1.0/24
 
 volumes:
-  db-data:
+  db-data: {}
