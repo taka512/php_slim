@@ -22,10 +22,30 @@ class ClientFactory
 
     public static function createChrome(array $option = []): Client
     {
+        // https://github.com/symfony/panther/blob/main/src/Client.php#L70
+        // https://github.com/symfony/panther/blob/main/src/ProcessManager/ChromeManager.php#L37
+        // arguments = [
+        //    '--headless',                      // PANTHER_NO_HEADLESS=true
+        //    '--window-size=1200,1100',         // PANTHER_NO_HEADLESS=true
+        //    '--disable-gpu',                   // PANTHER_NO_HEADLESS=true
+        //    '--auto-open-devtools-for-tabs',   // PANTHER_DEVTOOLS=true
+        //    '--no-sandbox',                    // PANTHER_NO_SANDBOX=true
+        //    or PANTHER_CHROME_ARGUMENTS=xxx
+        // ];
+        // option = [
+        //     'scheme' => 'http',
+        //     'host' => '127.0.0.1',
+        //     'port' => 9515,
+        //     'path' => '/status',
+        //     'chromedriver_arguments' => [],
+        //     'capabilities' => [],
+        // ];
         return Client::createChromeClient(
             null,
             null,
-            [],
+            [
+                'capabilities' => $option['capabilities'] ?? [],
+            ],
             $option['base_uri'] ?? null
         );
     }

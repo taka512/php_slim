@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Taka512\Command\BaseCommand;
 use Taka512\Http\ClientFactory;
+use Symfony\Component\DomCrawler\Crawler;
 
 class SiteCrawlerCommand extends BaseCommand
 {
@@ -32,9 +33,15 @@ class SiteCrawlerCommand extends BaseCommand
     public function process(InputInterface $input)
     {
         $this->get(LoggerInterface::class)->info($input->getOption('config'));
-        $client = ClientFactory::createChrome();
+        $client = ClientFactory::createChrome([
+            'capabilities' => [
+                'goog:loggingPrefs' => [
+                    'browser' => 'ALL', // calls to console.* methods
+                    'performance' => 'ALL', // performance data
+                ],
+            ]]);
         $crawler = $client->request('GET', 'https://www.google.co.jp/search?q=test');
-        $nodeValues = $crawler->filterXPath('//div[contains(@class, "rc")]')->each(function ($node, $i) {
+        $nodeValues = $crawler->filterXPath('//h3')->each(function ($node, $i) {
             return $node->text();
         });
         foreach ($nodeValues as $v) {
